@@ -8,3 +8,4 @@ It helps users learn topics through quizzes, tasks, and progress tracking.
 Mikhail Kremenetski - chebupell <br>
 Anastasiya Andronava - anastan588 <br>
 Tatsiana Hladkaya - t-gladkaya <br>
+Egor Gerasimchyk - ForestDeerr <br>
