@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MainPage: React.FC = () => {
+const JSPage: React.FC = () => {
   return (
     <div className="p-1">
-      <h1>Main</h1>
+      <h1>JS Exercises</h1>
     </div>
   );
 };
 
-export default MainPage;
+export default JSPage;
