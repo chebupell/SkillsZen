@@ -1,10 +1,13 @@
 import React from 'react';
+import PageLayout from '../../../shared/components/PageLayout/PageLayout';
 
 const JSPage: React.FC = () => {
   return (
-    <div className="p-1">
-      <h1>JS Exercises</h1>
-    </div>
+    <PageLayout backgroundImage="/background-images/js-page-background.png">
+      <h1 className="text-3xl text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+        JS Exercises
+      </h1>
+    </PageLayout>
   );
 };
 
