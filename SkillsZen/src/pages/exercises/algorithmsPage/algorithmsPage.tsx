@@ -1,10 +1,13 @@
 import React from 'react';
+import PageLayout from '../../../shared/components/PageLayout/PageLayout';
 
 const AlgorithmsPage: React.FC = () => {
   return (
-    <div className="p-1">
-      <h1>Algorithms Exercises</h1>
-    </div>
+    <PageLayout backgroundImage='/background-images/algo-page-background.png'>
+      <div className="text-3xl text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] flex justify-center">
+        Algorithms Exercises
+      </div>
+    </PageLayout>
   );
 };
 
