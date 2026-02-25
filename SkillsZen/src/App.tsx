@@ -1,11 +1,14 @@
-import './App.css'
+import { Outlet } from 'react-router-dom';
+import './App.css';
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>SkillsZen</h1>
+    <div className="min-h-screen bg-[#efefef]">
+      <main>
+        <Outlet />
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
