@@ -22,7 +22,8 @@ const TSPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/ts-icon.png'
         topicTitle='TypeScript Exercises'
-        exercisesProgress={`1/3 blocks completed`}
+        statusText='10 random questions'
+        exercisesProgress={`0/10 blocks completed`}
         exercises={tsExercises}
       />
     </PageLayout>

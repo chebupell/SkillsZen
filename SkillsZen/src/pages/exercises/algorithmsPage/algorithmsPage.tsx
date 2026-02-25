@@ -21,8 +21,9 @@ const AlgorithmsPage: React.FC = () => {
     <PageLayout backgroundImage='/background-images/algo-page-background.png'>
       <ExerciseSubPage
         topicImg='/icons/algo-icon.png'
-        topicTitle='Algorithms'
-        exercisesProgress={`1/3 blocks completed`}
+        topicTitle='Algorithms Exercises'
+        statusText='10 random questions'
+        exercisesProgress={`0/10 blocks completed`}
         exercises={algoExercises}
       />
     </PageLayout>

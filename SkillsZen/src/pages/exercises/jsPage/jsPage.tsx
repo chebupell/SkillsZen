@@ -20,9 +20,10 @@ const JSPage: React.FC = () => {
   return (
     <PageLayout backgroundImage="/background-images/js-page-background.png">
       <ExerciseSubPage
-         topicImg='/icons/js-icon.png'
+        topicImg='/icons/js-icon.png'
         topicTitle='JavaScript Exercises'
-        exercisesProgress={`1/3 blocks completed`}
+        statusText='10 random questions'
+        exercisesProgress={`0/10 blocks completed`}
         exercises={jsExercises}
       />
     </PageLayout>

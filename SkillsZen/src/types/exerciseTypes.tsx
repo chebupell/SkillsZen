@@ -6,6 +6,7 @@ export interface ExerciseSubPage {
 export interface ExerciseSubPageProps {
   topicTitle: string;
   topicImg: string;
+  statusText: string;
   exercisesProgress: string;
   exercises: ExerciseItem[];
 }
