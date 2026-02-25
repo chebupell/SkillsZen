@@ -2,6 +2,7 @@ import React from "react";
 import type { ExerciseSubPageProps } from "../../../types/exerciseTypes";
 
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
+  topicImg,
   topicTitle,
   exercisesProgress,
   exercises
@@ -20,6 +21,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
     <div className="grid gap-4 md:grid-cols-1">
       {exercises.map((item) => (
         <div key={item.id} className="p-4 bg-white rounded-xl shadow-lg md:flex gap-8">
+          <img src={topicImg} alt="Topic Image" className="max-h-10 rounded-lg"/>
           <h3 className="font-semibold">{item.title}</h3>
             <p className="text-sm text-gray-500">{item.status}</p>
           </div>
