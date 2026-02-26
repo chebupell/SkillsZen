@@ -23,7 +23,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
           <div key={item.id} className="p-4 bg-white rounded-xl shadow-lg md:flex items-center gap-8 hover:bg-gray-100">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-1">
               <img src={topicImg} alt="Topic Image" className="max-h-10 rounded-lg" />
               <div>
                 <h3 className="font-semibold">{item.title}</h3>
