@@ -2,6 +2,8 @@ import React from "react";
 import type { ExerciseSubPageProps } from "../../../types/exerciseTypes";
 import SuccessTag from "../tags/successTag";
 import RetryTag from "../tags/retryTag";
+import InProgressTag from "../tags/inProgressTag";
+import StartTag from "../tags/startTag";
 
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   topicImg,
@@ -31,11 +33,13 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
               </div>
             </div>
             <div className="ml-auto">
-              { item.status === 'Completed'
+              { item.status === 'completed'
                 ? <SuccessTag />
-                : (item.status === 'Try again')
+                : (item.status === 'try-again')
                   ? <RetryTag />
-                  : <p className="text-sm font-medium">{item.status}</p>
+                  : (item.status === 'in-progress')
+                  ? <InProgressTag />
+                  : <StartTag />
               }
             </div>
           </div>

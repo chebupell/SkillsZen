@@ -14,5 +14,5 @@ export interface ExerciseSubPageProps {
 export interface ExerciseItem {
   id: string;
   title: string;
-  status: 'Try again' | 'In-progress' | 'Completed';
+  status: 'try-again' | 'in-progress' | 'completed' | 'start';
 }
