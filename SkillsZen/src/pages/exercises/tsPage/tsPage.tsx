@@ -9,11 +9,6 @@ const tsExercises: ExerciseItem[] = [
   { id: '3', title: 'Subject', status: 'Try again' },
   { id: '4', title: 'Subject', status: 'Completed' },
   { id: '5', title: 'Subject', status: 'In-progress' },
-  { id: '6', title: 'Subject', status: 'Try again' },
-  { id: '7', title: 'Subject', status: 'Completed' },
-  { id: '8', title: 'Subject', status: 'In-progress' },
-  { id: '9', title: 'Subject', status: 'Try again' },
-  { id: '10', title: 'Subject', status: 'Try again' },
 ]
 
 const TSPage: React.FC = () => {
