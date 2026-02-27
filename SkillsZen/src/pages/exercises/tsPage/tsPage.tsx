@@ -44,7 +44,7 @@ const TSPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/ts-icon.png'
         topicTitle='TypeScript Exercises'
-        statusText='10 random questions'
+        statusText='10 questions'
         exercisesProgress={`${exercises.filter((it) => it.status === 'completed').length} / ${exercises.length} blocks completed `}
         exercises={exercises}
       />

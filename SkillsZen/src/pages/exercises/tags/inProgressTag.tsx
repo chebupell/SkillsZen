@@ -2,7 +2,7 @@ import React from "react";
 
 const InProgressTag: React.FC = () => {
   return (
-    <div className="rounded-2xl p-2 flex flex-col gap-2">
+    <div className="rounded-2xl p-2 flex flex-col gap-2 min-w-40">
       <div className="text-right text-blue-900 pr-1">
         In Progress
       </div>

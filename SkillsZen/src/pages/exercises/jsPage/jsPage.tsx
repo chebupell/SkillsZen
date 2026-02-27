@@ -41,7 +41,7 @@ const JSPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/js-icon.png'
         topicTitle='JavaScript Exercises'
-        statusText='10 random questions'
+        statusText='10 questions'
         exercisesProgress={`${exercises.filter(it => it.status === 'completed').length}/${exercises.length} blocks completed`}
         exercises={exercises}
       />

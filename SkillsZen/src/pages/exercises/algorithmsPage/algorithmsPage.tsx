@@ -41,7 +41,7 @@ const AlgorithmsPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/algo-icon.png'
         topicTitle='Algorithms Exercises'
-        statusText='10 random questions'
+        statusText='10 questions'
         exercisesProgress={`${exercises.filter((it) => it.status === 'completed').length}/${exercises.length} blocks completed`}
         exercises={exercises}
       />
