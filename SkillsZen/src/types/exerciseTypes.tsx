@@ -11,8 +11,16 @@ export interface ExerciseSubPageProps {
   exercises: ExerciseItem[];
 }
 
+export type ExerciseStatus = 'try_again' | 'in_progress' | 'completed' | 'not_started';
+
 export interface ExerciseItem {
   id: string;
   title: string;
-  status: 'try-again' | 'in-progress' | 'completed' | 'start';
+  status: ExerciseStatus;
+}
+
+export interface APIBlock {
+  id: number;
+  name: string;
+  status: ExerciseStatus;
 }

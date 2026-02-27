@@ -18,7 +18,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
         <div className="text-4xl text-center">{topicTitle}</div>
       </div>
 
-      <p className="text-center text-gray-600 mb-8">Progress: {exercisesProgress}</p>
+      <p className="text-center text-gray-600 mb-8">{exercisesProgress}</p>
 
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
@@ -35,9 +35,9 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
             <div className="ml-auto">
               { item.status === 'completed'
                 ? <SuccessTag />
-                : (item.status === 'try-again')
+                : (item.status === 'try_again')
                   ? <RetryTag />
-                  : (item.status === 'in-progress')
+                  : (item.status === 'in_progress')
                   ? <InProgressTag />
                   : <StartTag />
               }
