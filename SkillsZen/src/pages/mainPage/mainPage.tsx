@@ -1,9 +1,14 @@
 import React from 'react';
+import { Header } from '../../shared/header';
+import { Outlet } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
   return (
-    <div className="p-1">
-      <h1>Main</h1>
+    <div>
+      <Header></Header>
+      <main>
+        <Outlet></Outlet>
+      </main>
     </div>
   );
 };
