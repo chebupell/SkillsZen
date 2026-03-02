@@ -11,4 +11,4 @@ Tatsiana Hladkaya - [t-gladkaya](https://github.com/t-gladkaya) <br>
 Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)   <br>
 
 
-deploy - (https://skillszen.netlify.app/)
+deploy - https://skillszen.netlify.app/
