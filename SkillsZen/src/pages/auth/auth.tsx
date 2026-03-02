@@ -2,11 +2,12 @@ import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
 import { Label } from '../../components/ui/label'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
+import { signupService } from '../../services/login'
 
 const signupSchema = z.object({
   email: z.string().email('Invalid email address').min(1, 'Email is required'),
@@ -33,7 +34,9 @@ export function AuthPage() {
     defaultValues: { email: '', password: '' },
   })
 
-  const formValues = useWatch({ control })
+  const formValues = useWatch({ control });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (formValues.email && formValues.password) {
@@ -41,8 +44,13 @@ export function AuthPage() {
     }
   }, [formValues])
 
-  const onSubmit = (data: SignupFormValues) => {
-    console.log('Submit Data:', data)
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      await signupService(data.email, data.password)
+      navigate('/')
+    } catch (error) {
+      console.error('Registration:', error)
+    }
   }
 
   return (
