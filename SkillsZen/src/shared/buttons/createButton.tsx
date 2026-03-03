@@ -1,20 +1,14 @@
-export type ButtonProps = {
-  text: string
-  className?: string
-  onClick?: () => void
-  disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & { 
+text: string; 
 }
 
 function CreateButton({
   text,
   className = '',
-  onClick,
-  disabled = false,
-  type = 'button',
+  ...props
 }: ButtonProps) {
   return (
-    <button type={type} className={className} onClick={onClick} disabled={disabled}>
+    <button className={className} {...props}>
       {text}
     </button>
   )
