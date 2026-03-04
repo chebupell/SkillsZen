@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../../shared/header';
 import { Outlet } from 'react-router-dom';
+import { Button } from '../../components/ui/button';
 
 const MainPage: React.FC = () => {
   return (
@@ -8,6 +9,7 @@ const MainPage: React.FC = () => {
       <Header></Header>
       <main>
         <Outlet></Outlet>
+        <div className="bg-[url('/background-images/main-page-background.png')] bg-fixed bg-cover bg-center w-90 h-90"></div>
       </main>
     </div>
   );
