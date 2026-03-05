@@ -3,7 +3,6 @@ import PageLayout from '../../../shared/components/PageLayout/PageLayout';
 import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage';
 import type { APIBlock, ExerciseItem } from '../../../types/exerciseTypes';
 import { apiFetch } from '../../../api/api';
-import { devLogin } from '../../../api/authService';
 
 const TSPage: React.FC = () => {
   const [exercises, setExercises] = useState<ExerciseItem[]>([]);
@@ -12,8 +11,6 @@ const TSPage: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        await devLogin();
-
         const blocks: APIBlock[] = await apiFetch('/api/courses/2/blocks');
 
         const mappedExercises: ExerciseItem[] = blocks.map((block: APIBlock) => ({

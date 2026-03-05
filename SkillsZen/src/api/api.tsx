@@ -1,7 +1,9 @@
+import { auth } from "../services/login";
+
 const API_URL = '';
 
 export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
-  const token = localStorage.getItem('token');
+  const token = await auth.currentUser?.getIdToken();
   const url = `${API_URL}${endpoint}`;
 
   const headers = {

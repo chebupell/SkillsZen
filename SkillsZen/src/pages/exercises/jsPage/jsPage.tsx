@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PageLayout from '../../../shared/components/PageLayout/PageLayout';
 import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage';
 import type { ExerciseItem, APIBlock } from '../../../types/exerciseTypes';
-import { devLogin } from '../../../api/authService';
 import { apiFetch } from '../../../api/api';
 
 const JSPage: React.FC = () => {
@@ -12,8 +11,6 @@ const JSPage: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        await devLogin();
-
         const blocks: APIBlock[] = await apiFetch('/api/courses/1/blocks');
 
         const mappedExercises: ExerciseItem[] = blocks.map((block: APIBlock) => ({
