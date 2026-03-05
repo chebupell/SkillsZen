@@ -8,8 +8,8 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children, backgroundImage }) => {
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center bg-no-repeat bg-fixed"
-      style={backgroundImage ? { backgroundImage: `url('${backgroundImage}')` } : {}}
+      className="h-screen max-h-211 w-full bg-cover bg-center bg-no-repeat bg-fixed"
+      style={backgroundImage ? { backgroundImage: `url('/background-images/${backgroundImage}')` } : {}}
     >
       <div className="mx-auto max-w-[1280px] w-full min-w-[320px] p-4 md:p-8">
         {children}
