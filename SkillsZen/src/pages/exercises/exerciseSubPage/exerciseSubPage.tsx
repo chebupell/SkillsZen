@@ -4,6 +4,7 @@ import SuccessTag from "../tags/successTag";
 import RetryTag from "../tags/retryTag";
 import InProgressTag from "../tags/inProgressTag";
 import StartTag from "../tags/startTag";
+import BackButton from "../../../components/shared/backButton";
 
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   topicImg,
@@ -14,7 +15,10 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
 }) => {
   return (
     <div className="p-10 min-h-screen">
-      <div className="grid items-center mb-6">
+      <div className="relative flex items-center justify-center mb-6">
+        <div className="absolute left-0">
+          <BackButton />
+        </div>
         <div className="text-4xl text-center">{topicTitle}</div>
       </div>
 
@@ -28,18 +32,18 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
               <div>
                 <h3 className="font-semibold">{item.title}</h3>
                 <div className="ml-auto">
-                   <p className="text-sm text-gray-500">{statusText}</p>
+                  <p className="text-sm text-gray-500">{statusText}</p>
                 </div>
               </div>
             </div>
             <div className="ml-auto">
-              { item.status === 'completed'
+              {item.status === 'completed'
                 ? <SuccessTag />
                 : (item.status === 'try_again')
                   ? <RetryTag />
                   : (item.status === 'in_progress')
-                  ? <InProgressTag />
-                  : <StartTag />
+                    ? <InProgressTag />
+                    : <StartTag />
               }
             </div>
           </div>
