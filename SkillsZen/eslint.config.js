@@ -27,6 +27,10 @@ export default defineConfig([
           'ts-ignore': 'allow-with-description',
         },
       ],
+      'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
     },
     'react-refresh/only-export-components': [
     'warn',

@@ -85,7 +85,7 @@ export function AuthPage() {
                 <p className="text-xs text-destructive">{errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" className="w-full text-black" disabled={!isValid}>
+            <Button type="submit" className="w-full text-orange-200" disabled={!isValid}>
               Create Account
             </Button>
             <div className="text-center text-sm">
