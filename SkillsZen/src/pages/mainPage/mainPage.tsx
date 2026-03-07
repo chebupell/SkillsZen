@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from '../../shared/header';
+import { Header } from '../../components/shared/header';
 import { Outlet } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
