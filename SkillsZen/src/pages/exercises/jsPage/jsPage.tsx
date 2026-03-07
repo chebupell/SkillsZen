@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PageLayout from '../../../shared/components/PageLayout/PageLayout';
+import PageLayout from '../../../components/shared/PageLayout/PageLayout';
 import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage';
 import type { ExerciseItem, APIBlock } from '../../../types/exerciseTypes';
 import { apiFetch } from '../../../api/api';
