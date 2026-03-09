@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { FirebaseError, initializeApp } from 'firebase/app'
-import { getAuth, type UserCredential, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, type UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -17,7 +17,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 }
-// Initialize Firebase
+
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const database = getDatabase(app)
@@ -38,3 +38,24 @@ export async function signupService(email: string, password: string): Promise<Us
     }
   }
 }
+
+
+export const signinService = async (email: string, password: string): Promise<UserCredential> => {
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error('Signin error:', error);
+    throw error;
+  }
+};
+
+
+export const logout = async (): Promise<void> => {
+  try {
+    return await signOut(auth);
+  } catch (error) {
+    console.error('Logout error:', error);
+    throw error;
+  }
+};
+

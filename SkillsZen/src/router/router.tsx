@@ -5,6 +5,7 @@ import TSPage from '../pages/exercises/tsPage/tsPage';
 import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage';
 import StatsPage from '../pages/stats/stats';
 import { AuthPage } from '../pages/auth/auth';
+import { LoginPage } from '../pages/login/login';
 
 export const router = createBrowserRouter([
   {
@@ -12,8 +13,12 @@ export const router = createBrowserRouter([
     element: <MainPage />,
     children: [
       {
-        path: 'auth',
+        path: 'signup',
         element: <AuthPage />,
+      },
+      {
+        path: 'signin',
+        element: <LoginPage />,
       },
       {
         path: 'exercises/js',
