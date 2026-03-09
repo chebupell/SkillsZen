@@ -5,10 +5,9 @@ interface ExerciseCardProps {
     taskIcon?: string;
     title?: string;
     descriprion?: string;
-    buttonText?: string;
 }
 
-export default function ExerciseCard({ taskIcon, title, descriprion, buttonText }: ExerciseCardProps) {
+export default function ExerciseCard({ taskIcon, title, descriprion }: ExerciseCardProps) {
     return (
         <Card className="flex justify-center w-64 align-center flex-col">
             <div
@@ -17,7 +16,7 @@ export default function ExerciseCard({ taskIcon, title, descriprion, buttonText 
             />
             <CardTitle className="text-2xl text-center">{title}</CardTitle>
             <CardDescription className="text-xl text-center">{descriprion}</CardDescription>
-            <Button variant='taskBtn' className="ml-15">{buttonText}</Button>
+            <Button variant='taskBtn'>Continue</Button>
         </Card>
     ); 
 }
