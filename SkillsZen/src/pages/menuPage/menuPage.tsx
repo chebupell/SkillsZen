@@ -14,7 +14,7 @@ const name = "Alex";
 
 const Menu: React.FC = () => {
     return (
-      <PageLayout backgroundImage='main-page-background.png'>
+      <PageLayout backgroundImage='main-page-background.png' className='flex items-center'>
         <h2 className='text-center text-4xl text-secondary-foreground'>Welcome, {name}!</h2>
         <p className='text-center text-2xl text-secondary-foreground m-7'>Completed Blocks: {completedBlocks} / 12</p>
         <div className='flex gap-8 justify-center flex-wrap px-4'>
