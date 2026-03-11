@@ -9,7 +9,7 @@ interface ExerciseCardProps {
 
 export default function ExerciseCard({ taskIcon, title, descriprion }: ExerciseCardProps) {
     return (
-        <Card className="flex justify-center w-64 align-center flex-col">
+        <Card className="flex flex-col items-center justify-center w-full max-w-85 p-6">
             <div
               className="h-32 w-32 bg-cover bg-center bg-no-repeat mb-5 rounded-2xl overflow-hidden shadow-sm"
               style={taskIcon ? { backgroundImage: `url('/icons/${taskIcon}')` } : {}}
