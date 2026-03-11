@@ -36,7 +36,9 @@ const Menu: React.FC = () => {
               descriprion={algoProgress+`/4 blocks completed`}>
             </ExerciseCard>
         </div>
-        <Button className='m-10 ml-117' variant='progress'>View Progress</Button>
+     <div className="flex justify-center w-full">
+        <Button className='m-10 mx-auto' variant='progress'>View Progress</Button>
+      </div>
       </PageLayout>
     ); 
 };
