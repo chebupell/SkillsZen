@@ -51,6 +51,10 @@ body {
   color: #111827;
 }
 
+.bg-blue-500 {
+  background-color: #3b82f6;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

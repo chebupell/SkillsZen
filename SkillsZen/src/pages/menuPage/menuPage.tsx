@@ -32,7 +32,7 @@ const Menu: React.FC = () => {
             
             <ExerciseCard 
               taskIcon='algo-icon.png'
-              title='Algotithms'
+              title='Algorithms'
               descriprion={algoProgress+`/4 blocks completed`}>
             </ExerciseCard>
         </div>
