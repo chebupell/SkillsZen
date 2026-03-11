@@ -9,3 +9,8 @@ Mikhail Kremenetski - [chebupell](https://github.com/chebupell)   <br>
 Anastasiya Andronava - [anastan588](https://github.com/anastan588)  <br>
 Tatsiana Hladkaya - [t-gladkaya](https://github.com/t-gladkaya) <br>
 Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)   <br>
+
+## Weekly meetings
+06.03.2026 - [record](development-notes/calls/2026-03-06.md)
+
+deploy - https://skillszen.netlify.app/
