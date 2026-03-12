@@ -1,5 +1,5 @@
 import React from 'react';
-import PageLayout from '../../../shared/components/PageLayout/PageLayout';
+import PageLayout from '../../../components/shared/PageLayout/PageLayout';
 
 const JSPage: React.FC = () => {
   return (

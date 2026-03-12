@@ -4,6 +4,7 @@ import JSPage from '../pages/exercises/jsPage/jsPage';
 import TSPage from '../pages/exercises/tsPage/tsPage';
 import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage';
 import StatsPage from '../pages/stats/stats';
+import PracticePage from '../pages/exercises/practice/practicePage';
 import { AuthPage } from '../pages/auth/auth';
 
 export const router = createBrowserRouter([
@@ -16,16 +17,20 @@ export const router = createBrowserRouter([
         element: <AuthPage />,
       },
       {
-        path: 'exercises/js',
+        path: 'js',
         element: <JSPage />,
       },
       {
-        path: 'exercises/ts',
+        path: 'ts',
         element: <TSPage />,
       },
       {
-        path: 'exercises/algo',
+        path: 'algo',
         element: <AlgorithmsPage />,
+      },
+      {
+        path: 'practice',
+        element: <PracticePage />
       },
       {
         path: 'stats',

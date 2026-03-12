@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header } from '../../components/shared/header';
 import { Outlet } from 'react-router-dom';
-import { Button } from '../../components/ui/button';
 
 const MainPage: React.FC = () => {
   return (
