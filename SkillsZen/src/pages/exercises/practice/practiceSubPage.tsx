@@ -1,0 +1,40 @@
+import React from "react";
+import { Card } from "../../../components/ui/card";
+import ContinueButton from "../../../components/shared/nextQuestionButton";
+
+interface PracticeSubPageProps {
+  options?: string[];
+}
+
+export const PracticeSubPage: React.FC<PracticeSubPageProps> = ({ options = ['1', '2', '3', '4']}) => {
+  return (
+    <div className="p-4 sm:p-10 min-h-screen">
+      <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">
+        <div className="flex justify-start">
+            Back button
+        </div>
+      </div>
+      <div className="text-2xl sm:text-4xl text-center"> Question 1/10</div>
+      <div className="hidden sm:block w-25" aria-hidden="true"></div>
+
+      <p className="text-center text-gray-600 mb-8">Progress bar</p>
+
+      <Card>
+        <div className="flex justify-center bg-gray-50 p-2 mx-auto rounded-md">Question line</div>
+        <hr className="border-t border-gray-100" />
+        <div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4 m-2'>
+            {options.map((item, index) => (
+              <div key={index} className="p-4 rounded-md bg-gray-50 hover:bg-blue-200 cursor-pointer text-center">{item}</div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center bg-gray-50 p-3 mx-auto rounded-md"> Correct or incorrect feedback line</div>
+      </Card>
+      <ContinueButton />
+    </div>
+  );
+};
+
+export default PracticeSubPage;

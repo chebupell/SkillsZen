@@ -1,12 +1,12 @@
 import React from "react";
 import PageLayout from "../../../components/shared/PageLayout/PageLayout";
+import PracticeSubPage from "./practiceSubPage";
 
 const PracticePage: React.FC = () => {
   return (
-    <PageLayout >
-    <div>
-      <h2>Practice Page</h2>
-    </div>
+    <PageLayout backgroundImage="/background-images/practice-background.png">
+      <PracticeSubPage
+      />
     </PageLayout>
   )
 };
