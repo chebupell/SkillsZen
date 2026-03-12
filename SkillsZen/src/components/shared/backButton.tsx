@@ -7,8 +7,7 @@ export default function BackButton() {
 
   return (
     <Button
-      variant="ghost"
-      className="bg-white text-black hover:bg-gray-100 transition-all gap-2 rounded-xl shadow-lg border-none"
+      variant="back"
       onClick={() => navigate(-1)}
     >
       <ArrowLeft size={20} />
