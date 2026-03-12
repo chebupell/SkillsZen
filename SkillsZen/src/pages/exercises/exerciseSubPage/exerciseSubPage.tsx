@@ -14,12 +14,13 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   exercises
 }) => {
   return (
-    <div className="p-10 min-h-screen">
-      <div className="relative flex items-center justify-center mb-6">
-        <div className="absolute left-0">
+    <div className="p-4 sm:p-10 min-h-screen">
+      <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">
+        <div className="flex justify-start">
           <BackButton />
         </div>
-        <div className="text-4xl text-center">{topicTitle}</div>
+        <div className="text-2xl sm:text-4xl text-center">{topicTitle}</div>
+        <div className="hidden sm:block w-25" aria-hidden="true"></div>
       </div>
 
       <p className="text-center text-gray-600 mb-8">{exercisesProgress}</p>
