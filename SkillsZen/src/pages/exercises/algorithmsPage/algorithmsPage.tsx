@@ -44,7 +44,7 @@ const AlgorithmsPage: React.FC = () => {
   }
 
   return (
-    <PageLayout backgroundImage='/background-images/algo-page-background.png'>
+    <PageLayout backgroundImage='/algo-page-background.png'>
       <ExerciseSubPage
         topicImg='/icons/algo-icon.png'
         topicTitle='Algorithms Exercises'

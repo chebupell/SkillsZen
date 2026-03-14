@@ -44,7 +44,7 @@ const JSPage: React.FC = () => {
   }
 
   return (
-    <PageLayout backgroundImage="/background-images/js-page-background.png">
+    <PageLayout backgroundImage="/js-page-background.png">
       <ExerciseSubPage
         topicImg='/icons/js-icon.png'
         topicTitle='JavaScript Exercises'

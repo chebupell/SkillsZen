@@ -22,15 +22,15 @@ export const router = createBrowserRouter([
         element: <AuthPage />,
       },
       {
-        path: 'js',
+        path: 'exercises/js',
         element: <JSPage />,
       },
       {
-        path: 'ts',
+        path: 'exercises/ts',
         element: <TSPage />,
       },
       {
-        path: 'algo',
+        path: 'exercises/algo',
         element: <AlgorithmsPage />,
       },
       {
