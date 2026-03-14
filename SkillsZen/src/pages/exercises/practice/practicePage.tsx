@@ -26,7 +26,7 @@ const mockData: PracticePageProps = {
 
 const PracticePage: React.FC = () => {
   return (
-    <PageLayout backgroundImage="/background-images/practice-background.png">
+    <PageLayout backgroundImage="practice-background.png">
       <PracticeSubPage {...mockData} />
     </PageLayout>
   )

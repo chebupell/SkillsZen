@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "../../../components/ui/card";
 import ContinueButton from "../../../components/shared/nextQuestionButton";
 import type { PracticePageProps } from "../../../types/practiceTypes";
+import BackButton from "../../../components/shared/backButton";
 
 export const PracticeSubPage: React.FC<PracticePageProps> = ({
   current_question,
@@ -20,16 +21,16 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
     <div className="p-4 sm:p-10 min-h-screen">
       <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">
         <div className="flex justify-start">
-          Back button
+          <BackButton />
         </div>
       </div>
       <div className="text-2xl sm:text-4xl text-center"> Question {current_question} / {total_questions}</div>
       <div className="hidden sm:block w-25" aria-hidden="true"></div>
 
-      <p className="text-center text-gray-600 mb-8">Progress bar</p>
+      <p className="text-center text-gray-600 mb-8">Progress Bar</p>
 
       <Card>
-        <div className="flex justify-center bg-gray-50 p-2 mx-auto rounded-md text-xl font-medium"> {question.text} </div>
+        <div className="flex justify-center bg-gray-50 p-2 mx-auto rounded-md text-xl font-medium text-center"> {question.text} </div>
         <hr className="border-t border-gray-100" />
         <div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 m-2'>
