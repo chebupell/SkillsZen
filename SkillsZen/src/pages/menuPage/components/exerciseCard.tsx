@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
 import { Card, CardDescription, CardTitle } from "../../../components/ui/card";
 
@@ -5,9 +6,10 @@ interface ExerciseCardProps {
     taskIcon?: string;
     title?: string;
     description?: string;
+    route: string
 }
 
-export default function ExerciseCard({ taskIcon, title, description }: ExerciseCardProps) {
+export default function ExerciseCard({ taskIcon, title, description, route }: ExerciseCardProps) {
     return (
         <Card className="flex flex-col items-center justify-center w-full max-w-85 p-6">
             <div
@@ -16,7 +18,9 @@ export default function ExerciseCard({ taskIcon, title, description }: ExerciseC
             />
             <CardTitle className="text-2xl text-center">{title}</CardTitle>
             <CardDescription className="text-xl text-center">{description}</CardDescription>
-            <Button variant='taskBtn'>Continue</Button>
+            <Button variant='taskBtn'>         
+                <Link to={`/${route}`}>Continue</Link>
+            </Button>
         </Card>
     ); 
 }
