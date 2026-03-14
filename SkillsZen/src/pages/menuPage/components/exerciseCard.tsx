@@ -4,7 +4,7 @@ import { Card, CardDescription, CardTitle } from "../../../components/ui/card";
 interface ExerciseCardProps {
     taskIcon?: string;
     title?: string;
-    descriprion?: string;
+    description?: string;
 }
 
 export default function ExerciseCard({ taskIcon, title, descriprion }: ExerciseCardProps) {
@@ -15,7 +15,7 @@ export default function ExerciseCard({ taskIcon, title, descriprion }: ExerciseC
               style={taskIcon ? { backgroundImage: `url('/icons/${taskIcon}')` } : {}}
             />
             <CardTitle className="text-2xl text-center">{title}</CardTitle>
-            <CardDescription className="text-xl text-center">{descriprion}</CardDescription>
+            <CardDescription className="text-xl text-center">{description}</CardDescription>
             <Button variant='taskBtn'>Continue</Button>
         </Card>
     ); 
