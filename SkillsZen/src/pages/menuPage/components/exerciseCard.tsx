@@ -7,7 +7,7 @@ interface ExerciseCardProps {
     description?: string;
 }
 
-export default function ExerciseCard({ taskIcon, title, descriprion }: ExerciseCardProps) {
+export default function ExerciseCard({ taskIcon, title, description }: ExerciseCardProps) {
     return (
         <Card className="flex flex-col items-center justify-center w-full max-w-85 p-6">
             <div
