@@ -7,7 +7,7 @@ const MainPage: React.FC = () => {
     <div>
       <Header />
       <main>
-        <Outlet />
+        <Outlet></Outlet>
       </main>
     </div>
   );
