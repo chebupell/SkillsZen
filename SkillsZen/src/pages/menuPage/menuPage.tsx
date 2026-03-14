@@ -3,6 +3,7 @@ import React from 'react';
 import PageLayout from '../../components/shared/PageLayout/PageLayout';
 import ExerciseCard from './components/exerciseCard';
 import { Button } from '../../components/ui/button';
+import { Link } from 'react-router-dom';
 
 
 let jsProgress = 0;
@@ -21,23 +22,26 @@ const Menu: React.FC = () => {
             <ExerciseCard 
               taskIcon='js-icon.png'
               title='JavaScript'
-              description={jsProgress+`/4 blocks completed`}>
+              description={jsProgress+`/4 blocks completed`}
+              route='exercises/js'>
             </ExerciseCard>
 
             <ExerciseCard 
               taskIcon='ts-icon.png'
               title='TypeScript'
-              description={tsProgress+`/4 blocks completed`}>
+              description={tsProgress+`/4 blocks completed`}
+              route='exercises/ts'>
             </ExerciseCard>
             
             <ExerciseCard 
               taskIcon='algo-icon.png'
               title='Algorithms'
-              description={algoProgress+`/4 blocks completed`}>
+              description={algoProgress+`/4 blocks completed`}
+              route='exercises/algo'>
             </ExerciseCard>
         </div>
      <div className="flex justify-center w-full">
-        <Button className='m-10 mx-auto' variant='progress'>View Progress</Button>
+        <Button className='m-10 mx-auto' variant='progress'><Link to={'/stats'}>View Progress</Link></Button>
       </div>
       </PageLayout>
     ); 
