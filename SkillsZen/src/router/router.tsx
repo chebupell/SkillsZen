@@ -5,12 +5,17 @@ import TSPage from '../pages/exercises/tsPage/tsPage';
 import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage';
 import StatsPage from '../pages/stats/stats';
 import { AuthPage } from '../pages/auth/auth';
+import Menu from '../pages/menuPage/menuPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
     children: [
+      {
+        index: true,
+        element: <Menu />,
+      },
       {
         path: 'auth',
         element: <AuthPage />,

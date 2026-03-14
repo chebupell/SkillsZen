@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 const MainPage: React.FC = () => {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <main>
         <Outlet></Outlet>
       </main>

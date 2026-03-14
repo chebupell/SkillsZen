@@ -18,7 +18,7 @@
   --primary: oklch(50.8% 0.118 165.612);
   --primary-foreground: oklch(95.4% 0.038 75.164);
   --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: oklch(39.3% 0.095 152.535);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(43.2% 0.095 166.913);
@@ -49,6 +49,10 @@ body {
   min-height: 100vh;
   background-color: #f9fafb;
   color: #111827;
+}
+
+.bg-blue-500 {
+  background-color: #3b82f6;
 }
 
 h1 {

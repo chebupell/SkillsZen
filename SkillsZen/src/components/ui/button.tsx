@@ -19,6 +19,8 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-black dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        taskBtn: "bg-blue-500 underline-offset-4 hover:underline w-30 text-secondary",
+        progress: "bg-card text-secondary-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm w-70",
         back: "bg-white text-black hover:bg-gray-100 transition-all gap-2 rounded-xl shadow-lg border-none",
       },
       size: {
