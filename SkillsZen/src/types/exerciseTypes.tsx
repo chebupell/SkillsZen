@@ -24,3 +24,7 @@ export interface APIBlock {
   name: string;
   status: ExerciseStatus;
 }
+
+export type blockProgress = {
+  
+}
