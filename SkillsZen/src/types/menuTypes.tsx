@@ -3,7 +3,8 @@ export type ExerciseCardProps = {
     name: string,
     icon: string,
     description: string,
-    total_blocks: number,
-    completed_blocks: number,
-    route: string
+    total_blocks?: number,
+    completed_blocks?: number,
+    route?: string
+    progress?: string
 }

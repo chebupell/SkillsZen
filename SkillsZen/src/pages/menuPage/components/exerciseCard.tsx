@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
 import { Button } from "../../../components/ui/button";
-import { Card, CardDescription, CardTitle } from "../../../components/ui/card";
+import { Card, CardContent, CardDescription, CardTitle } from "../../../components/ui/card";
 import type { ExerciseCardProps } from "../../../types/menuTypes";
 
 export const ExerciseCard : React.FC<ExerciseCardProps> = (
     {
         icon,
         name,
-        description
+        description,
+        progress,
+        route
     }
 ) => {
     return (
@@ -17,7 +20,9 @@ export const ExerciseCard : React.FC<ExerciseCardProps> = (
             />
             <CardTitle className="text-2xl text-center">{name}</CardTitle>
             <CardDescription className="text-xl text-center">{description}</CardDescription>
-            <Button variant='taskBtn'>        
+            <CardContent className="text-xl text-center">{progress}</CardContent>
+            <Button variant='taskBtn'>   
+                <Link to={'/' + route}>Continue</Link> 
             </Button>
         </Card>
     ); 

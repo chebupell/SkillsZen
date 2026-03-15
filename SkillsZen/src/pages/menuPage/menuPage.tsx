@@ -10,12 +10,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../services/login';
 import { Blocks } from 'lucide-react';
 
-
-let jsProgress = 0;
-let tsProgress = 0;
-let algoProgress = 0;
-let completedBlocks = 0;
-
 const name = "Alex";
 
 const Menu: React.FC = () => {
@@ -39,7 +33,6 @@ const Menu: React.FC = () => {
                 }));
     
                 setBlocks(mappedCards);
-                console.log(cards);
               } catch (error) {
                 console.log('Failed to fetch exercises:', error);
               } finally {
@@ -61,24 +54,34 @@ const Menu: React.FC = () => {
 
     return (
       <PageLayout backgroundImage='main-page-background.png' className='flex items-center'>
-        <h2 className='text-center text-4xl text-secondary-foreground'>Welcome, {name}!</h2>
-        <p className='text-center text-2xl text-secondary-foreground m-7'>Completed Blocks: {completedBlocks} / 12</p>
+        <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {name}!</h2>
         <div className='flex gap-8 justify-center flex-wrap px-4'>
-            <ExerciseCard id={0} name={''} icon={''} description={''} total_blocks={0} completed_blocks={0} />
+            <ExerciseCard 
+            id={cards[0].id}
+            name={cards[0].name}
+            icon={cards[0].icon.toLowerCase() + '-icon.png'}
+            description={cards[0].description}
+            progress={cards[0].completed_blocks + '/' +
+              cards[0].total_blocks + ' blocks completed'}
+            route='js'/>
 
-            {/* <ExerciseCard 
-              taskIcon='ts-icon.png'
-              title='TypeScript'
-              description={tsProgress+`/4 blocks completed`}
-              route='exercises/ts'>
-            </ExerciseCard>
+            <ExerciseCard 
+            id={cards[1].id}
+            name={cards[1].name}
+            icon={cards[1].icon.toLowerCase() + '-icon.png'}
+            description={cards[1].description}
+            progress={cards[1].completed_blocks + '/' +
+              cards[1].total_blocks + ' blocks completed'}
+            route='ts'/>
             
             <ExerciseCard 
-              taskIcon='algo-icon.png'
-              title='Algorithms'
-              description={algoProgress+`/4 blocks completed`}
-              route='exercises/algo'>
-            </ExerciseCard> */}
+            id={cards[2].id}
+            name={cards[2].name}
+            icon={cards[2].icon.toLowerCase() + '-icon.png'}
+            description={cards[2].description}
+            progress={cards[2].completed_blocks + '/' +
+              cards[2].total_blocks + ' blocks completed'}
+            route='algo'/>
         </div>
      <div className="flex justify-center w-full">
         <Button className='m-10 mx-auto' variant='progress'><Link to={'/stats'}>View Progress</Link></Button>
