@@ -23,4 +23,14 @@ describe('ExerciseSubPage', () => {
     );
     expect(screen.getByText('Test Topic Title')).toBeInTheDocument();
   });
+
+  it ('should render progress correctly', () => {
+    render(
+      <BrowserRouter>
+        <ExerciseSubPage {...mockProps}/>
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText('1/5 completed')).toBeInTheDocument();
+  })
 })
