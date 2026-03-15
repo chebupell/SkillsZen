@@ -12,5 +12,6 @@ Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)   <br>
 
 ## Weekly meetings
 06.03.2026 - [record](development-notes/calls/2026-03-06.md)
+15.03.2026 - [record](development-notes/calls/2026-03-15.md)
 
 deploy - https://skillszen.netlify.app/
