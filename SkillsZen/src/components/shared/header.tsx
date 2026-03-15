@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-end">
+      <div className="container flex h-[7.9vh] items-center justify-end">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="sm">
             <Link to="/auth">Sign up</Link>
