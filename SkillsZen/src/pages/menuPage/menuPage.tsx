@@ -1,18 +1,17 @@
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
 import PageLayout from '../../components/shared/PageLayout/PageLayout';
-import { ExerciseCard } from './components/exerciseCard';
 import { Button } from '../../components/ui/button';
 import { Link } from 'react-router-dom';
 import type { ExerciseCardProps } from '../../types/menuTypes';
 import { apiFetch } from '../../api/api';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../services/login';
-import { Blocks } from 'lucide-react';
-
-const name = "Alex";
+import { ExerciseCard } from './components/exerciseCard';
+import { useAuth } from '../../services/AuthContext';
 
 const Menu: React.FC = () => {
+  const { user } = useAuth();
   const [cards, setBlocks] = useState<ExerciseCardProps[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -54,7 +53,7 @@ const Menu: React.FC = () => {
 
     return (
       <PageLayout backgroundImage='main-page-background.png' className='flex items-center'>
-        <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {name}!</h2>
+        <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {user?.email}!</h2>
         <div className='flex gap-8 justify-center flex-wrap px-4'>
             <ExerciseCard 
             id={cards[0].id}
