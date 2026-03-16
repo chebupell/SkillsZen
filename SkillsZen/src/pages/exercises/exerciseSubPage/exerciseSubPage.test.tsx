@@ -54,6 +54,6 @@ describe('ExerciseSubPage', () => {
     expect(screen.getByText('Completed')).toBeInTheDocument();
     expect(screen.getByText('Try Again')).toBeInTheDocument();
     expect(screen.getByText('In Progress')).toBeInTheDocument();
-    expect(screen.getByText('Start')).toBeInTheDocument();
+    expect(screen.getByText('Not Started')).toBeInTheDocument();
   });
 })
