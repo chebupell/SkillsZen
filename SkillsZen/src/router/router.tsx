@@ -5,6 +5,7 @@ import TSPage from '../pages/exercises/tsPage/tsPage';
 import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage';
 import StatsPage from '../pages/stats/stats';
 import { AuthPage } from '../pages/auth/auth';
+import Menu from '../pages/menuPage/menuPage';
 import { LoginPage } from '../pages/login/login';
 
 export const router = createBrowserRouter([
@@ -12,6 +13,14 @@ export const router = createBrowserRouter([
     path: '/',
     element: <MainPage />,
     children: [
+      {
+        index: true,
+        element: <Menu />,
+      },
+      {
+        index: true,
+        element: <Menu />,
+      },
       {
         path: 'signup',
         element: <AuthPage />,
@@ -21,15 +30,19 @@ export const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: 'exercises/js',
+        path: 'signin',
+        element: <LoginPage />,
+      },
+      {
+        path: 'js',
         element: <JSPage />,
       },
       {
-        path: 'exercises/ts',
+        path: 'ts',
         element: <TSPage />,
       },
       {
-        path: 'exercises/algo',
+        path: 'algo',
         element: <AlgorithmsPage />,
       },
       {
