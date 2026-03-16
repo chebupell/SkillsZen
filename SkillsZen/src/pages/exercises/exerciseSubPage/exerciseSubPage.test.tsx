@@ -27,10 +27,33 @@ describe('ExerciseSubPage', () => {
   it ('should render progress correctly', () => {
     render(
       <BrowserRouter>
-        <ExerciseSubPage {...mockProps}/>
+        <ExerciseSubPage {...mockProps} />
       </BrowserRouter>
     );
 
     expect(screen.getByText('1/5 completed')).toBeInTheDocument();
-  })
+  });
+
+  it('should render status tags correctly', () => {
+    const statusProps: ExerciseSubPageProps = {
+      ...mockProps,
+      exercises: [
+        { id: '1', title: 'Exercise 1', status: 'completed' },
+        { id: '2', title: 'Exercise 2', status: 'try_again' },
+        { id: '3', title: 'Exercise 3', status: 'in_progress' },
+        { id: '4', title: 'Exercise 4', status: 'start' as ExerciseStatus },
+      ],
+    };
+
+    render(
+      <BrowserRouter>
+        <ExerciseSubPage {...statusProps} />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText('Completed')).toBeInTheDocument();
+    expect(screen.getByText('Try Again')).toBeInTheDocument();
+    expect(screen.getByText('In Progress')).toBeInTheDocument();
+    expect(screen.getByText('Start')).toBeInTheDocument();
+  });
 })
