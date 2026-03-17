@@ -27,7 +27,7 @@ export function AuthFormLayout({
   });
 
   return (
-    <div className="flex flex-col gap-6 max-w-md mx-auto mt-10">
+    <div className="flex flex-col gap-6 max-w-md mx-auto p-10">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl text-center">{title}</CardTitle>
