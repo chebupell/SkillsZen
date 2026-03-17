@@ -84,7 +84,7 @@ export function ProfilePage() {
       await deleteFirebaseUser(user.uid)
       userStorageService.clearSession()
       logout()
-      navigate('/signup')
+      navigate('/')
     } catch (error) {
       if (error instanceof FirebaseError) {
         if (error.code === 'auth/requires-recent-login') {
