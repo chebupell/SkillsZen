@@ -1,12 +1,5 @@
 import { type UserCredential } from "firebase/auth";
-
-
-export interface UserSession {
-  uid: string;
-  email: string | null;
-  accessToken: string;
-  lastLogin: string;
-}
+import { type UserSession } from '../types/types';
 
 const STORAGE_KEY = 'auth_user_session';
 
@@ -18,20 +11,25 @@ export const userStorageService = {
       email: credential.user.email,
       accessToken: token || '',
       lastLogin: new Date().toISOString(),
+      name: credential.user.displayName,
+      photo: credential.user.photoURL
     };
-    
     localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
   },
 
   getSession(): UserSession | null {
     const data = localStorage.getItem(STORAGE_KEY);
-    if (!data) return null;
-    
-    try {
-      return JSON.parse(data) as UserSession;
-    } catch {
-      return null;
+    return data ? (JSON.parse(data) as UserSession) : null;
+  },
+
+  syncLocalSession(updatedName: string): UserSession | null {
+    const session = this.getSession();
+    if (session) {
+      const updated = { ...session, name: updatedName };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
     }
+    return null;
   },
 
   clearSession(): void {
@@ -39,6 +37,6 @@ export const userStorageService = {
   },
 
   isAuthenticated(): boolean {
-    return localStorage.getItem(STORAGE_KEY) !== null;
+    return !!localStorage.getItem(STORAGE_KEY);
   }
 };

@@ -8,8 +8,15 @@ import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
 
 const loginSchema = z.object({
-  login: z.string().min(1, 'Login is required'),
-  password: z.string().min(1, 'Password is required'),
+  login: z.string().email('Invalid email address').min(1, 'Email is required'),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .refine((val) => /[A-Z]/.test(val), 'Must contain an uppercase letter')
+    .refine((val) => /[a-z]/.test(val), 'Must contain a lowercase letter')
+    .refine((val) => /[0-9]/.test(val), 'Must contain a number')
+    .refine((val) => /[!@#$%^&*(),.?":{}|<>]/.test(val), 'Must contain a special character'),
+  username: z.string().optional(),
 })
 
 export function LoginPage() {

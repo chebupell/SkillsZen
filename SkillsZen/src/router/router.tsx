@@ -8,6 +8,7 @@ import { AuthPage } from '../pages/auth/auth'
 import Menu from '../pages/menuPage/menuPage'
 import { LoginPage } from '../pages/login/login'
 import { ProtectedRoute } from './protectedRoute'
+import { ProfilePage } from '../pages/profilePage/ProfilePage'
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
           { path: 'ts', element: <TSPage /> },
           { path: 'algo', element: <AlgorithmsPage /> },
           { path: 'stats', element: <StatsPage /> },
+          { path: 'profile', element: <ProfilePage /> },
         ],
       },
     ],

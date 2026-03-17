@@ -7,6 +7,7 @@ import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
 
 const signupSchema = z.object({
+  username: z.string().min(2, 'Name must be at least 2 characters').optional(),
   login: z.string().email('Invalid email address').min(1, 'Email is required'),
   password: z
     .string()
@@ -16,14 +17,14 @@ const signupSchema = z.object({
     .refine((val) => /[0-9]/.test(val), 'Must contain a number')
     .refine((val) => /[!@#$%^&*(),.?":{}|<>]/.test(val), 'Must contain a special character'),
 })
-
 export function AuthPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSignup = async (data: { login: string; password: string }) => {
+  const handleSignup = async (data: z.infer<typeof signupSchema>) => {
     try {
-      const credential = await signupService(data.login, data.password)
+      const credential = await signupService(data.login, data.password, data.username)
+
       await userStorageService.saveSession(credential)
       const session = userStorageService.getSession()
 
@@ -46,6 +47,7 @@ export function AuthPage() {
       linkDescription="Already have an account?"
       linkText="Sign in"
       linkHref="/sign-in"
+      isSignUp={true}
     />
   )
 }

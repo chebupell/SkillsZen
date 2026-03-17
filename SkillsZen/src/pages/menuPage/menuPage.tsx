@@ -53,7 +53,7 @@ const Menu: React.FC = () => {
 
     return (
       <PageLayout backgroundImage='main-page-background.png' className='flex items-center'>
-        <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {user?.email}!</h2>
+        <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {user?.name}!</h2>
         <div className='flex gap-8 justify-center flex-wrap px-4'>
             <ExerciseCard 
             id={cards[0].id}

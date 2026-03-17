@@ -6,7 +6,6 @@ import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import type { AuthFormProps, AuthValues } from '../../types/types';
 
-
 export function AuthFormLayout({
   title,
   resolver,
@@ -16,6 +15,7 @@ export function AuthFormLayout({
   linkText,
   linkHref,
   linkDescription,
+  isSignUp,
 }: AuthFormProps) {
   const {
     register,
@@ -34,6 +34,21 @@ export function AuthFormLayout({
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {isSignUp && (
+              <div className="grid gap-2">
+                <Label htmlFor="username">User Name</Label>
+                <Input
+                  id="username"
+                  placeholder="John Doe"
+                  {...register('username')}
+                  className={errors.username ? 'border-destructive' : ''}
+                />
+                {errors.username && (
+                  <p className="text-xs text-destructive">{errors.username.message}</p>
+                )}
+              </div>
+            )}
+
             <div className="grid gap-2">
               <Label htmlFor="login">{loginLabel}</Label>
               <Input
@@ -75,3 +90,4 @@ export function AuthFormLayout({
     </div>
   );
 }
+

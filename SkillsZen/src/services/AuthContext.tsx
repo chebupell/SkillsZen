@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
-import { userStorageService, type UserSession } from './userService'
+import { userStorageService} from './userService'
+import type { UserSession } from '../types/types'
 
 interface AuthContextType {
   user: UserSession | null
