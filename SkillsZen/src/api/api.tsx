@@ -1,6 +1,6 @@
 import { auth } from "../services/login";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = '';
 
 export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
   const token = await auth.currentUser?.getIdToken();
