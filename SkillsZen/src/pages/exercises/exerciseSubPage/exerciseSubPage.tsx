@@ -10,7 +10,6 @@ import BackButton from "../../../components/shared/backButton";
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   topicImg,
   topicTitle,
-  statusText,
   exercisesProgress,
   exercises
 }) => {
@@ -29,13 +28,13 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
           <div key={item.id} className="p-4 bg-white rounded-xl shadow-lg hover:bg-gray-100">
-            <Link to={'/practice'} className="md:flex items-center gap-8">
+            <Link to={`/practice/${item.id}`} className="md:flex items-center gap-8">
               <div className="flex items-center gap-4 mb-1">
                 <img src={topicImg} alt="Topic Image" className="max-h-10 rounded-lg" />
                 <div>
                   <h3 className="font-semibold">{item.title}</h3>
                   <div className="ml-auto">
-                    <p className="text-sm text-gray-500">{statusText}</p>
+                    <p className="text-sm text-gray-500">{item.totalQuestions} questions</p>
                   </div>
                 </div>
               </div>
@@ -45,7 +44,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
                   : (item.status === 'try_again')
                     ? <RetryTag />
                     : (item.status === 'in_progress')
-                      ? <InProgressTag />
+                      ? <InProgressTag current={item.currentQuestion} total={item.totalQuestions} />
                       : <StartTag />
                 }
               </div>

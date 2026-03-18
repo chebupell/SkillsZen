@@ -23,21 +23,21 @@ const Menu: React.FC = () => {
               taskIcon='js-icon.png'
               title='JavaScript'
               description={jsProgress+`/4 blocks completed`}
-              route='exercises/js'>
+              route='js'>
             </ExerciseCard>
 
             <ExerciseCard 
               taskIcon='ts-icon.png'
               title='TypeScript'
               description={tsProgress+`/4 blocks completed`}
-              route='exercises/ts'>
+              route='ts'>
             </ExerciseCard>
             
             <ExerciseCard 
               taskIcon='algo-icon.png'
               title='Algorithms'
               description={algoProgress+`/4 blocks completed`}
-              route='exercises/algo'>
+              route='algo'>
             </ExerciseCard>
         </div>
      <div className="flex justify-center w-full">

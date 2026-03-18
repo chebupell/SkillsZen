@@ -21,6 +21,8 @@ const AlgorithmsPage: React.FC = () => {
               id: block.id.toString(),
               title: block.name,
               status: block.status,
+              totalQuestions: block.total_questions,
+              currentQuestion: block.current_question,
             }));
 
             setExercises(mappedExercises);
@@ -40,7 +42,9 @@ const AlgorithmsPage: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>;
+    return (
+      <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
+    );
   }
 
   return (
@@ -48,7 +52,6 @@ const AlgorithmsPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/algo-icon.png'
         topicTitle='Algorithms Exercises'
-        statusText='10 questions'
         exercisesProgress={`${exercises.filter((it) => it.status === 'completed').length}/${exercises.length} blocks completed`}
         exercises={exercises}
       />

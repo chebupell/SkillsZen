@@ -6,7 +6,6 @@ export interface ExerciseSubPage {
 export interface ExerciseSubPageProps {
   topicTitle: string;
   topicImg: string;
-  statusText: string;
   exercisesProgress: string;
   exercises: ExerciseItem[];
 }
@@ -17,10 +16,14 @@ export interface ExerciseItem {
   id: string;
   title: string;
   status: ExerciseStatus;
+  totalQuestions: number;
+  currentQuestion?: number;
 }
 
 export interface APIBlock {
   id: number;
   name: string;
   status: ExerciseStatus;
+  total_questions: number;
+  current_question?: number;
 }

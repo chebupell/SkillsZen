@@ -21,6 +21,8 @@ const JSPage: React.FC = () => {
               id: block.id.toString(),
               title: block.name,
               status: block.status,
+              totalQuestions: block.total_questions,
+              currentQuestion: block.current_question,
             }));
 
             setExercises(mappedExercises);
@@ -48,7 +50,6 @@ const JSPage: React.FC = () => {
       <ExerciseSubPage
         topicImg='/icons/js-icon.png'
         topicTitle='JavaScript Exercises'
-        statusText='10 questions'
         exercisesProgress={`${exercises.filter(it => it.status === 'completed').length}/${exercises.length} blocks completed`}
         exercises={exercises}
       />
