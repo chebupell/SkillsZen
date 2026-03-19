@@ -17,8 +17,8 @@ vi.mock('../pages/mainPage/mainPage', () => ({
 }));
 
 vi.mock('../pages/menuPage/menuPage', () => ({ default: () => <div>Menu Page</div> }));
-vi.mock('../pages/login/login', () => ({ LoginPage: () => <div>Login Page</div> }));
-vi.mock('../pages/auth/auth', () => ({ AuthPage: () => <div>Signup Page</div> }));
+vi.mock('../pages/login/loginPage', () => ({ LoginPage: () => <div>Login Page</div> }));
+vi.mock('../pages/auth/authPage', () => ({ AuthPage: () => <div>Signup Page</div> }));
 
 describe('Router Configuration', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Router Configuration', () => {
 
 
   it('renders Login Page on /signin', async () => {
-    navigateTo('/signin');
+    navigateTo('/sign-in');
     expect(await screen.findByText(/login page/i)).toBeInTheDocument();
   });
 });

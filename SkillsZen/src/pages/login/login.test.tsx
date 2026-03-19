@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach} from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
@@ -44,22 +44,33 @@ describe('LoginPage', () => {
 
   it('performs successful login flow', async () => {
     const user = userEvent.setup()
-    const mockCredential = { user: { uid: '123' } }
-    const mockSession = { token: 'abc' }
 
-    vi.mocked(signinService).mockResolvedValue(mockCredential as any)
-    vi.mocked(userStorageService.getSession).mockReturnValue(mockSession as any)
+    const mockCredential = { user: { uid: '123' } } as Awaited<ReturnType<typeof signinService>>
+    const mockSession = { token: 'abc' } as unknown as ReturnType<
+      typeof userStorageService.getSession
+    >
+
+    vi.mocked(signinService).mockResolvedValue(mockCredential)
+    vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
 
     renderPage()
 
-    await user.type(screen.getByLabelText(/username/i), 'testuser')
-    await user.type(screen.getByLabelText(/password/i), 'password123')
-
+    const emailInput = screen.getByLabelText(/username/i)
+    const passwordInput = screen.getByLabelText(/password/i)
     const submitBtn = screen.getByRole('button', { name: /sign in/i })
-    await waitFor(() => expect(submitBtn).toBeEnabled())
+
+    await user.type(emailInput, 'test@example.com')
+    await user.type(passwordInput, 'Password123!')
+
+    await waitFor(() => {
+      expect(submitBtn).toBeEnabled()
+    })
+
     await user.click(submitBtn)
 
-    expect(signinService).toHaveBeenCalledWith('testuser', 'password123')
+    await waitFor(() => {
+      expect(signinService).toHaveBeenCalledWith('test@example.com', 'Password123!')
+    })
 
     await waitFor(() => {
       expect(userStorageService.saveSession).toHaveBeenCalledWith(mockCredential)
