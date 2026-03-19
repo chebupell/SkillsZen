@@ -9,11 +9,7 @@ const MainPage: React.FC = () => {
     <div>
       <Toaster position="top-right" richColors theme="light"/>
       <Header />
-<<<<<<< 4-login-page
       <main className="flex flex-col min-h-full bg-[url('/background-images/main-page-background.png')] bg-cover bg-center">
-=======
-      <main>
->>>>>>> development
         <Outlet />
       </main>
       <Footer />
