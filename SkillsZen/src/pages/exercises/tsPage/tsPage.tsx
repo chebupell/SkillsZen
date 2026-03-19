@@ -47,7 +47,7 @@ const TSPage: React.FC = () => {
   };
 
   return (
-    <PageLayout backgroundImage='/background-images/ts-page-background.png'>
+    <PageLayout backgroundImage='ts-page-background.png'>
       <ExerciseSubPage
         topicImg='/icons/ts-icon.png'
         topicTitle='TypeScript Exercises'
