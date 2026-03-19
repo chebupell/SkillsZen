@@ -9,11 +9,13 @@ import Menu from '../pages/menuPage/menuPage'
 import { LoginPage } from '../pages/login/login'
 import { ProtectedRoute } from './protectedRoute'
 import { ProfilePage } from '../pages/profilePage/ProfilePage'
+import { ErrorFallback } from '../components/shared/ErrorFallback'
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
+    errorElement: <ErrorFallback />,
     children: [
       {
         path: 'sign-up',
