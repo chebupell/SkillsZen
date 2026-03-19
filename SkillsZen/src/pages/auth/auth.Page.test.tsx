@@ -4,12 +4,12 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { signinService } from '../../services/login'
+import { signupService } from '../../services/login'
 import { userStorageService } from '../../services/userService'
-import { LoginPage } from './loginPage'
+import { AuthPage } from './authPage'
 
 vi.mock('../../services/login', () => ({
-  signinService: vi.fn(),
+  signupService: vi.fn(),
 }))
 
 vi.mock('../../services/userService', () => ({
@@ -30,7 +30,7 @@ vi.mock('../../services/AuthContext', () => ({
   useAuth: () => ({ login: mockLogin }),
 }))
 
-describe('LoginPage', () => {
+describe('AuthPage', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -38,32 +38,31 @@ describe('LoginPage', () => {
   const renderPage = () =>
     render(
       <MemoryRouter>
-        <LoginPage />
+        <AuthPage />
       </MemoryRouter>,
     )
 
-  it('performs successful login flow', async () => {
+  it('executes full signup flow on success', async () => {
     const user = userEvent.setup()
-    const mockCredential = { user: { uid: '123' } }
-    const mockSession = { token: 'abc' }
+    const mockCred = { user: { email: 'test@example.com' } }
+    const mockSess = { id: 'session_123' }
 
-    vi.mocked(signinService).mockResolvedValue(mockCredential as any)
-    vi.mocked(userStorageService.getSession).mockReturnValue(mockSession as any)
+    vi.mocked(signupService).mockResolvedValue(mockCred as any)
+    vi.mocked(userStorageService.getSession).mockReturnValue(mockSess as any)
 
     renderPage()
 
-    await user.type(screen.getByLabelText(/username/i), 'testuser')
-    await user.type(screen.getByLabelText(/password/i), 'password123')
+    await user.type(screen.getByLabelText(/email/i), 'test@example.com')
+    await user.type(screen.getByLabelText(/password/i), 'Valid123!')
 
-    const submitBtn = screen.getByRole('button', { name: /sign in/i })
+    const submitBtn = screen.getByRole('button', { name: /create account/i })
     await waitFor(() => expect(submitBtn).toBeEnabled())
     await user.click(submitBtn)
 
-    expect(signinService).toHaveBeenCalledWith('testuser', 'password123')
-
     await waitFor(() => {
-      expect(userStorageService.saveSession).toHaveBeenCalledWith(mockCredential)
-      expect(mockLogin).toHaveBeenCalledWith(mockSession)
+      expect(signupService).toHaveBeenCalledWith('test@example.com', 'Valid123!')
+      expect(userStorageService.saveSession).toHaveBeenCalledWith(mockCred)
+      expect(mockLogin).toHaveBeenCalledWith(mockSess)
       expect(mockNavigate).toHaveBeenCalledWith('/')
     })
   })

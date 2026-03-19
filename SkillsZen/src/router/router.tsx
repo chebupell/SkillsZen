@@ -4,12 +4,13 @@ import JSPage from '../pages/exercises/jsPage/jsPage'
 import TSPage from '../pages/exercises/tsPage/tsPage'
 import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage'
 import StatsPage from '../pages/stats/stats'
-import { AuthPage } from '../pages/auth/auth'
+import { AuthPage } from '../pages/auth/authPage'
 import Menu from '../pages/menuPage/menuPage'
-import { LoginPage } from '../pages/login/login'
+import { LoginPage } from '../pages/login/loginPage'
 import { ProtectedRoute } from './protectedRoute'
 import { ProfilePage } from '../pages/profilePage/ProfilePage'
 import { ErrorFallback } from '../components/shared/ErrorFallback'
+import { NotFound } from '../pages/404Page/notFound'
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
           { path: 'stats', element: <StatsPage /> },
           { path: 'profile', element: <ProfilePage /> },
         ],
+      },
+      {
+        path: '*', 
+        element: <NotFound />,
       },
     ],
   },
