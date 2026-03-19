@@ -69,7 +69,7 @@ export function ProfilePage() {
         duration: 3000,
       })
     } catch (error) {
-      toast.error('Failed to update profile', {
+      toast.error(`Failed to update profile. ${error}`, {
         description: 'Please try again later.',
         duration: 3000,
       })
