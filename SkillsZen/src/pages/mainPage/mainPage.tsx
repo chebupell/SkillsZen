@@ -10,7 +10,7 @@ const MainPage: React.FC = () => {
       <Toaster position="top-right" richColors theme="light"/>
       <Header />
       <main className="flex flex-col min-h-full bg-[url('/background-images/main-page-background.png')] bg-cover bg-center">
-        <Outlet></Outlet>
+        <Outlet />
       </main>
       <Footer />
     </div>
