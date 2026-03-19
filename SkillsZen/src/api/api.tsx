@@ -21,5 +21,11 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
     throw new Error(`API Error: ${response.statusText}`)
   }
 
+   const contentType = response.headers.get('content-type');
+
+  if (!contentType?.includes('application/json')) {
+    throw new Error('API returned non-JSON response');
+  }
+
   return response.json();
 }
