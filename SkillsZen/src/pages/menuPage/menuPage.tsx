@@ -21,7 +21,7 @@ const Menu: React.FC = () => {
             const loadData = async () => {
               try {
                 const cards: ExerciseCardProps[] = await apiFetch('/api/courses');
-    
+
                 const mappedCards: ExerciseCardProps[] = cards.map((card: ExerciseCardProps) => ({
                   id: card.id,
                   name: card.name,
@@ -30,7 +30,7 @@ const Menu: React.FC = () => {
                   total_blocks: card.total_blocks,
                   completed_blocks: card.completed_blocks,
                 }));
-    
+
                 setBlocks(mappedCards);
               } catch (error) {
                 console.log('Failed to fetch exercises:', error);
@@ -43,7 +43,7 @@ const Menu: React.FC = () => {
             setLoading(false);
           }
         });
-    
+
         return () => unsubscribe();
       }, []);
 
@@ -55,7 +55,7 @@ const Menu: React.FC = () => {
       <PageLayout backgroundImage='main-page-background.png' className='flex items-center'>
         <h2 className='text-center text-4xl text-secondary-foreground mb-10'>Welcome, {user?.name}!</h2>
         <div className='flex gap-8 justify-center flex-wrap px-4'>
-            <ExerciseCard 
+            <ExerciseCard
             id={cards[0].id}
             name={cards[0].name}
             icon={cards[0].icon.toLowerCase() + '-icon.png'}
@@ -64,7 +64,7 @@ const Menu: React.FC = () => {
               cards[0].total_blocks + ' blocks completed'}
             route='js'/>
 
-            <ExerciseCard 
+            <ExerciseCard
             id={cards[1].id}
             name={cards[1].name}
             icon={cards[1].icon.toLowerCase() + '-icon.png'}
@@ -72,8 +72,8 @@ const Menu: React.FC = () => {
             progress={cards[1].completed_blocks + '/' +
               cards[1].total_blocks + ' blocks completed'}
             route='ts'/>
-            
-            <ExerciseCard 
+
+            <ExerciseCard
             id={cards[2].id}
             name={cards[2].name}
             icon={cards[2].icon.toLowerCase() + '-icon.png'}
@@ -86,7 +86,7 @@ const Menu: React.FC = () => {
         <Button className='m-10 mx-auto' variant='progress'><Link to={'/stats'}>View Progress</Link></Button>
       </div>
       </PageLayout>
-    ); 
+    );
 };
 
 export default Menu;
