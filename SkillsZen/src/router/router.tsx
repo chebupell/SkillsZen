@@ -34,12 +34,12 @@ export const router = createBrowserRouter([
             index: true,
             element: <Menu />,
           },
+          { path: 'profile', element: <ProfilePage /> },
           { path: 'js', element: <JSPage /> },
           { path: 'ts', element: <TSPage /> },
           { path: 'algo', element: <AlgorithmsPage /> },
+          { path: 'practice/:blockId', element: <PracticePage /> },
           { path: 'stats', element: <StatsPage /> },
-          { path: 'profile', element: <ProfilePage /> },
-          { path: 'practice/:blockId', element: <PracticePage />}
         ],
       },
       {

@@ -31,4 +31,5 @@ export interface ProgressOut {
 
 export interface PracticePageProps extends BlockProgress {
   question?: Task;
+  onNext?: () => void;
 }

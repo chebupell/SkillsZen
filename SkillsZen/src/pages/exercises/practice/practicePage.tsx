@@ -11,11 +11,17 @@ const PracticePage: React.FC = () => {
   const { blockId } = useParams<{ blockId: string }>();
   const [practice, setPractice] = useState<PracticePageProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleNext = () => {
+    setRefreshTrigger(prev => prev + 1);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const loadData = async () => {
+          setLoading(true);
           try {
             if (!blockId) return;
 
@@ -57,7 +63,7 @@ const PracticePage: React.FC = () => {
       }
     })
     return () => unsubscribe();
-  }, [blockId])
+  }, [blockId, refreshTrigger])
 
   if (loading) {
     return (
@@ -73,7 +79,7 @@ const PracticePage: React.FC = () => {
 
   return (
     <PageLayout backgroundImage="practice-background.png">
-      <PracticeSubPage {...practice} />
+      <PracticeSubPage {...practice} onNext={handleNext} />
     </PageLayout>
   )
 };
