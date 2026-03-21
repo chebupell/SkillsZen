@@ -7,7 +7,7 @@ import { Footer } from '../../components/shared/footer'
 const MainPage: React.FC = () => {
   return (
     <div>
-      <Toaster position="top-right" richColors theme="light"/>
+      <Toaster position="top-right" richColors theme="light" />
       <Header />
       <main className="flex flex-col min-h-full bg-[url('/background-images/main-page-background.png')] bg-cover bg-center">
         <Outlet />

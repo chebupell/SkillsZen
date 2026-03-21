@@ -17,11 +17,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-[7.9vh] items-center justify-between px-4 mx-auto">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <img
-            src={logo}
-            alt="SkillsZen Logo"
-            className="h-8 w-8 object-contain"
-          />
+          <img src={logo} alt="SkillsZen Logo" className="h-8 w-8 object-contain" />
           <span className="text-xl font-bold tracking-tight text-primary">
             Skills<span className="text-muted-foreground font-medium">Zen</span>
           </span>

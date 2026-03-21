@@ -48,15 +48,14 @@ describe('Header', () => {
     expect(screen.queryByRole('button', { name: /logout/i })).not.toBeInTheDocument()
   })
 
- 
   it('calls logout and navigates to home on logout click', async () => {
     const user = userEvent.setup()
 
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
-        isAuthenticated: true,
-        logout: mockLogout,
-        user: { name: 'User', email: 'u@t.com' },
-        login: vi.fn(),
+      isAuthenticated: true,
+      logout: mockLogout,
+      user: { name: 'User', email: 'u@t.com' },
+      login: vi.fn(),
     } as unknown as UseAuthReturn)
 
     renderHeader()
@@ -70,10 +69,10 @@ describe('Header', () => {
 
   it('links to profile page when authenticated', () => {
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
-        isAuthenticated: true,
-        user: { name: 'John' },
-        logout: mockLogout,
-        login: vi.fn(),
+      isAuthenticated: true,
+      user: { name: 'John' },
+      logout: mockLogout,
+      login: vi.fn(),
     } as unknown as UseAuthReturn)
 
     renderHeader()

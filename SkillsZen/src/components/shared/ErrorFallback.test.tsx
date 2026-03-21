@@ -12,13 +12,13 @@ vi.mock('react-router-dom', () => ({
 
 describe('ErrorFallback', () => {
   const mockReset = vi.fn()
-  
+
   beforeEach(() => {
     vi.clearAllMocks()
     vi.mocked(isRouteErrorResponse).mockReturnValue(false)
-    vi.stubGlobal('location', { 
+    vi.stubGlobal('location', {
       reload: vi.fn(),
-      href: '' 
+      href: '',
     })
   })
 
@@ -70,5 +70,4 @@ describe('ErrorFallback', () => {
 
     expect(window.location.href).toBe('/')
   })
-
 })

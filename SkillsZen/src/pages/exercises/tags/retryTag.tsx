@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const RetryTag: React.FC = () => {
   return (
@@ -8,4 +8,4 @@ const RetryTag: React.FC = () => {
   )
 }
 
-export default RetryTag;
+export default RetryTag
