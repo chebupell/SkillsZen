@@ -11,6 +11,7 @@ import { ProtectedRoute } from './protectedRoute'
 import { ProfilePage } from '../pages/profilePage/ProfilePage'
 import { ErrorFallback } from '../components/shared/ErrorFallback'
 import { NotFound } from '../pages/404Page/notFound'
+import PracticePage from '../pages/exercises/practice/practicePage'
 
 export const router = createBrowserRouter([
   {
@@ -38,10 +39,11 @@ export const router = createBrowserRouter([
           { path: 'algo', element: <AlgorithmsPage /> },
           { path: 'stats', element: <StatsPage /> },
           { path: 'profile', element: <ProfilePage /> },
+          { path: 'practice/:blockId', element: <PracticePage />}
         ],
       },
       {
-        path: '*', 
+        path: '*',
         element: <NotFound />,
       },
     ],
