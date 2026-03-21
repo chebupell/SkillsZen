@@ -27,3 +27,4 @@ export interface APIBlock {
   total_questions: number;
   current_question?: number;
 }
+
