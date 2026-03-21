@@ -111,9 +111,9 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
         </div>
       </Card>
       {total_questions > 0 && current_question === total_questions - 1 ? (
-        <SeeResultsButton onClick={onNext} />
+        <SeeResultsButton disabled={!feedback} onClick={onNext} />
       ) : (
-        <ContinueButton onClick={onNext} />
+        <ContinueButton disabled={!feedback} onClick={onNext} />
       )}
     </div>
   );
