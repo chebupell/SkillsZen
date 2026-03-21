@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import type { ExerciseSubPageProps } from "../../../types/exerciseTypes";
 import SuccessTag from "../tags/successTag";
 import RetryTag from "../tags/retryTag";
@@ -13,6 +13,12 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   exercisesProgress,
   exercises
 }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    localStorage.setItem('lastCategory', location.pathname);
+  }, [location]);
+
   return (
     <div className="p-4 sm:p-10 min-h-screen">
       <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">

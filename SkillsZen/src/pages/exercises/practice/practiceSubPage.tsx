@@ -58,7 +58,7 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
 
   return (
     <div className="p-4 sm:p-10 min-h-screen">
-      <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">
+      <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-1">
         <div className="flex justify-start">
           <BackButton />
         </div>
@@ -66,7 +66,7 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
       <div className="text-2xl sm:text-4xl text-center"> Question {current_question + 1} / {total_questions}</div>
       <div className="hidden sm:block w-25" aria-hidden="true"></div>
 
-      <p className="text-center text-gray-600 mb-8"><ProgressBar current={current_question} total={total_questions} /></p>
+      <div className="text-center text-gray-600 mb-8"><ProgressBar current={current_question} total={total_questions} /></div>
 
       <Card className="px-4 sm:px-6">
         <div className="flex justify-center bg-gray-50 p-2 mx-auto rounded-md text-xl font-medium text-center"> {question.text} </div>
@@ -102,8 +102,8 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
         <div className={`flex justify-center p-3 mx-auto rounded-md ${feedback ? (feedback.correct ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800') : 'bg-gray-50'}`}>
           {feedback ? (
             <div className="text-center">
-              <p className="font-bold">{feedback.correct ? "Correct!" : "Incorrect"}</p>
-              <p>{feedback.explanation}</p>
+              <div className="font-bold">{feedback.correct ? "Correct!" : "Incorrect"}</div>
+              <div>{feedback.explanation}</div>
             </div>
           ) : (
             "Choose the correct answer"
