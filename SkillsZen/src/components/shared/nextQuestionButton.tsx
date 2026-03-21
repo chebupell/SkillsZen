@@ -11,11 +11,13 @@ const ContinueButton: React.FC<ContinueButtonProps> = ({ onClick }) => {
   const navigate = useNavigate();
   return (
     <Button
-      className="flex justify-self-center bg-blue-500 text-black transition-all gap-2 rounded-xl shadow-lg border-none m-4 "
+      className="group flex justify-self-center bg-blue-500 text-white transition-all duration-200 gap-2 rounded-xl shadow-lg border-none m-4 hover:bg-blue-600 hover:scale-[1.02] active:bg-blue-700 active:scale-100 active:shadow-inner"
       onClick={() => (onClick ? onClick() : navigate(+1))}
     >
       <span>Next Question</span>
-      <ArrowRight size={20} />
+      <span className="group-hover:translate-x-1 transition-transform duration-200">
+        <ArrowRight size={20} />
+      </span>
     </Button>
   );
 };
