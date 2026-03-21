@@ -1,10 +1,10 @@
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Label } from '../../components/ui/label';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import type { AuthFormProps, AuthValues } from '../../types/types';
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
+import { Label } from '../../components/ui/label'
+import { Input } from '../../components/ui/input'
+import { Button } from '../../components/ui/button'
+import type { AuthFormProps, AuthValues } from '../../types/types'
 
 export function AuthFormLayout({
   title,
@@ -24,7 +24,7 @@ export function AuthFormLayout({
   } = useForm<AuthValues>({
     resolver,
     mode: 'onChange',
-  });
+  })
 
   return (
     <div className="flex flex-col gap-6 max-w-md mx-auto p-10">
@@ -56,9 +56,7 @@ export function AuthFormLayout({
                 {...register('login')}
                 className={errors.login ? 'border-destructive' : ''}
               />
-              {errors.login && (
-                <p className="text-xs text-destructive">{errors.login.message}</p>
-              )}
+              {errors.login && <p className="text-xs text-destructive">{errors.login.message}</p>}
             </div>
 
             <div className="grid gap-2">
@@ -88,6 +86,5 @@ export function AuthFormLayout({
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
-

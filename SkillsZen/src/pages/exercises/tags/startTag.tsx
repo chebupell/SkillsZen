@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const StartTag: React.FC = () => {
   return (
@@ -8,4 +8,4 @@ const StartTag: React.FC = () => {
   )
 }
 
-export default StartTag;
+export default StartTag

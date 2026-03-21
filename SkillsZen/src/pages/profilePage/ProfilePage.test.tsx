@@ -44,14 +44,12 @@ describe('ProfilePage', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
-        user: mockUser,
-        isAuthenticated: true,
-        login: mockLogin,
-        logout: mockLogout,
+      user: mockUser,
+      isAuthenticated: true,
+      login: mockLogin,
+      logout: mockLogout,
     } as unknown as UseAuthReturn)
-
     ;(vi.mocked(fetchFirestoreUserData) as Mock).mockResolvedValue({
       name: 'Original Name',
       country: 'Belarus',

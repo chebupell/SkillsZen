@@ -1,62 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import PageLayout from '../../../components/shared/PageLayout/PageLayout';
-import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage';
-import type { APIBlock, ExerciseItem } from '../../../types/exerciseTypes';
-import { apiFetch } from '../../../api/api';
-import { auth } from '../../../services/login';
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { useEffect, useState } from 'react'
+import PageLayout from '../../../components/shared/PageLayout/PageLayout'
+import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage'
+import { useAuth } from '../../../services/AuthContext'
+import { getExerciseSubPage } from '../../../services/login'
+import type { ExerciseSubPageProps } from '../../../types/exerciseTypes'
 
 const TSPage: React.FC = () => {
-  const [exercises, setExercises] = useState<ExerciseItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuth()
+  const [data, setData] = useState<ExerciseSubPageProps | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  const COURSE_ID = 'ts_course'
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const loadData = async () => {
-          try {
-            const blocks: APIBlock[] = await apiFetch('/api/courses/2/blocks');
+    if (!user?.uid) return
 
-            const mappedExercises: ExerciseItem[] = blocks.map((block: APIBlock) => ({
-              id: block.id.toString(),
-              title: block.name,
-              status: block.status,
-            }));
-
-            setExercises(mappedExercises);
-
-          } catch (error) {
-            console.log('Failed to fetch exercises: ', error);
-          } finally {
-            setLoading(false);
-          }
+    const loadData = async () => {
+      try {
+        const result = await getExerciseSubPage(COURSE_ID, user.uid)
+        if (result) {
+          setData(result)
         }
-        loadData();
-      } else {
-        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch TypeScript exercises:', error)
+      } finally {
+        setLoading(false)
       }
-    });
+    }
 
-    return () => unsubscribe();
-  }, []);
+    loadData()
+  }, [user?.uid])
 
   if (loading) {
     return (
-      <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
+      <div className="bg-white text-center p-20 text-2xl animate-pulse">Loading exercises...</div>
     )
-  };
+  }
+
+  if (!data) {
+    return (
+      <div className="text-center p-20 text-xl text-red-500">TypeScript course data not found.</div>
+    )
+  }
 
   return (
-    <PageLayout backgroundImage='ts-page-background.png'>
+    <PageLayout backgroundImage="ts-page-background.png">
       <ExerciseSubPage
-        topicImg='/icons/ts-icon.png'
-        topicTitle='TypeScript Exercises'
-        statusText='10 questions'
-        exercisesProgress={`${exercises.filter((it) => it.status === 'completed').length} / ${exercises.length} blocks completed `}
-        exercises={exercises}
+        topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.png`}
+        topicTitle={data.topicTitle}
+        statusText={data.statusText}
+        exercisesProgress={data.exercisesProgress}
+        exercises={data.exercises}
       />
     </PageLayout>
-  );
-};
+  )
+}
 
-export default TSPage;
+export default TSPage

@@ -8,18 +8,18 @@ import { useAuth } from '../../services/AuthContext'
 import { getAllCoursesWithProgress } from '../../services/login'
 
 const Menu: React.FC = () => {
-  const { user } = useAuth() 
+  const { user } = useAuth()
   const [cards, setCards] = useState<ExerciseCardProps[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user?.uid) return 
+    if (!user?.uid) return
 
     const loadData = async () => {
       try {
         const data = await getAllCoursesWithProgress(user.uid)
-        setCards(data);
-        console.log(data);
+        setCards(data)
+        console.log(data)
       } catch (error) {
         console.log('Failed to fetch exercises:', error)
       } finally {

@@ -1,40 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import PageLayout from '../../../components/shared/PageLayout/PageLayout';
-import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage';
-import { useAuth } from '../../../services/AuthContext';
-import { getExerciseSubPage } from '../../../services/login';
-import type { ExerciseSubPageProps } from '../../../types/exerciseTypes';
-
+import React, { useState, useEffect } from 'react'
+import PageLayout from '../../../components/shared/PageLayout/PageLayout'
+import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage'
+import { useAuth } from '../../../services/AuthContext'
+import { getExerciseSubPage } from '../../../services/login'
+import type { ExerciseSubPageProps } from '../../../types/exerciseTypes'
 
 const AlgorithmsPage: React.FC = () => {
-  const { user } = useAuth();
-  const [data, setData] = useState<ExerciseSubPageProps | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuth()
+  const [data, setData] = useState<ExerciseSubPageProps | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const COURSE_ID = "algo_course"; 
+  const COURSE_ID = 'algo_course'
 
   useEffect(() => {
-    if (!user?.uid) return;
+    if (!user?.uid) return
 
     const loadData = async () => {
       try {
-        const result = await getExerciseSubPage(COURSE_ID, user.uid);
-        if (result) setData(result);
+        const result = await getExerciseSubPage(COURSE_ID, user.uid)
+        if (result) setData(result)
       } catch (error) {
-        console.error('Fetch error:', error);
+        console.error('Fetch error:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    loadData();
-  }, [user?.uid]);
+    loadData()
+  }, [user?.uid])
 
-  if (loading) return <div className="flex justify-center items-center h-screen text-xl animate-pulse">Loading...</div>;
-  if (!data) return <div className="text-center p-20">Course content is missing.</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen text-xl animate-pulse">
+        Loading...
+      </div>
+    )
+  if (!data) return <div className="text-center p-20">Course content is missing.</div>
 
   return (
-    <PageLayout backgroundImage='algo-page-background.png'>
+    <PageLayout backgroundImage="algo-page-background.png">
       <ExerciseSubPage
         topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.png`}
         topicTitle={data.topicTitle}
@@ -43,8 +47,7 @@ const AlgorithmsPage: React.FC = () => {
         exercises={data.exercises}
       />
     </PageLayout>
-  );
-};
+  )
+}
 
-
-export default AlgorithmsPage;
+export default AlgorithmsPage
