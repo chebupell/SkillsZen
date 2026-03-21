@@ -3,6 +3,7 @@ import { Card } from "../../../components/ui/card";
 import ContinueButton from "../../../components/shared/nextQuestionButton";
 import type { PracticePageProps } from "../../../types/practiceTypes";
 import BackButton from "../../../components/shared/backButton";
+import { ProgressBar } from "../../../components/shared/ProgressBar";
 
 export const PracticeSubPage: React.FC<PracticePageProps> = ({
   current_question,
@@ -27,7 +28,7 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
       <div className="text-2xl sm:text-4xl text-center"> Question {current_question + 1} / {total_questions}</div>
       <div className="hidden sm:block w-25" aria-hidden="true"></div>
 
-      <p className="text-center text-gray-600 mb-8">Progress Bar</p>
+      <p className="text-center text-gray-600 mb-8"><ProgressBar /></p>
 
       <Card>
         <div className="flex justify-center bg-gray-50 p-2 mx-auto rounded-md text-xl font-medium text-center"> {question.text} </div>
