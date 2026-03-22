@@ -83,12 +83,20 @@ export const practiceService = {
 
     const questions: Task[] = questionsSnap.docs.map(doc => {
       const data = doc.data();
+      const normalizedAnswers = (data.answers || []).map((ans: string | { id?: string | number; text?: string; is_correct?: boolean }, idx: number) => {
+        if (typeof ans === 'string') return { id: String(idx), text: ans };
+        return { ...ans, id: ans.id !== undefined ? String(ans.id) : String(idx) };
+      });
+
+      const correctAnsObj = normalizedAnswers.find((a: { is_correct?: boolean; text?: string }) => a.is_correct === true);
+      const computedCorrectAnswer = correctAnsObj ? correctAnsObj.text : data.correct_answer;
+
       return {
         id: doc.id,
         text: data.text,
         question_type: data.question_type,
-        answers: data.answers || [],
-        correct_answer: data.correct_answer,
+        answers: normalizedAnswers,
+        correct_answer: computedCorrectAnswer,
         explanation: data.explanation
       } as Task;
     });

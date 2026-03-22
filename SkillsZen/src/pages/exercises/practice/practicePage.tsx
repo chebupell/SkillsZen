@@ -24,13 +24,11 @@ const PracticePage: React.FC = () => {
           if (!blockId) return;
           setLoading(true);
           try {
-            console.log(`DEBUG: loading data for blockId: ${blockId}`);
             const data = await practiceService.getPracticeData(blockId, user.uid);
-            console.log("DEBUG: practice data received:", data);
 
             if (data) {
               if (data.questions.length === 0) {
-                console.warn("DEBUG: No questions found for this block!");
+                console.warn("No questions found for this block!");
               }
               const currentQuestion = data.questions[data.progress.current_question];
               setPractice({

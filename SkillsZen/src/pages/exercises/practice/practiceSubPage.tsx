@@ -46,7 +46,11 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
     setLoading(true);
 
     try {
-      const isCorrect = String(answerId) === String(question.correct_answer) || (typeof answerId === 'number' && question.answers.find(a => a.id === answerId)?.text === question.correct_answer);
+      const selectedAnswer = question.answers.find(a => String(a.id) === String(answerId));
+      const selectedAnswerText = selectedAnswer ? selectedAnswer.text : String(answerId);
+
+      const isCorrect = String(selectedAnswerText).trim() === String(question.correct_answer).trim() ||
+        String(answerId).trim() === String(question.correct_answer).trim();
 
       const response: AnswerResponse = {
         correct: isCorrect,
@@ -96,15 +100,21 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 m-2'>
             {Array.isArray(question.answers) && question.answers.map((item) => {
               const isSelected = selectedId === item.id;
-              const isCorrect = feedback?.correct;
 
               let bgColor = "bg-gray-50 hover:bg-blue-200 active:bg-blue-400";
-              if (isSelected) {
-                if (feedback) {
-                  bgColor = isCorrect ? "bg-green-200" : "bg-red-200";
+
+              if (feedback) {
+                const isThisItemCorrect = String(item.text).trim() === String(feedback.correct_answer).trim();
+
+                if (isThisItemCorrect) {
+                  bgColor = "bg-green-200";
+                } else if (isSelected) {
+                  bgColor = "bg-red-200";
                 } else {
-                  bgColor = "bg-blue-400";
+                  bgColor = "bg-gray-50 opacity-50";
                 }
+              } else if (isSelected) {
+                bgColor = "bg-blue-400";
               }
 
               return (
