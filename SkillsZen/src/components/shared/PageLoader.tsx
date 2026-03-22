@@ -8,9 +8,9 @@ export const PageLoader = () => {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
           <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl p-4 shadow-2xl flex items-center justify-center border border-white/50 overflow-hidden">
-            <img 
-              src="/background-images/main-page-background.png" 
-              alt="Loading..." 
+            <img
+              src="/background-images/main-page-background.png"
+              alt="Loading..."
               className="w-full h-full object-cover rounded-xl scale-125 animate-float"
             />
           </div>

@@ -30,10 +30,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, status, onClick }) => 
       <div className="flex items-center gap-6 relative z-10">
         <div
           className={`transition-all duration-500 ${
-            isPassed 
-              ? 'text-green-500 scale-110' 
-              : isFailed 
-                ? 'text-red-400' 
+            isPassed
+              ? 'text-green-500 scale-110'
+              : isFailed
+                ? 'text-red-400'
                 : 'text-gray-200 group-hover:text-indigo-400'
           }`}
         >
@@ -60,7 +60,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, status, onClick }) => 
             ) : isFailed ? (
               <span className="text-red-400">Try Again</span>
             ) : (
-              <span className="text-gray-400 group-hover:text-indigo-500 font-black">Available</span>
+              <span className="text-gray-400 group-hover:text-indigo-500 font-black">
+                Available
+              </span>
             )}
           </div>
         </div>

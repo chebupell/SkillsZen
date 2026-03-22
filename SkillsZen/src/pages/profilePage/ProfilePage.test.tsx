@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
-import { ProfilePage } from './ProfilePage'
+
 import { useAuth } from '../../services/AuthContext'
 import {
   fetchFirestoreUserData,
@@ -11,6 +11,7 @@ import {
   deleteFirebaseUser,
 } from '../../services/firebase'
 import { userStorageService } from '../../services/userService'
+import ProfilePage from './ProfilePage'
 
 vi.mock('../../services/AuthContext', () => ({
   useAuth: vi.fn(),

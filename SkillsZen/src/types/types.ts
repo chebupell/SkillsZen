@@ -41,10 +41,8 @@ export interface UserSession {
   lastLogin: string
   name: string | null
   photo: string | null
-  completedTasks?: Record<string, 'passed' | 'failed'> 
+  completedTasks?: Record<string, 'passed' | 'failed'>
 }
-
-
 
 export interface TaskData {
   text: string

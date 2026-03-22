@@ -30,7 +30,9 @@ const CodingTasks: React.FC = () => {
       }
     }
     loadData()
-    return () => { isMounted = false }
+    return () => {
+      isMounted = false
+    }
   }, [user?.uid])
 
   const completedCount = useMemo(
@@ -40,9 +42,9 @@ const CodingTasks: React.FC = () => {
 
   const progressPercentage = useMemo(
     () => (tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0),
-    [completedCount, tasks.length]
+    [completedCount, tasks.length],
   )
-  
+
   const isFullyCompleted = completedCount === tasks.length && tasks.length > 0
 
   if (loading) return <PageLoader />
@@ -65,7 +67,6 @@ const CodingTasks: React.FC = () => {
 
       <main className="max-w-4xl mx-auto px-6">
         <div className="mt-4 md:p-10 bg-white rounded-[2.5rem] border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden relative">
-          
           <TasksHeader
             completedCount={completedCount}
             totalTasks={tasks.length}
@@ -93,7 +94,9 @@ const CodingTasks: React.FC = () => {
                 <div className="p-5 bg-white rounded-2xl mb-4 text-slate-300 shadow-sm">
                   <Code2 size={40} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-slate-900 font-black text-lg tracking-tight">Challenge Awaits</h3>
+                <h3 className="text-slate-900 font-black text-lg tracking-tight">
+                  Challenge Awaits
+                </h3>
                 <p className="text-slate-400 font-bold uppercase text-[9px] tracking-[0.2em] mt-2">
                   New coding tasks are on their way
                 </p>

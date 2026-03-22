@@ -15,15 +15,16 @@ const MainPage: React.FC = () => {
 
   const isLoading = navigation.state === 'loading'
 
-  const isOnTaskPage = useMemo(() => 
-    pathname.includes('/coding-tasks') || pathname.includes('/editor'), 
-  [pathname])
+  const isOnTaskPage = useMemo(
+    () => pathname.includes('/coding-tasks') || pathname.includes('/editor'),
+    [pathname],
+  )
 
   return (
     <div className="flex flex-col min-h-screen relative">
       <Toaster position="top-right" richColors theme="light" />
       {isLoading && <PageLoader />}
-      
+
       <Header />
 
       <main className="flex-grow flex flex-col bg-[url('/background-images/main-page-background.png')] bg-cover bg-center overflow-x-hidden">
@@ -50,4 +51,3 @@ const MainPage: React.FC = () => {
 }
 
 export default MainPage
-

@@ -21,7 +21,7 @@ type UseAuthReturn = ReturnType<typeof useAuth>
 
 describe('Header', () => {
   const mockLogout = vi.fn()
-
+  const mockUpdateTaskStatus = vi.fn(() => Promise.resolve())
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -36,9 +36,10 @@ describe('Header', () => {
   it('renders login and signup buttons when NOT authenticated', () => {
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
       isAuthenticated: false,
-      logout: mockLogout,
       user: null,
+      logout: mockLogout,
       login: vi.fn(),
+      updateTaskStatus: mockUpdateTaskStatus,
     } as UseAuthReturn)
 
     renderHeader()
@@ -54,8 +55,9 @@ describe('Header', () => {
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
       isAuthenticated: true,
       logout: mockLogout,
-      user: { name: 'User', email: 'u@t.com' },
+      user: { name: 'User', email: 'u@t.com', uid: '123' },
       login: vi.fn(),
+      updateTaskStatus: mockUpdateTaskStatus,
     } as unknown as UseAuthReturn)
 
     renderHeader()
@@ -70,9 +72,10 @@ describe('Header', () => {
   it('links to profile page when authenticated', () => {
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
       isAuthenticated: true,
-      user: { name: 'John' },
+      user: { name: 'John', uid: '456' },
       logout: mockLogout,
       login: vi.fn(),
+      updateTaskStatus: mockUpdateTaskStatus, 
     } as unknown as UseAuthReturn)
 
     renderHeader()

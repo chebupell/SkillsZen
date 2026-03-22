@@ -34,7 +34,7 @@ describe('ProtectedRoute', () => {
       user: null,
       login: vi.fn(),
       logout: vi.fn(),
-    } as UseAuthReturn)
+    } as unknown as UseAuthReturn)
 
     renderProtectedRoute()
 

@@ -1,11 +1,15 @@
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertTriangle, X } from 'lucide-react'
 
-const ResetConfirmModal = ({ isOpen, onClose, onConfirm }: { 
-  isOpen: boolean, 
-  onClose: () => void, 
-  onConfirm: () => void 
+const ResetConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
 }) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -18,11 +22,12 @@ const ResetConfirmModal = ({ isOpen, onClose, onConfirm }: {
             <X size={18} />
           </button>
         </div>
-        
+
         <div className="p-8">
           <h3 className="text-lg font-bold mb-2">Reset to initial state?</h3>
           <p className="text-gray-400 text-sm leading-relaxed">
-            This will permanently delete your current progress and restore the initial template. This action cannot be undone.
+            This will permanently delete your current progress and restore the initial template.
+            This action cannot be undone.
           </p>
         </div>
 
@@ -35,8 +40,8 @@ const ResetConfirmModal = ({ isOpen, onClose, onConfirm }: {
           </button>
           <button
             onClick={() => {
-              onConfirm();
-              onClose();
+              onConfirm()
+              onClose()
             }}
             className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-black uppercase tracking-wider rounded-md shadow-lg shadow-red-900/20 active:scale-95 transition-all"
           >
@@ -45,7 +50,7 @@ const ResetConfirmModal = ({ isOpen, onClose, onConfirm }: {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ResetConfirmModal;
+export default ResetConfirmModal

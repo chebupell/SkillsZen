@@ -3,7 +3,7 @@ import { BookOpen } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 
 interface TaskDescriptionProps {
-  text: string | undefined | null;
+  text: string | undefined | null
 }
 
 const TaskDescription: React.FC<TaskDescriptionProps> = ({ text }) => (

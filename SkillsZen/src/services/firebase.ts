@@ -119,7 +119,7 @@ export const updateTaskStatusFirebase = async (
       updatedAt: new Date().toISOString(),
     },
     { merge: true },
-  ) 
+  )
 }
 
 export const fetchFirestoreUserData = async (uid: string) => {

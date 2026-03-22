@@ -163,19 +163,18 @@ button {
   }
 }
 
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #1e1e1e; 
+  background: #1e1e1e;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #333333;
-  border: 2px solid #1e1e1e; 
+  border: 2px solid #1e1e1e;
   border-radius: 10px;
 }
 
