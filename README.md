@@ -15,3 +15,5 @@ Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)<br>
 15.03.2026 - [record](development-notes/calls/2026-03-15.md)<br>
 
 deploy - https://skillszen.netlify.app/
+
+week 5 checkpoint video - https://youtu.be/XZR6ZVGX7hk
