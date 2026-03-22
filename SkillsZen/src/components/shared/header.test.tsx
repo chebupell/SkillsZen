@@ -75,7 +75,7 @@ describe('Header', () => {
       user: { name: 'John', uid: '456' },
       logout: mockLogout,
       login: vi.fn(),
-      updateTaskStatus: mockUpdateTaskStatus, 
+      updateTaskStatus: mockUpdateTaskStatus,
     } as unknown as UseAuthReturn)
 
     renderHeader()

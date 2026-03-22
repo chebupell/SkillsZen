@@ -299,16 +299,13 @@ export const getTaskData = async (taskId: string) => {
   }
 }
 
-// --- API Service ---
 export const runCodeInBrowser = (
   code: string,
   tests: string,
 ): Promise<{ output: string; error?: string; success: boolean }> => {
   return new Promise((resolve) => {
-    // Note: Path must point to your public folder
     const worker = new Worker('/worker/js-worker.js')
 
-    // Safety: Terminate if it takes longer than 5 seconds (Infinite loop protection)
     const timeout = setTimeout(() => {
       worker.terminate()
       resolve({

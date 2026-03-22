@@ -36,16 +36,11 @@ globalThis.onmessage = function (e) {
   }
 
   try {
-    // 🔥 FIX: Remove 'import' and 'export' statements
-    // We remove:
-    // 1. import { ... } from '...'
-    // 2. export function name(...)
-    // 3. export const name = ...
     const cleanCode = code
-      .replace(/import\s+[\s\S]*?from\s+['"].*?['"];?/g, '') // Remove imports
-      .replace(/export\s+function/g, 'function') // Remove export from functions
-      .replace(/export\s+const/g, 'const') // Remove export from constants
-      .replace(/export\s+default\s+/g, '') // Remove default exports
+      .replace(/import\s+[\s\S]*?from\s+['"].*?['"];?/g, '')
+      .replace(/export\s+function/g, 'function') 
+      .replace(/export\s+const/g, 'const') 
+      .replace(/export\s+default\s+/g, '')
 
     const runner = new Function(
       'console',
