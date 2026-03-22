@@ -5,6 +5,10 @@ import RetryTag from '../tags/retryTag'
 import InProgressTag from '../tags/inProgressTag'
 import StartTag from '../tags/startTag'
 import BackButton from '../../../components/shared/backButton'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { practiceService } from '../../../services/practiceService'
+import { useAuth } from '../../../services/AuthContext'
 
 const STATUS_TAGS = {
   completed: <SuccessTag />,
@@ -14,6 +18,7 @@ const STATUS_TAGS = {
 }
 
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
+  courseId,
   topicImg,
   topicTitle,
   exercisesProgress,
@@ -21,6 +26,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     localStorage.setItem('lastCategory', location.pathname);
@@ -29,7 +35,9 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   const handleExerciseClick = async (itemId: string, status: string) => {
     if (status === 'completed' || status === 'try_again') {
       try {
-        await apiFetch(`/api/blocks/${itemId}/restart`, { method: 'POST' });
+        if (user?.uid) {
+          await practiceService.restartBlock(user.uid, itemId, courseId);
+        }
       } catch (error) {
         console.error("Failed to restart block:", error);
       }
@@ -52,18 +60,18 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
           <div
             key={item.id}
             className="p-4 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md hover:border-blue-100 active:scale-[0.98]"
-            onClick={() => (window.location.href = `/exercise/${item.id}`)}
+            onClick={() => handleExerciseClick(item.id, item.status)}
           >
             <div className="flex items-center gap-4">
               <img src={topicImg} alt="" className="w-12 h-12 object-contain" />
               <div>
                 <h3 className="font-semibold text-lg">{item.title}</h3>
                 <p className="text-sm text-gray-400">
-                  {item.totalQuestions} questions • {item.status.replace('_', ' ')}
+                  {item.totalQuestions} questions
                 </p>
               </div>
             </div>
-            <div className="flex-shrink-0">{STATUS_TAGS[item.status] || <StartTag />}</div>
+            <div className="shrink-0">{STATUS_TAGS[item.status] || <StartTag />}</div>
           </div>
         ))}
       </div>

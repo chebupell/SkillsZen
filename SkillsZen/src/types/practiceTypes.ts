@@ -1,17 +1,19 @@
 export interface Answer {
-  id: number;
+  id: number | string;
   text: string;
 }
 
 export interface Task {
-  id: number;
+  id: number | string;
   text: string;
   question_type: string;
   answers: Answer[];
+  correct_answer: string;
+  explanation: string;
 }
 
 export interface BlockProgress {
-  block_id: number;
+  block_id: string;
   block_name: string;
   course_name: string;
   status: string;
@@ -30,6 +32,7 @@ export interface ProgressOut {
 }
 
 export interface PracticePageProps extends BlockProgress {
+  userId: string;
   question?: Task;
   onNext?: () => void;
 }

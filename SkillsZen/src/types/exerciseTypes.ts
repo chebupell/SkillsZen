@@ -4,6 +4,7 @@ export interface ExerciseSubPage {
 }
 
 export interface ExerciseSubPageProps {
+  courseId: string
   topicTitle: string
   topicImg: string
   statusText: string

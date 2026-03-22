@@ -46,6 +46,7 @@ const TSPage: React.FC = () => {
   return (
     <PageLayout backgroundImage="ts-page-background.png">
       <ExerciseSubPage
+        courseId={COURSE_ID}
         topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.png`}
         topicTitle={data.topicTitle}
         statusText={data.statusText}

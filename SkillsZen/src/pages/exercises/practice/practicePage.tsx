@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../../../components/shared/PageLayout/PageLayout";
 import PracticeSubPage from "./practiceSubPage";
-import type { PracticePageProps, ProgressOut, Task, BlockProgress } from "../../../types/practiceTypes";
+import type { PracticePageProps } from "../../../types/practiceTypes";
 import { auth } from "../../../services/login";
 import { onAuthStateChanged } from 'firebase/auth';
-import { apiFetch } from "../../../api/api";
+import { practiceService } from "../../../services/practiceService";
 import { useParams } from "react-router-dom";
 
 const PracticePage: React.FC = () => {
@@ -21,34 +21,22 @@ const PracticePage: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const loadData = async () => {
+          if (!blockId) return;
           setLoading(true);
           try {
-            if (!blockId) return;
+            console.log(`DEBUG: loading data for blockId: ${blockId}`);
+            const data = await practiceService.getPracticeData(blockId, user.uid);
+            console.log("DEBUG: practice data received:", data);
 
-            const [questionData, progressData] = await Promise.all([
-              apiFetch(`/api/blocks/${blockId}/next-question`) as Promise<Task>,
-              apiFetch(`/api/progress`) as Promise<ProgressOut>
-            ]);
-
-            const blockProgress = progressData?.blocks?.find(
-              (b: BlockProgress) => b.block_id === Number(blockId)
-            );
-
-            if (blockProgress) {
+            if (data) {
+              if (data.questions.length === 0) {
+                console.warn("DEBUG: No questions found for this block!");
+              }
+              const currentQuestion = data.questions[data.progress.current_question];
               setPractice({
-                ...blockProgress,
-                question: questionData
-              });
-            } else {
-              setPractice({
-                block_id: Number(blockId),
-                block_name: "Loading...",
-                course_name: "Loading...",
-                status: "in_progress",
-                current_question: 0,
-                total_questions: 0,
-                correct_count: 0,
-                question: questionData
+                ...data.progress,
+                userId: user.uid,
+                question: currentQuestion
               });
             }
           } catch (error) {

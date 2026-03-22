@@ -40,6 +40,7 @@ const AlgorithmsPage: React.FC = () => {
   return (
     <PageLayout backgroundImage="algo-page-background.png">
       <ExerciseSubPage
+        courseId={COURSE_ID}
         topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.png`}
         topicTitle={data.topicTitle}
         statusText={data.statusText}

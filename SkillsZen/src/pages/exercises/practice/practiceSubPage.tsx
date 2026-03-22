@@ -4,7 +4,7 @@ import ContinueButton from "../../../components/shared/nextQuestionButton";
 import type { PracticePageProps } from "../../../types/practiceTypes";
 import BackButton from "../../../components/shared/backButton";
 import { ProgressBar } from "../../../components/shared/ProgressBar";
-import { apiFetch } from "../../../api/api";
+import { practiceService } from "../../../services/practiceService";
 import SeeResultsButton from "../../../components/shared/seeResultsButton";
 
 export interface AnswerResponse {
@@ -14,12 +14,15 @@ export interface AnswerResponse {
 }
 
 export const PracticeSubPage: React.FC<PracticePageProps> = ({
+  userId,
+  block_id,
   current_question,
   total_questions,
+  correct_count,
   question,
   onNext
 }) => {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | string | null>(null);
   const [feedback, setFeedback] = useState<AnswerResponse | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -36,21 +39,39 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
     );
   }
 
-  const handleAnswerClick = async (answerId: number) => {
-    if (selectedId !== null || loading) return;
+  const handleAnswerClick = async (answerId: number | string) => {
+    if (selectedId !== null || loading || !question) return;
 
     setSelectedId(answerId);
     setLoading(true);
 
     try {
-      const response = await apiFetch(`/api/questions/${question.id}/answer`, {
-        method: "POST",
-        body: JSON.stringify({ answer_id: answerId })
-      }) as AnswerResponse;
+      const isCorrect = String(answerId) === String(question.correct_answer) || (typeof answerId === 'number' && question.answers.find(a => a.id === answerId)?.text === question.correct_answer);
+
+      const response: AnswerResponse = {
+        correct: isCorrect,
+        correct_answer: question.correct_answer,
+        explanation: question.explanation
+      };
 
       setFeedback(response);
+
+      const newCorrectCount = isCorrect ? correct_count + 1 : correct_count;
+      const newCurrentQuestion = current_question + 1;
+
+      let status = 'in_progress';
+      if (newCurrentQuestion >= total_questions) {
+        const threshold = total_questions * 0.7;
+        status = newCorrectCount >= threshold ? 'completed' : 'try_again';
+      }
+
+      await practiceService.updateProgress(userId, block_id, {
+        correct_count: newCorrectCount,
+        current_question: newCurrentQuestion,
+        status: status
+      });
     } catch (error) {
-      console.error("Failed to check answer:", error);
+      console.error("Failed to update progress:", error);
     } finally {
       setLoading(false);
     }
