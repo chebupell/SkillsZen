@@ -38,8 +38,8 @@ globalThis.onmessage = function (e) {
   try {
     const cleanCode = code
       .replace(/import\s+[\s\S]*?from\s+['"].*?['"];?/g, '')
-      .replace(/export\s+function/g, 'function') 
-      .replace(/export\s+const/g, 'const') 
+      .replace(/export\s+function/g, 'function')
+      .replace(/export\s+const/g, 'const')
       .replace(/export\s+default\s+/g, '')
 
     const runner = new Function(

@@ -17,7 +17,7 @@ vi.mock('../../services/AuthContext', () => ({
   useAuth: vi.fn(),
 }))
 
-vi.mock('../../services/login', () => ({
+vi.mock('../../services/firebase', () => ({
   fetchFirestoreUserData: vi.fn(),
   updateFirebaseUser: vi.fn(),
   deleteFirebaseUser: vi.fn(),

@@ -4,12 +4,12 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { signinService } from '../../services/firebase'
+import { signupService } from '../../services/firebase'
 import { userStorageService } from '../../services/userService'
-import { LoginPage } from './loginPage'
+import { AuthPage } from './authPage'
 
-vi.mock('../../services/login', () => ({
-  signinService: vi.fn(),
+vi.mock('../../services/firebase', () => ({
+  signupService: vi.fn(),
 }))
 
 vi.mock('../../services/userService', () => ({
@@ -30,7 +30,7 @@ vi.mock('../../services/AuthContext', () => ({
   useAuth: () => ({ login: mockLogin }),
 }))
 
-describe('LoginPage', () => {
+describe('AuthPage', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -38,29 +38,34 @@ describe('LoginPage', () => {
   const renderPage = () =>
     render(
       <MemoryRouter>
-        <LoginPage />
+        <AuthPage />
       </MemoryRouter>,
     )
 
-  it('performs successful login flow', async () => {
-    const user = userEvent.setup()
+  it('executes full signup flow on success', async () => {
+    const user = userEvent.setup({ delay: 10 })
 
-    const mockCredential = { user: { uid: '123' } } as Awaited<ReturnType<typeof signinService>>
-    const mockSession = { token: 'abc' } as unknown as ReturnType<
-      typeof userStorageService.getSession
-    >
+    const mockCred = {
+      user: { email: 'test@example.com' },
+    } as Awaited<ReturnType<typeof signupService>>
 
-    vi.mocked(signinService).mockResolvedValue(mockCredential)
-    vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
+    const mockSess = {
+      id: 'session_123',
+    } as unknown as ReturnType<typeof userStorageService.getSession>
+
+    vi.mocked(signupService).mockResolvedValue(mockCred)
+    vi.mocked(userStorageService.getSession).mockReturnValue(mockSess)
 
     renderPage()
 
-    const emailInput = screen.getByLabelText(/username/i)
+    const nameInput = screen.getByLabelText(/user name/i)
+    const emailInput = screen.getByLabelText(/email/i)
     const passwordInput = screen.getByLabelText(/password/i)
-    const submitBtn = screen.getByRole('button', { name: /sign in/i })
+    const submitBtn = screen.getByRole('button', { name: /create account/i })
 
+    await user.type(nameInput, 'John Doe')
     await user.type(emailInput, 'test@example.com')
-    await user.type(passwordInput, 'Password123!')
+    await user.type(passwordInput, 'Valid123!')
 
     await waitFor(() => {
       expect(submitBtn).toBeEnabled()
@@ -69,12 +74,10 @@ describe('LoginPage', () => {
     await user.click(submitBtn)
 
     await waitFor(() => {
-      expect(signinService).toHaveBeenCalledWith('test@example.com', 'Password123!')
-    })
+      expect(signupService).toHaveBeenCalledWith('test@example.com', 'Valid123!', 'John Doe')
 
-    await waitFor(() => {
-      expect(userStorageService.saveSession).toHaveBeenCalledWith(mockCredential)
-      expect(mockLogin).toHaveBeenCalledWith(mockSession)
+      expect(userStorageService.saveSession).toHaveBeenCalledWith(mockCred)
+      expect(mockLogin).toHaveBeenCalledWith(mockSess)
       expect(mockNavigate).toHaveBeenCalledWith('/')
     })
   })
