@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { signupService } from '../../services/login'
+import { signupService } from '../../services/firebase'
 import { userStorageService } from '../../services/userService'
 import { AuthPage } from './authPage'
 

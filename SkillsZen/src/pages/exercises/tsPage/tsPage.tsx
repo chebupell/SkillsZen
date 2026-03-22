@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import PageLayout from '../../../components/shared/PageLayout/PageLayout'
 import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage'
 import { useAuth } from '../../../services/AuthContext'
-import { getExerciseSubPage } from '../../../services/login'
+import { getExerciseSubPage } from '../../../services/firebase'
 import type { ExerciseSubPageProps } from '../../../types/exerciseTypes'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 const TSPage: React.FC = () => {
   const { user } = useAuth()
@@ -31,11 +32,7 @@ const TSPage: React.FC = () => {
     loadData()
   }, [user?.uid])
 
-  if (loading) {
-    return (
-      <div className="bg-white text-center p-20 text-2xl animate-pulse">Loading exercises...</div>
-    )
-  }
+  if (loading) return <PageLoader />
 
   if (!data) {
     return (

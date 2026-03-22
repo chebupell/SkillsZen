@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import PageLayout from '../../../components/shared/PageLayout/PageLayout'
 import { ExerciseSubPage } from '../exerciseSubPage/exerciseSubPage'
 import { useAuth } from '../../../services/AuthContext'
-import { getExerciseSubPage } from '../../../services/login'
+import { getExerciseSubPage } from '../../../services/firebase'
 import type { ExerciseSubPageProps } from '../../../types/exerciseTypes'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 const AlgorithmsPage: React.FC = () => {
   const { user } = useAuth()
@@ -29,12 +30,7 @@ const AlgorithmsPage: React.FC = () => {
     loadData()
   }, [user?.uid])
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen text-xl animate-pulse">
-        Loading...
-      </div>
-    )
+  if (loading) return <PageLoader />
   if (!data) return <div className="text-center p-20">Course content is missing.</div>
 
   return (

@@ -1,4 +1,4 @@
-import { auth } from '../services/login'
+import { auth } from '../services/firebase'
 
 const API_URL = ''
 

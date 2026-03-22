@@ -41,4 +41,20 @@ export interface UserSession {
   lastLogin: string
   name: string | null
   photo: string | null
+  completedTasks?: Record<string, 'passed' | 'failed'> 
+}
+
+
+
+export interface TaskData {
+  text: string
+  initial_code: string
+  tests: string[]
+  type: string
+}
+
+export interface ExecutionResult {
+  output: string
+  error: string
+  success: boolean
 }

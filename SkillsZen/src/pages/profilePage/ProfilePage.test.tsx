@@ -9,7 +9,7 @@ import {
   fetchFirestoreUserData,
   updateFirebaseUser,
   deleteFirebaseUser,
-} from '../../services/login'
+} from '../../services/firebase'
 import { userStorageService } from '../../services/userService'
 
 vi.mock('../../services/AuthContext', () => ({

@@ -13,13 +13,13 @@ import {
   deleteFirebaseUser,
   fetchFirestoreUserData,
   updateFirebaseUser,
-} from '../../services/login'
+} from '../../services/firebase'
 import { DeleteAccountModal } from '../../components/shared/DeleteAccountModal'
 import { useNavigate } from 'react-router-dom'
 import { FirebaseError } from 'firebase/app'
 import { toast } from 'sonner'
 
-export function ProfilePage() {
+export default function ProfilePage() {
   const { user, login, logout } = useAuth()
   const navigate = useNavigate()
   const [isDeleting, setIsDeleting] = useState(false)
