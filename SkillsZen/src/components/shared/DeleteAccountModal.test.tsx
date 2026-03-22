@@ -40,7 +40,7 @@ describe('DeleteAccountModal', () => {
     render(<DeleteAccountModal onConfirm={mockOnConfirm} isDeleting={false} />)
 
     await user.click(screen.getByRole('button', { name: /delete my account/i }))
-    
+
     const cancelBtn = screen.getByRole('button', { name: /cancel/i })
     await user.click(cancelBtn)
 

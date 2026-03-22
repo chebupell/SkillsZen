@@ -30,4 +30,4 @@ const InProgressTag: React.FC<InProgressTagProps> = ({ current = 0, total = 0 })
   )
 }
 
-export default InProgressTag;
+export default InProgressTag

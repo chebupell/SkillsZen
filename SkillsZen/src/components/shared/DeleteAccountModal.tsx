@@ -35,12 +35,15 @@ export function DeleteAccountModal({ onConfirm, isDeleting }: DeleteAccountModal
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                          e.preventDefault()
-                          onConfirm()
-                      } }
-                      disabled={isDeleting}
-                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90" variant={undefined} size={undefined}          >
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault()
+              onConfirm()
+            }}
+            disabled={isDeleting}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            variant={undefined}
+            size={undefined}
+          >
             {isDeleting ? 'Deleting...' : 'Yes, delete account'}
           </AlertDialogAction>
         </AlertDialogFooter>

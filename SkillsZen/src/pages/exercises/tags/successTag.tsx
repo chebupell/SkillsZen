@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const SuccessTag: React.FC = () => {
   return (
@@ -18,4 +18,4 @@ const SuccessTag: React.FC = () => {
   )
 }
 
-export default SuccessTag;
+export default SuccessTag
