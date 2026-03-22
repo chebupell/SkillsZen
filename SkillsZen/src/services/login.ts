@@ -210,6 +210,7 @@ export async function getExerciseSubPage(
     const completedCount = exercises.filter((e) => e.status === 'completed').length
 
     return {
+      courseId,
       topicTitle: courseData.name,
       topicImg: courseData.icon,
       statusText: completedCount === exercises.length ? 'All done!' : 'Keep going',
