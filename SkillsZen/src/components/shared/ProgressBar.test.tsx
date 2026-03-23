@@ -43,13 +43,15 @@ describe('ProgressBar', () => {
 
     it('applies completed styles and shows "Perfect Score" when isCompleted is true', () => {
       const { container } = render(<ProgressBar progress={100} isCompleted={true} />)
-      
+
       expect(screen.getByText(/Perfect Score/i)).toBeInTheDocument()
-      
+
       const innerBar = container.querySelector('.bg-gradient-to-r')
       expect(innerBar).toHaveClass('from-yellow-400', 'to-orange-500')
-      
-      expect(screen.getByText(/Perfect Score/i).parentElement?.lastChild).toHaveClass('animate-pulse')
+
+      expect(screen.getByText(/Perfect Score/i).parentElement?.lastChild).toHaveClass(
+        'animate-pulse',
+      )
     })
 
     it('renders indigo colors when not completed', () => {

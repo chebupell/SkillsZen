@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/card'
 import { Label } from '../../components/ui/label'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
+import { Loader2, ArrowRight } from 'lucide-react'
 import type { AuthFormProps, AuthValues } from '../../types/types'
 
 export function AuthFormLayout({
@@ -27,58 +28,103 @@ export function AuthFormLayout({
   })
 
   return (
-    <div className="flex flex-col gap-6 max-w-md mx-auto p-10">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">{title}</CardTitle>
+    <div className="flex flex-col justify-center min-h-[80vh] px-4">
+      <Card className="max-w-100 mx-auto w-full border-none shadow-2xl shadow-primary/5 bg-background/50 backdrop-blur-sm">
+        <CardHeader className="space-y-1 pb-8">
+          <CardTitle className="text-3xl font-bold tracking-tight text-center">{title}</CardTitle>
+          <CardDescription className="text-center text-muted-foreground">
+            {isSignUp ? 'Create an account to get started' : 'Welcome back'}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
             {isSignUp && (
               <div className="grid gap-2">
-                <Label htmlFor="username">User Name</Label>
+                <Label htmlFor="username" className="text-sm font-medium ml-1">
+                  User Name
+                </Label>
                 <Input
                   id="username"
                   placeholder="John Doe"
                   {...register('username')}
-                  className={errors.username ? 'border-destructive' : ''}
+                  className={`h-11 rounded-xl transition-all focus:ring-2 ${
+                    errors.username
+                      ? 'border-destructive focus-visible:ring-destructive'
+                      : 'focus-visible:ring-primary'
+                  }`}
                 />
                 {errors.username && (
-                  <p className="text-xs text-destructive">{errors.username.message}</p>
+                  <p className="text-[11px] font-medium text-destructive ml-1">
+                    {errors.username.message}
+                  </p>
                 )}
               </div>
             )}
 
             <div className="grid gap-2">
-              <Label htmlFor="login">{loginLabel}</Label>
+              <Label htmlFor="login" className="text-sm font-medium ml-1">
+                {loginLabel}
+              </Label>
               <Input
                 id="login"
+                placeholder="name@example.com"
                 {...register('login')}
-                className={errors.login ? 'border-destructive' : ''}
+                className={`h-11 rounded-xl transition-all focus:ring-2 ${
+                  errors.login
+                    ? 'border-destructive focus-visible:ring-destructive'
+                    : 'focus-visible:ring-primary'
+                }`}
               />
-              {errors.login && <p className="text-xs text-destructive">{errors.login.message}</p>}
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                {...register('password')}
-                className={errors.password ? 'border-destructive' : ''}
-              />
-              {errors.password && (
-                <p className="text-xs text-destructive">{errors.password.message}</p>
+              {errors.login && (
+                <p className="text-[11px] font-medium text-destructive ml-1">
+                  {errors.login.message}
+                </p>
               )}
             </div>
 
-            <Button type="submit" className="w-full" disabled={!isValid || isSubmitting}>
-              {isSubmitting ? 'Processing...' : buttonText}
+            <div className="grid gap-2">
+              <div className="flex items-center justify-between ml-1">
+                <Label htmlFor="password">Password</Label>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                {...register('password')}
+                className={`h-11 rounded-xl transition-all focus:ring-2 ${
+                  errors.password
+                    ? 'border-destructive focus-visible:ring-destructive'
+                    : 'focus-visible:ring-primary'
+                }`}
+              />
+              {errors.password && (
+                <p className="text-[11px] font-medium text-destructive ml-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full h-11 rounded-xl font-semibold transition-all active:scale-[0.98] mt-2 group"
+              disabled={!isValid || isSubmitting}
+            >
+              {isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <span className="flex items-center gap-2">
+                  {buttonText}{' '}
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              )}
             </Button>
 
-            <div className="text-center text-sm">
+            <div className="mt-4 text-center text-sm text-muted-foreground">
               {linkDescription}{' '}
-              <Link to={linkHref} className="underline underline-offset-4">
+              <Link
+                to={linkHref}
+                className="text-primary font-semibold hover:underline underline-offset-4 decoration-2"
+              >
                 {linkText}
               </Link>
             </div>

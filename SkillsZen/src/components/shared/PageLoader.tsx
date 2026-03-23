@@ -2,36 +2,37 @@ import { Loader2, Sparkles } from 'lucide-react'
 
 export const PageLoader = () => {
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-50/50 backdrop-blur-md z-50">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-yellow-200/30 rounded-full blur-[120px] animate-pulse" />
-      <div className="relative flex flex-col items-center space-y-6 animate-in zoom-in-95 duration-500">
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-background/60 backdrop-blur-xl z-[9999]">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary/10 rounded-full blur-[120px] animate-pulse" />
+      <div className="relative flex flex-col items-center space-y-8 animate-in zoom-in-95 duration-700 ease-out">
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-          <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl p-4 shadow-2xl flex items-center justify-center border border-white/50 overflow-hidden">
+          <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-transparent rounded-[2.5rem] blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+
+          <div className="relative w-28 h-28 md:w-32 md:h-32 bg-background/80 backdrop-blur-sm rounded-[2rem] p-1 shadow-2xl flex items-center justify-center border border-white/40 overflow-hidden">
             <img
-              src="/background-images/main-page-background.png"
+              src="/fav.png"
               alt="Loading..."
-              className="w-full h-full object-cover rounded-xl scale-125 animate-float"
+              className="w-16 h-16 object-contain animate-pulse"
             />
           </div>
-          <div className="absolute -bottom-2 -right-2 bg-yellow-400 p-2 rounded-xl shadow-lg border-2 border-white animate-bounce-slow">
-            <Sparkles className="text-white h-5 w-5" />
+          <div className="absolute -top-2 -right-2 bg-primary p-2 rounded-xl shadow-lg border-2 border-background animate-bounce text-primary-foreground">
+            <Sparkles className="h-4 w-4" />
           </div>
         </div>
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center gap-3">
-            <Loader2 className="h-6 w-6 animate-spin text-yellow-500" />
-            <span className="text-xl font-black text-gray-800 tracking-tight uppercase italic">
-              Loading Tasks
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+            <span className="text-xl font-bold text-foreground tracking-tight">
+              Preparing <span className="text-primary">Skills</span>Zen
             </span>
           </div>
-          <div className="h-1 w-24 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-yellow-400 animate-progress-loading" />
+          <div className="h-1.5 w-32 bg-primary/10 rounded-full overflow-hidden border border-primary/5">
+            <div className="h-full bg-primary rounded-full animate-progress-loading shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
           </div>
         </div>
       </div>
-      <p className="absolute bottom-10 text-xs font-bold text-gray-400 uppercase tracking-[0.3em]">
-        SkillsZen Engine
+      <p className="absolute bottom-12 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-[0.4em]">
+        Elevating Your Potential
       </p>
     </div>
   )

@@ -33,7 +33,7 @@ describe('PageLoader', () => {
 
     expect(loaderIcon).toBeInTheDocument()
     expect(loaderIcon).toHaveClass('animate-spin')
-    
+
     expect(sparklesIcon).toBeInTheDocument()
   })
 

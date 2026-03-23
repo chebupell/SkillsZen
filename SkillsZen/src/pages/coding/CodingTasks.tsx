@@ -30,9 +30,7 @@ const CodingTasks: React.FC = () => {
       }
     }
     loadData()
-    return () => {
-      isMounted = false
-    }
+    return () => { isMounted = false }
   }, [user?.uid])
 
   const completedCount = useMemo(
@@ -50,36 +48,33 @@ const CodingTasks: React.FC = () => {
   if (loading) return <PageLoader />
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] pb-20 selection:bg-indigo-100">
-      <nav className="sticky top-0 z-30 bg-[#f8fafc]/80 backdrop-blur-md transition-all">
-        <div className="max-w-4xl mx-auto pt-8 pb-4 px-6">
-          <button
-            onClick={() => navigate('/')}
-            className="group inline-flex items-center gap-3 text-slate-400 hover:text-indigo-600 transition-all text-[10px] font-black uppercase tracking-[0.2em] active:scale-95"
-          >
-            <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-sm group-hover:border-indigo-200 group-hover:bg-indigo-50 group-hover:shadow-indigo-500/10 transition-all">
-              <ChevronLeft size={14} strokeWidth={3} />
-            </div>
-            <span>Back to Home</span>
-          </button>
-        </div>
-      </nav>
+    <div className="min-h-screen flex flex-col bg-[url('/background-images/main-page-background.png')] bg-cover bg-center bg-fixed px-4 py-8">
+      <div className="max-w-4xl mx-auto w-full mb-6">
+        <button
+          onClick={() => navigate('/')}
+          className="group inline-flex items-center gap-3 text-primary/70 hover:text-primary transition-all text-xs font-bold uppercase tracking-widest active:scale-95 bg-background/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-sm"
+        >
+          <ChevronLeft size={16} strokeWidth={2.5} />
+          <span>Back to Home</span>
+        </button>
+      </div>
 
-      <main className="max-w-4xl mx-auto px-6">
-        <div className="mt-4 md:p-10 bg-white rounded-[2.5rem] border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden relative">
+      <main className="max-w-4xl mx-auto w-full">
+        <div className="bg-background/50 backdrop-blur-md rounded-[2rem] border-none shadow-2xl shadow-primary/5 overflow-hidden relative p-6 md:p-10">
+          
           <TasksHeader
             completedCount={completedCount}
             totalTasks={tasks.length}
             progressPercentage={progressPercentage}
             isFullyCompleted={isFullyCompleted}
           />
-          <section className="grid gap-5 mt-12 mb-6">
+          <section className="grid gap-4 mt-10 mb-2">
             {tasks.length > 0 ? (
               tasks.map((task, index) => (
                 <div
                   key={task.id}
-                  className="animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out fill-mode-both"
-                  style={{ animationDelay: `${index * 80}ms` }}
+                  className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out fill-mode-both"
+                  style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <TaskCard
                     task={task}
@@ -90,15 +85,13 @@ const CodingTasks: React.FC = () => {
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center justify-center p-16 bg-slate-50/50 rounded-[2rem] border border-dashed border-slate-200 shadow-inner">
-                <div className="p-5 bg-white rounded-2xl mb-4 text-slate-300 shadow-sm">
+              <div className="flex flex-col items-center justify-center p-16 bg-primary/5 rounded-[2rem] border border-dashed border-primary/20 backdrop-blur-sm">
+                <div className="p-5 bg-background/80 rounded-2xl mb-4 text-primary/30 shadow-sm">
                   <Code2 size={40} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-slate-900 font-black text-lg tracking-tight">
-                  Challenge Awaits
-                </h3>
-                <p className="text-slate-400 font-bold uppercase text-[9px] tracking-[0.2em] mt-2">
-                  New coding tasks are on their way
+                <h3 className="text-foreground font-bold text-lg">Challenge Awaits</h3>
+                <p className="text-muted-foreground text-xs uppercase tracking-widest mt-2">
+                  New coding tasks are coming soon
                 </p>
               </div>
             )}
@@ -107,13 +100,14 @@ const CodingTasks: React.FC = () => {
       </main>
       {error && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
-          <div className="px-8 py-4 bg-slate-900 text-white rounded-2xl shadow-2xl border border-white/10 text-[10px] font-black uppercase tracking-widest animate-in zoom-in slide-in-from-bottom-10">
-            <span className="text-red-400 mr-2 font-bold">!</span> {error}
+          <div className="px-6 py-3 bg-destructive text-destructive-foreground rounded-full shadow-2xl text-xs font-bold uppercase tracking-widest flex items-center gap-3 animate-in zoom-in slide-in-from-bottom-10">
+            <span className="bg-white/20 rounded-full p-1">!</span> {error}
           </div>
         </div>
       )}
     </div>
   )
 }
+
 
 export default CodingTasks

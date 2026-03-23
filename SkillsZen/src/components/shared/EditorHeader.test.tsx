@@ -52,7 +52,7 @@ describe('EditorHeader', () => {
       render(<EditorHeader {...defaultProps} status="passed" />)
       expect(screen.getByText(/solved/i)).toBeInTheDocument()
       expect(screen.getByText(/re-run tests/i)).toBeInTheDocument()
-      
+
       const runBtn = screen.getByRole('button', { name: /re-run tests/i })
       expect(runBtn).toHaveClass('bg-green-600')
     })
@@ -61,7 +61,7 @@ describe('EditorHeader', () => {
       render(<EditorHeader {...defaultProps} status="failed" />)
       expect(screen.getByText(/failed/i)).toBeInTheDocument()
       expect(screen.getByText(/run tests/i)).toBeInTheDocument()
-      
+
       const runBtn = screen.getByRole('button', { name: /run tests/i })
       expect(runBtn).toHaveClass('bg-indigo-600')
     })
@@ -85,4 +85,3 @@ describe('EditorHeader', () => {
     expect(screen.getByText(/reset all/i)).toBeInTheDocument()
   })
 })
-
