@@ -20,7 +20,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
   exercises,
 }) => {
   return (
-    <div className="p-4 sm:p-10 min-h-screen">
+    <div className="p-4 sm:p-10 h-full">
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 mb-6">
         <BackButton />
         <h1 className="text-2xl sm:text-4xl text-center font-bold">{topicTitle}</h1>

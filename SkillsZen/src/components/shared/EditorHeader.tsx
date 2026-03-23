@@ -30,7 +30,7 @@ const EditorHeader: React.FC<EditorHeaderProps> = ({
       >
         <ChevronLeft size={16} /> Tasks
       </button>
-      <div className="h-4 w-[1px] bg-gray-700" />
+      <div className="h-4 w-px-gray-700" />
 
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2 font-mono text-yellow-500 text-sm font-bold">

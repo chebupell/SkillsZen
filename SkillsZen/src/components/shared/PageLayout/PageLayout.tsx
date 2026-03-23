@@ -10,12 +10,17 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children, backgroundImage, className }) => {
   return (
     <div
-      className={cn('min-h-[92vh] w-full bg-cover bg-center bg-no-repeat bg-fixed', className)}
+      className={cn(
+        'w-full h-full bg-cover bg-center bg-no-repeat bg-fixed overflow-y-auto no-scrollbar flex flex-col',
+        className,
+      )}
       style={
         backgroundImage ? { backgroundImage: `url('/background-images/${backgroundImage}')` } : {}
       }
     >
-      <div className="mx-auto max-w-7xl w-full min-w-[320px] p-4 md:p-8">{children}</div>
+      <div className="mx-auto max-w-7xl w-full h-full min-w-[320px] px-4 md:px-8 py-4">
+        {children}
+      </div>
     </div>
   )
 }

@@ -21,7 +21,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <div className="w-full space-y-3">
-      <div className={`w-full ${heights[size]} bg-primary/5 rounded-full overflow-hidden relative border border-primary/10 backdrop-blur-sm`}>
+      <div
+        className={`w-full ${heights[size]} bg-primary/5 rounded-full overflow-hidden relative border border-primary/10 backdrop-blur-sm`}
+      >
         <div
           className={`h-full transition-all duration-1000 ease-out rounded-full relative z-10 ${
             isCompleted
@@ -52,4 +54,3 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 }
 
 export default ProgressBar
-

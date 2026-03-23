@@ -21,7 +21,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, status, onClick }) => 
       className={`group relative flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-md
         ${
           isPassed
-            ? 'border-green-500/30 bg-green-500/10 shadow-lg shadow-green-500/5' 
+            ? 'border-green-500/30 bg-green-500/10 shadow-lg shadow-green-500/5'
             : isFailed
               ? 'border-red-500/30 bg-red-500/10 shadow-lg shadow-red-500/5'
               : 'border-white/20 bg-background/40 hover:bg-background/60 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1'
@@ -47,21 +47,29 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, status, onClick }) => 
         </div>
 
         <div>
-          <h3 className={`font-bold text-lg tracking-tight transition-colors ${
-            isPassed ? 'text-green-900/90' : isFailed ? 'text-red-900/90' : 'text-foreground'
-          }`}>
+          <h3
+            className={`font-bold text-lg tracking-tight transition-colors ${
+              isPassed ? 'text-green-900/90' : isFailed ? 'text-red-900/90' : 'text-foreground'
+            }`}
+          >
             {task.name}
           </h3>
-          
+
           <div className="flex items-center gap-3 mt-1 text-[10px] font-bold uppercase tracking-widest">
-            <span className={`px-2 py-0.5 rounded-md ${
-              isPassed ? 'bg-green-500/20 text-green-700' : isFailed ? 'bg-red-500/20 text-red-700' : 'bg-primary/10 text-primary'
-            }`}>
+            <span
+              className={`px-2 py-0.5 rounded-md ${
+                isPassed
+                  ? 'bg-green-500/20 text-green-700'
+                  : isFailed
+                    ? 'bg-red-500/20 text-red-700'
+                    : 'bg-primary/10 text-primary'
+              }`}
+            >
               Step #{index + 1}
             </span>
-            
+
             <span className="text-muted-foreground/30">|</span>
-            
+
             {isPassed ? (
               <span className="text-green-600 flex items-center gap-1">
                 <Trophy size={10} /> Completed
@@ -88,18 +96,23 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, status, onClick }) => 
                   : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground shadow-primary/5'
             }`}
         >
-          {isPassed ? <CheckCircle size={20} /> : <ArrowRight size={20} className="group-hover:translate-x-0.5 transition-transform" />}
+          {isPassed ? (
+            <CheckCircle size={20} />
+          ) : (
+            <ArrowRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
+          )}
         </div>
       </div>
 
-      <div className={`absolute -right-4 -bottom-4 p-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity rotate-12 ${
-        isPassed ? 'text-green-500' : isFailed ? 'text-red-500' : 'text-primary'
-      }`}>
+      <div
+        className={`absolute -right-4 -bottom-4 p-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity rotate-12 ${
+          isPassed ? 'text-green-500' : isFailed ? 'text-red-500' : 'text-primary'
+        }`}
+      >
         <Code2 size={100} />
       </div>
     </div>
   )
 }
-
 
 export default TaskCard

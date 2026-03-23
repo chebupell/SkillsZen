@@ -30,7 +30,9 @@ const CodingTasks: React.FC = () => {
       }
     }
     loadData()
-    return () => { isMounted = false }
+    return () => {
+      isMounted = false
+    }
   }, [user?.uid])
 
   const completedCount = useMemo(
@@ -61,7 +63,6 @@ const CodingTasks: React.FC = () => {
 
       <main className="max-w-4xl mx-auto w-full">
         <div className="bg-background/50 backdrop-blur-md rounded-[2rem] border-none shadow-2xl shadow-primary/5 overflow-hidden relative p-6 md:p-10">
-          
           <TasksHeader
             completedCount={completedCount}
             totalTasks={tasks.length}
@@ -108,6 +109,5 @@ const CodingTasks: React.FC = () => {
     </div>
   )
 }
-
 
 export default CodingTasks
