@@ -10,11 +10,18 @@ import { useEffect } from 'react'
 import { practiceService } from '../../../services/practiceService'
 import { useAuth } from '../../../services/AuthContext'
 
-const STATUS_TAGS = {
-  completed: <SuccessTag />,
-  try_again: <RetryTag />,
-  in_progress: <InProgressTag />,
-  not_started: <StartTag />,
+const getStatusTag = (status: string, currentQuestion?: number, totalQuestions?: number) => {
+  switch (status) {
+    case 'completed':
+      return <SuccessTag />
+    case 'try_again':
+      return <RetryTag />
+    case 'in_progress':
+      return <InProgressTag current={currentQuestion} total={totalQuestions} />
+    case 'not_started':
+    default:
+      return <StartTag />
+  }
 }
 
 export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
@@ -73,7 +80,7 @@ export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
                 </p>
               </div>
             </div>
-            <div className="mt-2 md:mt-0 md:ml-auto">{STATUS_TAGS[item.status] || <StartTag />}</div>
+            <div className="mt-2 md:mt-0 md:ml-auto">{getStatusTag(item.status, item.currentQuestion, item.totalQuestions)}</div>
           </div>
         ))}
       </div>

@@ -19,11 +19,5 @@ export interface ExerciseItem {
   title: string
   status: ExerciseStatus
   totalQuestions: number
+  currentQuestion?: number
 }
-
-export interface APIBlock {
-  id: number
-  name: string
-  status: ExerciseStatus
-}
-

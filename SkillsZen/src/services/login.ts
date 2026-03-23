@@ -185,10 +185,13 @@ export async function getExerciseSubPage(
       ),
     )
 
-    const progressMap: Record<string, ExerciseStatus> = {}
+    const progressMap: Record<string, { status: ExerciseStatus; currentQuestion: number }> = {}
     progressSnap.forEach((doc) => {
       const data = doc.data()
-      progressMap[data.block_id] = data.status as ExerciseStatus
+      progressMap[data.block_id] = {
+        status: data.status as ExerciseStatus,
+        currentQuestion: data.current_question || 0,
+      }
     })
 
     const exercises: ExerciseItem[] = await Promise.all(
@@ -197,12 +200,14 @@ export async function getExerciseSubPage(
 
         const countSnapshot = await getCountFromServer(questionsRef)
         const totalQuestions = countSnapshot.data().count
+        const userProgress = progressMap[blockDoc.id]
 
         return {
           id: blockDoc.id,
           title: blockDoc.data().name,
-          status: progressMap[blockDoc.id] || 'not_started',
+          status: userProgress?.status || 'not_started',
           totalQuestions: totalQuestions,
+          currentQuestion: userProgress?.currentQuestion || 0,
         }
       }),
     )
