@@ -1,5 +1,5 @@
 import React from "react";
-import PageLayout from "../../../components/shared/PageLayout/PageLayout";
+import PageLayout from "../../../components/shared/PageLayout";
 import ToMenuButton from "../../../components/shared/toMenuButton";
 const BlockResultPage: React.FC = () => {
   return (

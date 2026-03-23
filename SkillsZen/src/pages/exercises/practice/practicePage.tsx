@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageLayout from "../../../components/shared/PageLayout/PageLayout";
+import PageLayout from "../../../components/shared/PageLayout";
 import PracticeSubPage from "./practiceSubPage";
 import type { PracticePageProps } from "../../../types/practiceTypes";
 import { auth } from "../../../services/login";

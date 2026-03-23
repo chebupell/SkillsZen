@@ -1,8 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import MainPage from '../pages/mainPage/mainPage'
-import JSPage from '../pages/exercises/jsPage/jsPage'
-import TSPage from '../pages/exercises/tsPage/tsPage'
-import AlgorithmsPage from '../pages/exercises/algorithmsPage/algorithmsPage'
+import CoursePage from '../pages/exercises/coursePage/coursePage'
 import StatsPage from '../pages/stats/stats'
 import { AuthPage } from '../pages/auth/authPage'
 import Menu from '../pages/menuPage/menuPage'
@@ -36,11 +34,11 @@ export const router = createBrowserRouter([
             element: <Menu />,
           },
           { path: 'profile', element: <ProfilePage /> },
-          { path: 'js', element: <JSPage /> },
-          { path: 'ts', element: <TSPage /> },
-          { path: 'algo', element: <AlgorithmsPage /> },
+          { path: 'js', element: <CoursePage courseId="js_course" backgroundImage="js-page-background.png" /> },
+          { path: 'ts', element: <CoursePage courseId="ts_course" backgroundImage="ts-page-background.png" /> },
+          { path: 'algo', element: <CoursePage courseId="algo_course" backgroundImage="algo-page-background.png" /> },
           { path: 'practice/:blockId', element: <PracticePage /> },
-          { path: 'results', element: <BlockResultPage />},
+          { path: 'results', element: <BlockResultPage /> },
           { path: 'stats', element: <StatsPage /> },
         ],
       },

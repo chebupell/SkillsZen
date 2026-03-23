@@ -1,9 +1,9 @@
-export interface ExerciseSubPage {
+export interface CourseSubPage {
   blockName: string
   blockProgress: string
 }
 
-export interface ExerciseSubPageProps {
+export interface CourseSubPageProps {
   courseId: string
   topicTitle: string
   topicImg: string

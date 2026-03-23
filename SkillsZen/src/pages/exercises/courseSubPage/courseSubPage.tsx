@@ -1,5 +1,5 @@
 import React from 'react'
-import type { ExerciseSubPageProps } from '../../../types/exerciseTypes'
+import type { CourseSubPageProps } from '../../../types/exerciseTypes'
 import SuccessTag from '../tags/successTag'
 import RetryTag from '../tags/retryTag'
 import InProgressTag from '../tags/inProgressTag'
@@ -24,7 +24,7 @@ const getStatusTag = (status: string, currentQuestion?: number, totalQuestions?:
   }
 }
 
-export const ExerciseSubPage: React.FC<ExerciseSubPageProps> = ({
+export const CourseSubPage: React.FC<CourseSubPageProps> = ({
   courseId,
   topicImg,
   topicTitle,

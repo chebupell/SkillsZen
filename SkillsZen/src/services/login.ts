@@ -24,7 +24,7 @@ import {
 } from 'firebase/firestore'
 import type { ProfileValues } from '../types/types'
 import type { ExerciseCardProps } from '../types/menuTypes'
-import type { ExerciseItem, ExerciseStatus, ExerciseSubPageProps } from '../types/exerciseTypes'
+import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -163,10 +163,10 @@ export async function getAllCoursesWithProgress(userId: string): Promise<Exercis
   }
 }
 
-export async function getExerciseSubPage(
+export async function getCourseSubPage(
   courseId: string,
   userId: string,
-): Promise<ExerciseSubPageProps | null> {
+): Promise<CourseSubPageProps | null> {
   try {
     const courseSnap = await getDoc(doc(db, 'courses', courseId))
     if (!courseSnap.exists()) return null
