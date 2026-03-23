@@ -8,7 +8,6 @@ import type { ExerciseCardProps } from '../../types/menuTypes';
 import { apiFetch } from '../../api/api';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../services/login';
-import { Blocks } from 'lucide-react';
 
 const name = "Alex";
 
