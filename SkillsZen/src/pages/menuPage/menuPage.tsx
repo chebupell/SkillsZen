@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
   }, [user?.uid])
 
   if (loading) {
-    return <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
+    return <div className="bg-white text-center p-20 text-2xl">Loading...</div>
   }
 
   if (cards.length === 0) {

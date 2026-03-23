@@ -38,7 +38,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen text-xl animate-pulse">
-        Loading exercises...
+        Loading...
       </div>
     )
   }

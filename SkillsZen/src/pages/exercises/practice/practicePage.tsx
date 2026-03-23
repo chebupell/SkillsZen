@@ -53,7 +53,7 @@ const PracticePage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
+      <div className="bg-white text-center p-20 text-2xl">Loading...</div>
     )
   };
 
