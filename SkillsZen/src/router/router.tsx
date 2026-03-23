@@ -11,6 +11,7 @@ import { ProtectedRoute } from './protectedRoute'
 import { ProfilePage } from '../pages/profilePage/ProfilePage'
 import { ErrorFallback } from '../components/shared/ErrorFallback'
 import { NotFound } from '../pages/404Page/notFound'
+import TsCards from '../pages/exercises/tsCardsPage/tsCardsPage'
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
           { path: 'algo', element: <AlgorithmsPage /> },
           { path: 'stats', element: <StatsPage /> },
           { path: 'profile', element: <ProfilePage /> },
+          { path: 'ts-cards', element: <TsCards />},
         ],
       },
       {

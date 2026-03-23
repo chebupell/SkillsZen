@@ -1,0 +1,423 @@
+{
+  "version": "2.0",
+  "cards": [
+    {
+      "id": "string",
+      "category": "primitive",
+      "difficulty": "easy",
+      "front": "string",
+      "back": {
+        "description": "Represents textual data.",
+        "example": "let name: string = 'John';",
+        "tip": "Used for all text values."
+      }
+    },
+    {
+      "id": "number",
+      "category": "primitive",
+      "difficulty": "easy",
+      "front": "number",
+      "back": {
+        "description": "Represents numeric values.",
+        "example": "let age: number = 25;",
+        "tip": "Includes integers and floats."
+      }
+    },
+    {
+      "id": "boolean",
+      "category": "primitive",
+      "difficulty": "easy",
+      "front": "boolean",
+      "back": {
+        "description": "Represents true or false.",
+        "example": "let isActive: boolean = true;",
+        "tip": "Used in conditions."
+      }
+    },
+    {
+      "id": "bigint",
+      "category": "primitive",
+      "difficulty": "medium",
+      "front": "bigint",
+      "back": {
+        "description": "Represents large integers.",
+        "example": "let big: bigint = 9007199254740991n;",
+        "tip": "Use for numbers beyond Number.MAX_SAFE_INTEGER."
+      }
+    },
+    {
+      "id": "symbol",
+      "category": "primitive",
+      "difficulty": "medium",
+      "front": "symbol",
+      "back": {
+        "description": "Represents a unique identifier.",
+        "example": "const id: symbol = Symbol('id');",
+        "tip": "Useful for unique object keys."
+      }
+    },
+    {
+      "id": "null",
+      "category": "primitive",
+      "difficulty": "easy",
+      "front": "null",
+      "back": {
+        "description": "Represents intentional absence of value.",
+        "example": "let data: null = null;",
+        "tip": "Often used with unions."
+      }
+    },
+    {
+      "id": "undefined",
+      "category": "primitive",
+      "difficulty": "easy",
+      "front": "undefined",
+      "back": {
+        "description": "Represents uninitialized value.",
+        "example": "let x: undefined = undefined;",
+        "tip": "Default for unassigned variables."
+      }
+    },
+    {
+      "id": "any",
+      "category": "special",
+      "difficulty": "easy",
+      "front": "any",
+      "back": {
+        "description": "Disables type checking.",
+        "example": "let value: any = 42;",
+        "tip": "Avoid when possible."
+      }
+    },
+    {
+      "id": "unknown",
+      "category": "special",
+      "difficulty": "medium",
+      "front": "unknown",
+      "back": {
+        "description": "Safer alternative to any.",
+        "example": "let value: unknown = 'hello';",
+        "tip": "Requires type narrowing."
+      }
+    },
+    {
+      "id": "void",
+      "category": "special",
+      "difficulty": "easy",
+      "front": "void",
+      "back": {
+        "description": "Represents no return value.",
+        "example": "function log(): void {}",
+        "tip": "Used for functions."
+      }
+    },
+    {
+      "id": "never",
+      "category": "special",
+      "difficulty": "hard",
+      "front": "never",
+      "back": {
+        "description": "Represents values that never occur.",
+        "example": "function fail(): never { throw new Error(); }",
+        "tip": "Used in exhaustive checks."
+      }
+    },
+    {
+      "id": "object",
+      "category": "object",
+      "difficulty": "easy",
+      "front": "object",
+      "back": {
+        "description": "Represents non-primitive types.",
+        "example": "let obj: object = {};",
+        "tip": "Avoid — too generic."
+      }
+    },
+    {
+      "id": "array",
+      "category": "object",
+      "difficulty": "easy",
+      "front": "T[] / Array<T>",
+      "back": {
+        "description": "Array of values.",
+        "example": "let arr: number[] = [1, 2];",
+        "tip": "Two syntaxes available."
+      }
+    },
+    {
+      "id": "tuple",
+      "category": "object",
+      "difficulty": "medium",
+      "front": "tuple",
+      "back": {
+        "description": "Fixed-length typed array.",
+        "example": "let t: [string, number] = ['a', 1];",
+        "tip": "Order matters."
+      }
+    },
+    {
+      "id": "function",
+      "category": "object",
+      "difficulty": "easy",
+      "front": "function",
+      "back": {
+        "description": "Represents callable type.",
+        "example": "let fn: (x: number) => number;",
+        "tip": "Always specify args and return."
+      }
+    },
+    {
+      "id": "type-alias",
+      "category": "structure",
+      "difficulty": "easy",
+      "front": "type",
+      "back": {
+        "description": "Custom type definition.",
+        "example": "type User = { name: string };",
+        "tip": "Flexible alternative to interface."
+      }
+    },
+    {
+      "id": "interface",
+      "category": "structure",
+      "difficulty": "easy",
+      "front": "interface",
+      "back": {
+        "description": "Defines object shape.",
+        "example": "interface User { name: string }",
+        "tip": "Supports merging."
+      }
+    },
+    {
+      "id": "enum",
+      "category": "structure",
+      "difficulty": "medium",
+      "front": "enum",
+      "back": {
+        "description": "Named constants.",
+        "example": "enum Role { Admin, User }",
+        "tip": "Avoid in modern TS when possible."
+      }
+    },
+    {
+      "id": "union",
+      "category": "advanced",
+      "difficulty": "medium",
+      "front": "| (union)",
+      "back": {
+        "description": "One of multiple types.",
+        "example": "let x: string | number;",
+        "tip": "Requires narrowing."
+      }
+    },
+    {
+      "id": "intersection",
+      "category": "advanced",
+      "difficulty": "hard",
+      "front": "& (intersection)",
+      "back": {
+        "description": "Combines types.",
+        "example": "type C = A & B;",
+        "tip": "Must satisfy all types."
+      }
+    },
+    {
+      "id": "literal",
+      "category": "advanced",
+      "difficulty": "medium",
+      "front": "literal types",
+      "back": {
+        "description": "Exact value types.",
+        "example": "let dir: 'left' | 'right';",
+        "tip": "Useful for strict APIs."
+      }
+    },
+    {
+      "id": "generic",
+      "category": "advanced",
+      "difficulty": "hard",
+      "front": "<T>",
+      "back": {
+        "description": "Reusable types.",
+        "example": "function id<T>(x: T): T { return x; }",
+        "tip": "Core TS concept."
+      }
+    },
+    {
+      "id": "keyof",
+      "category": "advanced",
+      "difficulty": "medium",
+      "front": "keyof",
+      "back": {
+        "description": "Union of keys.",
+        "example": "type K = keyof User;",
+        "tip": "Used with mapped types."
+      }
+    },
+    {
+      "id": "typeof",
+      "category": "advanced",
+      "difficulty": "easy",
+      "front": "typeof",
+      "back": {
+        "description": "Gets type of variable.",
+        "example": "type T = typeof obj;",
+        "tip": "Useful for reuse."
+      }
+    },
+    {
+      "id": "indexed-access",
+      "category": "advanced",
+      "difficulty": "medium",
+      "front": "T[K]",
+      "back": {
+        "description": "Access property type.",
+        "example": "type Name = User['name'];",
+        "tip": "Works with keyof."
+      }
+    },
+    {
+      "id": "mapped",
+      "category": "advanced",
+      "difficulty": "hard",
+      "front": "mapped types",
+      "back": {
+        "description": "Transforms types.",
+        "example": "type R<T> = { [K in keyof T]: T[K] };",
+        "tip": "Base for utility types."
+      }
+    },
+    {
+      "id": "conditional",
+      "category": "advanced",
+      "difficulty": "hard",
+      "front": "conditional types",
+      "back": {
+        "description": "Conditional logic in types.",
+        "example": "T extends U ? X : Y",
+        "tip": "Used in advanced libs."
+      }
+    },
+    {
+      "id": "infer",
+      "category": "advanced",
+      "difficulty": "hard",
+      "front": "infer",
+      "back": {
+        "description": "Infers type inside conditional.",
+        "example": "T extends Promise<infer U> ? U : T",
+        "tip": "Meta-programming tool."
+      }
+    },
+    {
+      "id": "partial",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Partial<T>",
+      "back": {
+        "description": "Makes all properties optional.",
+        "example": "Partial<User>",
+        "tip": "Used in updates."
+      }
+    },
+    {
+      "id": "required",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Required<T>",
+      "back": {
+        "description": "Makes all properties required.",
+        "example": "Required<User>",
+        "tip": "Opposite of Partial."
+      }
+    },
+    {
+      "id": "readonly",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Readonly<T>",
+      "back": {
+        "description": "Makes properties immutable.",
+        "example": "Readonly<User>",
+        "tip": "Prevents mutation."
+      }
+    },
+    {
+      "id": "pick",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Pick<T, K>",
+      "back": {
+        "description": "Select subset of properties.",
+        "example": "Pick<User, 'name'>",
+        "tip": "Useful for DTOs."
+      }
+    },
+    {
+      "id": "omit",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Omit<T, K>",
+      "back": {
+        "description": "Removes properties.",
+        "example": "Omit<User, 'id'>",
+        "tip": "Opposite of Pick."
+      }
+    },
+    {
+      "id": "record",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Record<K, T>",
+      "back": {
+        "description": "Key-value object.",
+        "example": "Record<string, number>",
+        "tip": "Useful for maps."
+      }
+    },
+    {
+      "id": "exclude",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Exclude<T, U>",
+      "back": {
+        "description": "Removes types from union.",
+        "example": "Exclude<string | number, string>",
+        "tip": "Filters union."
+      }
+    },
+    {
+      "id": "extract",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "Extract<T, U>",
+      "back": {
+        "description": "Keeps matching types.",
+        "example": "Extract<string | number, string>",
+        "tip": "Opposite of Exclude."
+      }
+    },
+    {
+      "id": "nonnullable",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "NonNullable<T>",
+      "back": {
+        "description": "Removes null/undefined.",
+        "example": "NonNullable<string | null>",
+        "tip": "Useful in strict mode."
+      }
+    },
+    {
+      "id": "returntype",
+      "category": "utility",
+      "difficulty": "medium",
+      "front": "ReturnType<T>",
+      "back": {
+        "description": "Gets function return type.",
+        "example": "ReturnType<typeof fn>",
+        "tip": "Useful for reuse."
+      }
+    }
+  ]
+}

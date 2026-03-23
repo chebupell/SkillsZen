@@ -1,0 +1,46 @@
+import React from "react";
+import PageLayout from "../../../components/shared/PageLayout/PageLayout";
+import BackButton from "../../../components/shared/backButton";
+import cards from "../../../data/ts-cards.json";
+import type { TsCard } from "../../../types/tsCardsTypes";
+import { Card } from "../../../components/ui/card";
+
+const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards;
+
+const bgVariants = [
+  "bg-sky-200 hover:bg-sky-300",
+  "bg-lime-200 hover:bg-lime-300",
+  "bg-yellow-200 hover:bg-yellow-300",
+];
+
+const TsCards: React.FC = () => {
+  return (
+      <PageLayout backgroundImage='ts-page-background.png'>
+        <div className="p-4 sm:p-10 min-h-screen">
+          <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-3">
+            <div className="flex justify-start">
+              <BackButton />
+            </div>
+            <div className="text-2xl sm:text-4xl text-right sm:text-center">TS Cards</div>
+          <div className="hidden sm:block w-25" aria-hidden="true"></div>
+          </div>
+
+          <div className="text-center mt-5">Practice TypeScript types with flashcards </div>
+          <div className="text-center mb-5">Flip cards to see explanations</div>
+
+          <div className="flex flex-wrap justify-center content-center">
+            {allCards.map((card, index) => (
+              <Card
+              key={card.id}
+              className={`flex justify-center text-center gap-10 cursor-pointer w-60 h-40 m-5 bg-blue-100 text-xl font-bold transition-colors duration-200  ${bgVariants[index % bgVariants.length]}`}
+              >
+                <div>{card.front}</div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </PageLayout>
+  )
+};
+
+export default TsCards;
