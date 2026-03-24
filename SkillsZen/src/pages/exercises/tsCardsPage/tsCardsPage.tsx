@@ -67,11 +67,10 @@ const TsCards: React.FC = () => {
             Flip cards to see explanations • Mark what you've learned to grow your garden
           </div>
           <div className="flex justify-self-center gap-2">
-            <Button onClick={resetAllCards} className="rounded-xl border border-white/40 text-white backdrop-blur-md
-             bg-gray-600 shadow-[0_8px_24px_rgba(31,41,55,0.12)] hover:bg-gray-700 active:bg-gray-800">
+            <Button onClick={resetAllCards} variant="resetCards">
                 Reset all cards
             </Button>
-            <GardenProgress />
+            <GardenProgress current={checkedCardIds.length} total={allCards.length} />
           </div>
           <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {allCards.map((card, index) => {

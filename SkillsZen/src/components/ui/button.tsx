@@ -21,6 +21,7 @@ const buttonVariants = cva(
         progress:
           'bg-card text-secondary-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm w-70',
         back: 'bg-white text-black hover:bg-gray-100 transition-all gap-2 rounded-xl shadow-lg border-none',
+        resetCards: 'rounded-xl border border-white/40 text-white backdrop-blur-md bg-gray-600 shadow-[0_8px_24px_rgba(31,41,55,0.12)] hover:bg-gray-700 active:bg-gray-800',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3 text-black',
