@@ -6,6 +6,7 @@ import type { TsCard } from "../../../types/tsCardsTypes";
 import { Card } from "../../../components/ui/card";
 import { useState } from "react";
 import { Button } from "../../../components/ui/button";
+import GardenProgress from "./gardenProgress";
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards;
 
@@ -19,9 +20,18 @@ const bgVariants = [
 const TsCards: React.FC = () => {
 
   const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
+  const [checkedCardIds, setCheckedCardIds] = useState<string[]>([]);
 
   const handleCardClick = (cardId: string): void => {
     setFlippedCardIds((previous) =>
+      previous.includes(cardId)
+      ? previous.filter((id) => id !== cardId)
+      : [...previous, cardId],
+    );
+  };
+
+  const handleCheckboxChange = (cardId: string): void => {
+    setCheckedCardIds((previous) =>
       previous.includes(cardId)
       ? previous.filter((id) => id !== cardId)
       : [...previous, cardId],
@@ -32,8 +42,13 @@ const TsCards: React.FC = () => {
     return flippedCardIds.includes(cardId);
   };
 
+  const isCardChecked = (cardId: string): boolean => {
+    return checkedCardIds.includes(cardId);
+  };
+
   const resetAllCards = (): void => {
     setFlippedCardIds([]);
+    setCheckedCardIds([]);
   };
 
   return (
@@ -48,11 +63,15 @@ const TsCards: React.FC = () => {
           </div>
 
           <div className="mt-5 text-center text-base text-slate-700">Learn TypeScript types with flashcards </div>
-          <div className="mb-5 text-center text-base text-slate-700/90">Flip cards to see explanations</div>
-          <div className="flex justify-self-center">
-            <Button onClick={resetAllCards} className=" rounded-xl border border-white/40
-            text-white backdrop-blur-md bg-gray-600
-              shadow-[0_8px_24px_rgba(31,41,55,0.12)] hover:bg-gray-700 active:bg-gray-800">Reset all cards</Button>
+          <div className="mb-5 text-center text-base text-slate-700/90">
+            Flip cards to see explanations • Mark what you've learned to grow your garden
+          </div>
+          <div className="flex justify-self-center gap-2">
+            <Button onClick={resetAllCards} className="rounded-xl border border-white/40 text-white backdrop-blur-md
+             bg-gray-600 shadow-[0_8px_24px_rgba(31,41,55,0.12)] hover:bg-gray-700 active:bg-gray-800">
+                Reset all cards
+            </Button>
+            <GardenProgress />
           </div>
           <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {allCards.map((card, index) => {
@@ -85,8 +104,23 @@ const TsCards: React.FC = () => {
                           <img src="icons/flower-icon.png" alt="flower" className="w-30" />
                         </div>
                         <div>{card.front}</div>
+                        <input type="checkbox"
+                          className="absolute top-2 right-2 h-6 w-6 appearance-none bg-amber-50 rounded-full
+                          checked:bg-lime-500 checked:border-transparent
+                            bg-no-repeat bg-center
+                            cursor-pointer border border-white-200 transition-all"
+                          style={
+                            isCardChecked(card.id)
+                              ? { backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3 4.3a1 1 0 0 0-1.4 0L6.5 9.6 4.1 7.3a1 1 0 1 0-1.4 1.4l3.1 3a1 1 0 0 0 1.4 0l6.1-6a1 1 0 0 0 0-1.4z'/%3E%3C/svg%3E")`, backgroundSize: '14px 14px' }
+                              : {}
+                          }
+                          checked={isCardChecked(card.id)}
+                          onChange={() => handleCheckboxChange(card.id)}
+                          onClick={(e) => e.stopPropagation()}
+                        />
                       </div>
                     </Card>
+
                     <Card
                       className={`absolute inset-0 flex flex-wrap  rounded-3xl border-white/35
                         items-center justify-center p-4 ring-1 ring-black/5 bg-white/35 backdrop-blur-lg
