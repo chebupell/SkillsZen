@@ -9,6 +9,7 @@ import { Button } from "../../../components/ui/button";
 import GardenProgress from "./gardenProgress";
 import { useAuth } from "../../../services/AuthContext";
 import { getTsCardsProgress, resetTsCardsProgress,  setTsCardCheckedState } from "../../../services/tsCardsProgressService";
+import Garden from "./garden";
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards;
 
@@ -27,6 +28,7 @@ const TsCards: React.FC = () => {
   const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
   const [checkedCardIds, setCheckedCardIds] = useState<string[]>([]);
   const [isLoadingProgress, setIsLoadingProgress] = useState(true);
+  const [showGarden, setShowGarden] = useState(false);
 
   useEffect(() => {
     const loadProgress = async (): Promise<void> => {
@@ -102,6 +104,10 @@ const TsCards: React.FC = () => {
     }
   };
 
+  if (showGarden) {
+    return <Garden onBack={() => setShowGarden(false)} />
+  }
+
   if (isLoadingProgress) {
     return (
       <div className="bg-white text-center p-20 text-2xl">Loading...</div>
@@ -136,6 +142,7 @@ const TsCards: React.FC = () => {
               src={isGardenFinished ? gardenImg : gardenImgDisabled}
               alt="Zen Garden Entrance"
               className={`h-15 transition-all duration-500 ${isGardenFinished ? 'cursor-pointer hover:scale-110' : 'cursor-not-allowed opacity-70'}`}
+              onClick={() => isGardenFinished && setShowGarden(true)}
             />
           </div>
           <div className="mx-auto grid max-w-6xl grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
