@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import GardenProgress from "./gardenProgress";
 import { useAuth } from "../../../services/AuthContext";
-import { getTsCardsProgress, saveTsCardsProgress } from "../../../services/tsCardsProgressService";
+import { getTsCardsProgress, resetTsCardsProgress,  setTsCardCheckedState } from "../../../services/tsCardsProgressService";
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards;
 
@@ -57,17 +57,21 @@ const TsCards: React.FC = () => {
   const handleCheckboxChange = async (cardId: string): Promise<void> => {
     if (!user?.uid) return;
 
-    const nextCheckedCardIds = checkedCardIds.includes(cardId)
-      ? checkedCardIds.filter((id) => id !== cardId)
-      : [...checkedCardIds, cardId];
+    const wasChecked = checkedCardIds.includes(cardId);
+    const nextIsChecked = !wasChecked;
+
+    const previousCheckedCardIds = checkedCardIds;
+    const nextCheckedCardIds = nextIsChecked
+      ? [...checkedCardIds, cardId]
+      : checkedCardIds.filter((id) => id !== cardId);
 
     setCheckedCardIds(nextCheckedCardIds);
 
     try {
-      await saveTsCardsProgress(user.uid, nextCheckedCardIds);
+      await setTsCardCheckedState(user.uid, cardId, nextIsChecked);
     } catch (error) {
       console.error("Failed to save progress", error);
-      setCheckedCardIds(checkedCardIds);
+      setCheckedCardIds(previousCheckedCardIds);
     }
   };
 
@@ -80,15 +84,18 @@ const TsCards: React.FC = () => {
   };
 
   const resetAllCards = async (): Promise<void> => {
+    const previousCheckedCardIds = checkedCardIds;
+
     setFlippedCardIds([]);
     setCheckedCardIds([]);
 
     if (!user?.uid) return;
 
     try {
-      await saveTsCardsProgress(user.uid, []);
+      await resetTsCardsProgress(user.uid);
     } catch (error) {
       console.error("Failed to reset progress", error);
+      setCheckedCardIds(previousCheckedCardIds);
     }
   };
 
