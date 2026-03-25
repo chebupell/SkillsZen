@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageLayout from "../../../components/shared/PageLayout/PageLayout";
 import BackButton from "../../../components/shared/backButton";
 import cards from "../../../data/ts-cards.json";
@@ -7,6 +7,8 @@ import { Card } from "../../../components/ui/card";
 import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import GardenProgress from "./gardenProgress";
+import { useAuth } from "../../../services/AuthContext";
+import { getTsCardsProgress, saveTsCardsProgress } from "../../../services/tsCardsProgressService";
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards;
 
@@ -18,9 +20,31 @@ const bgVariants = [
 ];
 
 const TsCards: React.FC = () => {
-
+  const { user } = useAuth();
   const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
   const [checkedCardIds, setCheckedCardIds] = useState<string[]>([]);
+  const [isLoadingProgress, setIsLoadingProgress] = useState(true);
+
+  useEffect(() => {
+    const loadProgress = async (): Promise<void> => {
+      if (!user?.uid) {
+        setCheckedCardIds([]);
+        setIsLoadingProgress(false);
+        return;
+      }
+
+      setIsLoadingProgress(true);
+
+      try {
+        const progress = await getTsCardsProgress(user.uid);
+        setCheckedCardIds(progress.checkedCardIds);
+      } finally {
+        setIsLoadingProgress(false);
+      }
+    };
+
+    void loadProgress();
+  }, [user?.uid]);
 
   const handleCardClick = (cardId: string): void => {
     setFlippedCardIds((previous) =>
@@ -30,12 +54,21 @@ const TsCards: React.FC = () => {
     );
   };
 
-  const handleCheckboxChange = (cardId: string): void => {
-    setCheckedCardIds((previous) =>
-      previous.includes(cardId)
-      ? previous.filter((id) => id !== cardId)
-      : [...previous, cardId],
-    );
+  const handleCheckboxChange = async (cardId: string): Promise<void> => {
+    if (!user?.uid) return;
+
+    const nextCheckedCardIds = checkedCardIds.includes(cardId)
+      ? checkedCardIds.filter((id) => id !== cardId)
+      : [...checkedCardIds, cardId];
+
+    setCheckedCardIds(nextCheckedCardIds);
+
+    try {
+      await saveTsCardsProgress(user.uid, nextCheckedCardIds);
+    } catch (error) {
+      console.error("Failed to save progress", error);
+      setCheckedCardIds(checkedCardIds);
+    }
   };
 
   const isCardFlipped = (cardId: string): boolean => {
@@ -46,10 +79,24 @@ const TsCards: React.FC = () => {
     return checkedCardIds.includes(cardId);
   };
 
-  const resetAllCards = (): void => {
+  const resetAllCards = async (): Promise<void> => {
     setFlippedCardIds([]);
     setCheckedCardIds([]);
+
+    if (!user?.uid) return;
+
+    try {
+      await saveTsCardsProgress(user.uid, []);
+    } catch (error) {
+      console.error("Failed to reset progress", error);
+    }
   };
+
+  if (isLoadingProgress) {
+    return (
+      <div className="bg-white text-center p-20 text-2xl">Loading...</div>
+    );
+  }
 
   return (
       <PageLayout backgroundImage="ts-cards-background.png">
@@ -67,7 +114,7 @@ const TsCards: React.FC = () => {
             Flip cards to see explanations • Mark what you've learned to grow your garden
           </div>
           <div className="flex justify-self-center gap-2">
-            <Button onClick={resetAllCards} variant="resetCards">
+            <Button onClick={() => void resetAllCards()} variant="resetCards">
                 Reset all cards
             </Button>
             <GardenProgress current={checkedCardIds.length} total={allCards.length} />
@@ -114,7 +161,7 @@ const TsCards: React.FC = () => {
                               : {}
                           }
                           checked={isCardChecked(card.id)}
-                          onChange={() => handleCheckboxChange(card.id)}
+                          onChange={() => void handleCheckboxChange(card.id)}
                           onClick={(e) => e.stopPropagation()}
                         />
                       </div>
