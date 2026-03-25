@@ -19,6 +19,9 @@ const bgVariants = [
   "bg-stone-100/25",
 ];
 
+const gardenImgDisabled = 'icons/zen-garden-disabled.png';
+const gardenImg = 'icons/zen-garden.png';
+
 const TsCards: React.FC = () => {
   const { user } = useAuth();
   const [flippedCardIds, setFlippedCardIds] = useState<string[]>([]);
@@ -105,6 +108,8 @@ const TsCards: React.FC = () => {
     );
   }
 
+  const isGardenFinished = checkedCardIds.length === allCards.length && allCards.length > 0;
+
   return (
       <PageLayout backgroundImage="ts-cards-background.png">
         <div className="p-4 sm:p-10 min-h-screen">
@@ -126,7 +131,14 @@ const TsCards: React.FC = () => {
             </Button>
             <GardenProgress current={checkedCardIds.length} total={allCards.length} />
           </div>
-          <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="flex justify-center mt-5">
+            <img
+              src={isGardenFinished ? gardenImg : gardenImgDisabled}
+              alt="Zen Garden Entrance"
+              className={`h-15 transition-all duration-500 ${isGardenFinished ? 'cursor-pointer hover:scale-110' : 'cursor-not-allowed opacity-70'}`}
+            />
+          </div>
+          <div className="mx-auto grid max-w-6xl grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {allCards.map((card, index) => {
               const flipped = isCardFlipped(card.id);
               const bgClass = bgVariants[index % bgVariants.length];
