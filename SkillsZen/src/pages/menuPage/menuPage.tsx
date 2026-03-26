@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageLayout from '../../components/shared/PageLayout/PageLayout'
+import PageLayout from '../../components/shared/PageLayout'
 import { Button } from '../../components/ui/button'
 import { ExerciseCard } from './components/exerciseCard'
 import type { ExerciseCardProps } from '../../types/menuTypes'
@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
   }, [user?.uid])
 
   if (loading) {
-    return <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
+    return <div className="bg-white text-center p-20 text-2xl">Loading...</div>
   }
 
   if (cards.length === 0) {
