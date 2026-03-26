@@ -53,7 +53,7 @@ const PracticePage: React.FC = () => {
   }, [blockId, refreshTrigger])
 
   if (loading) {
-    return <PageLoader/>
+    return <PageLoader />
   }
 
   if (!practice) {

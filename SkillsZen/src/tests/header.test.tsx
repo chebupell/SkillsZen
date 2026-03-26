@@ -4,10 +4,10 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { useAuth } from '../../services/AuthContext'
-import { Header } from './header'
+import { useAuth } from '../services/AuthContext'
+import { Header } from '../components/shared/header'
 
-vi.mock('../../services/AuthContext', () => ({
+vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
 }))
 
@@ -17,11 +17,9 @@ vi.mock('react-router-dom', async () => {
   return { ...actual, useNavigate: () => mockNavigate }
 })
 
-type UseAuthReturn = ReturnType<typeof useAuth>
-
 describe('Header', () => {
   const mockLogout = vi.fn()
-  const mockUpdateTaskStatus = vi.fn(() => Promise.resolve())
+
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -33,32 +31,25 @@ describe('Header', () => {
       </MemoryRouter>,
     )
 
-  it('renders login and signup buttons when NOT authenticated', () => {
+  it('renders login button when NOT authenticated', () => {
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
       isAuthenticated: false,
       user: null,
       logout: mockLogout,
-      login: vi.fn(),
-      updateTaskStatus: mockUpdateTaskStatus,
-    } as UseAuthReturn)
+    })
 
     renderHeader()
-
     expect(screen.getByRole('link', { name: /sign in/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /sign up/i })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /logout/i })).not.toBeInTheDocument()
   })
 
   it('calls logout and navigates to home on logout click', async () => {
     const user = userEvent.setup()
-
     ;(vi.mocked(useAuth) as Mock).mockReturnValue({
       isAuthenticated: true,
       logout: mockLogout,
       user: { name: 'User', email: 'u@t.com', uid: '123' },
-      login: vi.fn(),
-      updateTaskStatus: mockUpdateTaskStatus,
-    } as unknown as UseAuthReturn)
+    })
 
     renderHeader()
 
@@ -74,13 +65,27 @@ describe('Header', () => {
       isAuthenticated: true,
       user: { name: 'John', uid: '456' },
       logout: mockLogout,
-      login: vi.fn(),
-      updateTaskStatus: mockUpdateTaskStatus,
-    } as unknown as UseAuthReturn)
+    })
+
+    renderHeader()
+    const profileLinks = screen.getAllByRole('link')
+    const profileLink = profileLinks.find(link => link.getAttribute('href') === '/profile')
+    
+    expect(profileLink).toBeInTheDocument()
+    expect(profileLink).toHaveTextContent(/j/i)
+  })
+
+  it('renders logo and branding correctly', () => {
+    ;(vi.mocked(useAuth) as Mock).mockReturnValue({
+      isAuthenticated: false,
+      user: null,
+    })
 
     renderHeader()
 
-    const profileLink = screen.getByRole('link', { name: /j/i })
-    expect(profileLink).toHaveAttribute('href', '/profile')
+    expect(screen.getByAltText(/SkillsZen Logo/i)).toBeInTheDocument()
+    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
+    expect(screen.getByText(/Zen/i)).toBeInTheDocument()
   })
 })
+

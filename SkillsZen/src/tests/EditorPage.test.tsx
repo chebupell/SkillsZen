@@ -2,16 +2,17 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import EditorPage from './EditorPage'
-import { useAuth } from '../../services/AuthContext'
-import { getTaskData, runCodeInBrowser } from '../../services/firebase'
-import type { TaskData, UserSession } from '../../types/types'
 
-vi.mock('../../services/AuthContext', () => ({
+import { useAuth } from '../services/AuthContext'
+import { getTaskData, runCodeInBrowser } from '../services/firebase'
+import type { TaskData, UserSession } from '../types/types'
+import EditorPage from '../pages/coding/EditorPage'
+
+vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
 }))
 
-vi.mock('../../services/firebase', () => ({
+vi.mock('../services/firebase', () => ({
   getTaskData: vi.fn(),
   runCodeInBrowser: vi.fn(),
 }))
@@ -70,11 +71,16 @@ describe('EditorPage', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument()
+    expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
+    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
 
-    await waitFor(() => {
-      expect(screen.getByText(/Solve this!/i)).toBeInTheDocument()
-    })
+    await waitFor(
+      () => {
+        expect(screen.getByText(/Solve this!/i)).toBeInTheDocument()
+      },
+      { timeout: 3000 },
+    ) 
+    expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 
   it('updates editor code and persists to localStorage', async () => {

@@ -4,16 +4,17 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import CodingTasks from './CodingTasks'
-import { useAuth } from '../../services/AuthContext'
-import { getCodingTasksAndProgress, type CodingTask } from '../../services/firebase'
-import type { UserSession } from '../../types/types'
 
-vi.mock('../../services/AuthContext', () => ({
+import { useAuth } from '../services/AuthContext'
+import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
+import type { UserSession } from '../types/types'
+import CodingTasks from '../pages/coding/CodingTasks'
+
+vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
 }))
 
-vi.mock('../../services/firebase', () => ({
+vi.mock('../services/firebase', () => ({
   getCodingTasksAndProgress: vi.fn(),
 }))
 
@@ -55,12 +56,18 @@ describe('CodingTasks Page', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText(/Loading/i)).toBeInTheDocument()
+    expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
+    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
 
-    await waitFor(() => {
-      expect(screen.getByText('Variable Basics')).toBeInTheDocument()
-      expect(screen.getByText('Loop Masters')).toBeInTheDocument()
-    })
+    await waitFor(
+      () => {
+        expect(screen.getByText('Variable Basics')).toBeInTheDocument()
+        expect(screen.getByText('Loop Masters')).toBeInTheDocument()
+      },
+      { timeout: 2000 },
+    ) 
+
+    expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 
   it('calculates and displays the correct progress in the header', async () => {

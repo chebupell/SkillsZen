@@ -4,15 +4,16 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { signupService } from '../../services/firebase'
-import { userStorageService } from '../../services/userService'
-import { AuthPage } from './authPage'
+import { signupService } from '../services/firebase'
+import { userStorageService } from '../services/userService'
+import { AuthPage } from '../pages/auth/authPage'
 
-vi.mock('../../services/firebase', () => ({
+
+vi.mock('../services/firebase', () => ({
   signupService: vi.fn(),
 }))
 
-vi.mock('../../services/userService', () => ({
+vi.mock('../services/userService', () => ({
   userStorageService: {
     saveSession: vi.fn(),
     getSession: vi.fn(),
@@ -26,7 +27,7 @@ vi.mock('react-router-dom', async () => {
 })
 
 const mockLogin = vi.fn()
-vi.mock('../../services/AuthContext', () => ({
+vi.mock('../services/AuthContext', () => ({
   useAuth: () => ({ login: mockLogin }),
 }))
 

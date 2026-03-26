@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
-import { NotFound } from './notFound'
+import { NotFound } from '../pages/404Page/notFound'
 
-// Mock useNavigate from react-router-dom
+
 const mockNavigate = vi.fn()
 
 vi.mock('react-router-dom', async () => {

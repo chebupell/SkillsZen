@@ -2,8 +2,9 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
-import { ProtectedRoute } from './protectedRoute'
+
 import { useAuth } from '../services/AuthContext'
+import { ProtectedRoute } from '../router/protectedRoute'
 
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),

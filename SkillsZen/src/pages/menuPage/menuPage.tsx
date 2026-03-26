@@ -37,7 +37,10 @@ const Menu: React.FC = () => {
   }
 
   return (
-    <PageLayout backgroundImage="main-page-background.png" className="flex flex-col items-center min-h-full">
+    <PageLayout
+      backgroundImage="main-page-background.png"
+      className="flex flex-col items-center min-h-full"
+    >
       <h2 className="text-center text-4xl text-secondary-foreground mb-10">
         Welcome, {user?.name || 'Guest'}!
       </h2>

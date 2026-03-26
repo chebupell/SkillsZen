@@ -37,9 +37,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
   }, [user?.uid, courseId])
 
   if (loading) {
-    return (
-      <PageLoader />
-    )
+    return <PageLoader />
   }
 
   if (!data) {

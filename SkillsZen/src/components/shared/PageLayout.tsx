@@ -18,12 +18,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, backgroundImage, clas
         backgroundImage ? { backgroundImage: `url('/background-images/${backgroundImage}')` } : {}
       }
     >
-      <div className="mx-auto max-w-7xl w-full min-w-[320px] px-4 md:px-8 py-4">
-        {children}
-      </div>
+      <div className="mx-auto max-w-7xl w-full min-w-[320px] px-4 md:px-8 py-4">{children}</div>
     </div>
   )
 }
-
 
 export default PageLayout

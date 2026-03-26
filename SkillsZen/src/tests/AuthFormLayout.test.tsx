@@ -2,10 +2,10 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, act } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { AuthFormLayout } from './AuthFormLayout'
+import { AuthFormLayout } from '../components/shared/AuthFormLayout'
 import userEvent from '@testing-library/user-event'
 import type { Resolver, FieldErrors } from 'react-hook-form'
-import type { AuthValues } from '../../types/types'
+import type { AuthValues } from '../types/types'
 
 const mockResolver: Resolver<AuthValues> = async (values) => {
   const errors: FieldErrors<AuthValues> = {}
@@ -89,34 +89,36 @@ describe('AuthFormLayout', () => {
     })
   })
 
-  it('shows "Processing..." state during submission', async () => {
-    let resolveSubmit: () => void
+  it('shows loading state during submission', async () => {
+    const { container } = renderComponent()
+
+    const user = userEvent.setup()
+    let resolveSubmit: (value: void | PromiseLike<void>) => void
     const submitPromise = new Promise<void>((resolve) => {
       resolveSubmit = resolve
     })
 
     mockOnSubmit.mockReturnValue(submitPromise)
 
-    renderComponent()
-
-    await user.type(screen.getByLabelText(defaultProps.loginLabel), 'user')
-    await user.type(screen.getByLabelText(/password/i), 'pass')
-
-    const submitBtn = screen.getByRole('button', { name: /^login$/i })
+    await user.type(screen.getByLabelText(defaultProps.loginLabel), 'test@example.com')
+    await user.type(screen.getByLabelText(/password/i), 'password123')
+    const submitBtn = screen.getByRole('button')
     await waitFor(() => expect(submitBtn).toBeEnabled())
 
     await user.click(submitBtn)
 
-    expect(screen.getByText(/processing/i)).toBeInTheDocument()
     expect(submitBtn).toBeDisabled()
 
+    const loader = container.querySelector('.animate-spin')
+    expect(loader).toBeInTheDocument()
+
     await act(async () => {
-      resolveSubmit!()
+      resolveSubmit!(undefined)
       await submitPromise
     })
 
     await waitFor(() => {
-      expect(screen.queryByText(/processing/i)).not.toBeInTheDocument()
+      expect(container.querySelector('.animate-spin')).not.toBeInTheDocument()
     })
   })
 })
