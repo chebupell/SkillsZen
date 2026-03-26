@@ -17,7 +17,10 @@ export function Footer() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-all active:scale-95 group">
+            <Link
+              to="/"
+              className="flex items-center gap-2 hover:opacity-80 transition-all active:scale-95 group"
+            >
               <div className="p-1 bg-primary/5 rounded-md border border-primary/10">
                 <img src={logo} alt="SkillsZen" className="h-4 w-4 object-contain" />
               </div>
@@ -25,7 +28,7 @@ export function Footer() {
                 Skills<span className="text-muted-foreground font-medium">Zen</span>
               </span>
             </Link>
-            
+
             <nav className="flex flex-wrap justify-center gap-2">
               {developers.map((dev) => (
                 <Link
@@ -34,7 +37,10 @@ export function Footer() {
                   target="_blank"
                   className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/5 border border-primary/5 hover:border-primary/20 hover:bg-primary/10 transition-all duration-300"
                 >
-                  <Github size={12} className="text-muted-foreground/60 group-hover:text-primary transition-colors" />
+                  <Github
+                    size={12}
+                    className="text-muted-foreground/60 group-hover:text-primary transition-colors"
+                  />
                   <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 group-hover:text-foreground">
                     {dev.name}
                   </span>

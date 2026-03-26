@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import PageLayout from '../../../components/shared/PageLayout'
 import { CourseSubPage } from '../courseSubPage/courseSubPage'
 import { useAuth } from '../../../services/AuthContext'
-import { getCourseSubPage } from '../../../services/login'
+import { getCourseSubPage } from '../../../services/firebase'
 import type { CourseSubPageProps } from '../../../types/exerciseTypes'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 interface CoursePageProps {
   courseId: string
@@ -37,9 +38,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-xl animate-pulse">
-        Loading...
-      </div>
+      <PageLoader />
     )
   }
 

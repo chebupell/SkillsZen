@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
 interface InProgressTagProps {
-  current?: number;
-  total?: number;
+  current?: number
+  total?: number
 }
 
 const InProgressTag: React.FC<InProgressTagProps> = ({ current = 0, total = 0 }) => {
-  const widthPercentage = total > 0 ? (current / total) * 100 : 0;
+  const widthPercentage = total > 0 ? (current / total) * 100 : 0
 
   return (
     <div className="group relative inline-flex bg-purple-100 rounded-full h-10 px-6 items-center gap-4 min-w-40 transition-all duration-300 cursor-pointer">
@@ -23,7 +23,6 @@ const InProgressTag: React.FC<InProgressTagProps> = ({ current = 0, total = 0 })
 
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-max px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-lg">
         You're doing great, keep it up!
-
         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45" />
       </div>
     </div>
