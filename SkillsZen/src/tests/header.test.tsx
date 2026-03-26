@@ -69,8 +69,8 @@ describe('Header', () => {
 
     renderHeader()
     const profileLinks = screen.getAllByRole('link')
-    const profileLink = profileLinks.find(link => link.getAttribute('href') === '/profile')
-    
+    const profileLink = profileLinks.find((link) => link.getAttribute('href') === '/profile')
+
     expect(profileLink).toBeInTheDocument()
     expect(profileLink).toHaveTextContent(/j/i)
   })
@@ -88,4 +88,3 @@ describe('Header', () => {
     expect(screen.getByText(/Zen/i)).toBeInTheDocument()
   })
 })
-

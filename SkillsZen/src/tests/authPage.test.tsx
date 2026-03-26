@@ -8,7 +8,6 @@ import { signupService } from '../services/firebase'
 import { userStorageService } from '../services/userService'
 import { AuthPage } from '../pages/auth/authPage'
 
-
 vi.mock('../services/firebase', () => ({
   signupService: vi.fn(),
 }))

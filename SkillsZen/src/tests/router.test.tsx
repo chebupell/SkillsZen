@@ -4,7 +4,6 @@ import { render, screen, cleanup } from '@testing-library/react'
 import { RouterProvider, Outlet } from 'react-router-dom'
 import { router } from '../router/router'
 
-
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(() => ({ isAuthenticated: false })),
 }))

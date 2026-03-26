@@ -79,7 +79,7 @@ describe('EditorPage', () => {
         expect(screen.getByText(/Solve this!/i)).toBeInTheDocument()
       },
       { timeout: 3000 },
-    ) 
+    )
     expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 

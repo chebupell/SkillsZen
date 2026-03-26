@@ -17,7 +17,7 @@ describe('Footer', () => {
 
     const logoImg = screen.getByAltText('SkillsZen')
     expect(logoImg).toBeInTheDocument()
-    
+
     expect(screen.getByText(/Skills/i)).toBeInTheDocument()
     expect(screen.getByText(/Zen/i)).toBeInTheDocument()
   })
@@ -58,4 +58,3 @@ describe('Footer', () => {
     expect(homeLink).toHaveAttribute('href', '/')
   })
 })
-

@@ -4,7 +4,6 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-
 import { useAuth } from '../services/AuthContext'
 import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
 import type { UserSession } from '../types/types'
@@ -65,7 +64,7 @@ describe('CodingTasks Page', () => {
         expect(screen.getByText('Loop Masters')).toBeInTheDocument()
       },
       { timeout: 2000 },
-    ) 
+    )
 
     expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })

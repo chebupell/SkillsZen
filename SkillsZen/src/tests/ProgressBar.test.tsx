@@ -10,7 +10,7 @@ describe('ProgressBarCoding', () => {
 
     const innerBar = container.querySelector('.transition-all')
     expect(innerBar).toHaveStyle({ width: `${progress}%` })
-    expect(innerBar).toHaveClass('bg-primary') 
+    expect(innerBar).toHaveClass('bg-primary')
   })
 
   it('clamps progress between 0 and 100', () => {
@@ -29,7 +29,7 @@ describe('ProgressBarCoding', () => {
     expect(barWrapper).toHaveClass('h-1.5')
 
     rerender(<ProgressBarCoding progress={50} size="lg" />)
-    expect(barWrapper).toHaveClass('h-3.5') 
+    expect(barWrapper).toHaveClass('h-3.5')
   })
 
   describe('Stats and Completion', () => {
@@ -46,7 +46,7 @@ describe('ProgressBarCoding', () => {
       const innerBar = container.querySelector('.transition-all')
 
       expect(innerBar).toHaveClass('bg-gradient-to-r', 'from-yellow-400')
-      
+
       const pingDot = container.querySelector('.animate-ping')
       expect(pingDot).toBeInTheDocument()
     })
@@ -54,7 +54,7 @@ describe('ProgressBarCoding', () => {
     it('renders primary colors when not completed', () => {
       const { container } = render(<ProgressBarCoding progress={10} isCompleted={false} />)
       const innerBar = container.querySelector('.transition-all')
-      
+
       expect(innerBar).toHaveClass('bg-primary')
       expect(screen.queryByText(/Perfect Score/i)).not.toBeInTheDocument()
     })

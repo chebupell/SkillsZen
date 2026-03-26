@@ -13,7 +13,6 @@ import {
 import { userStorageService } from '../services/userService'
 import ProfilePage from '../pages/profilePage/ProfilePage'
 
-
 vi.mock('sonner', () => ({
   toast: {
     success: vi.fn(),

@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import { NotFound } from '../pages/404Page/notFound'
 
-
 const mockNavigate = vi.fn()
 
 vi.mock('react-router-dom', async () => {
