@@ -24,7 +24,7 @@ import {
 } from 'firebase/firestore'
 import type { ProfileValues } from '../types/types'
 import type { ExerciseCardProps } from '../types/menuTypes'
-import type { ExerciseItem, ExerciseStatus, ExerciseSubPageProps } from '../types/exerciseTypes'
+import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -180,10 +180,10 @@ export async function getAllCoursesWithProgress(userId: string): Promise<Exercis
   }
 }
 
-export async function getExerciseSubPage(
+export async function getCourseSubPage(
   courseId: string,
   userId: string,
-): Promise<ExerciseSubPageProps | null> {
+): Promise<CourseSubPageProps | null> {
   try {
     const courseSnap = await getDoc(doc(db, 'courses', courseId))
     if (!courseSnap.exists()) return null
@@ -200,10 +200,13 @@ export async function getExerciseSubPage(
       ),
     )
 
-    const progressMap: Record<string, ExerciseStatus> = {}
+    const progressMap: Record<string, { status: ExerciseStatus; currentQuestion: number }> = {}
     progressSnap.forEach((doc) => {
       const data = doc.data()
-      progressMap[data.block_id] = data.status as ExerciseStatus
+      progressMap[data.block_id] = {
+        status: data.status as ExerciseStatus,
+        currentQuestion: data.current_question || 0,
+      }
     })
 
     const exercises: ExerciseItem[] = await Promise.all(
@@ -212,12 +215,14 @@ export async function getExerciseSubPage(
 
         const countSnapshot = await getCountFromServer(questionsRef)
         const totalQuestions = countSnapshot.data().count
+        const userProgress = progressMap[blockDoc.id]
 
         return {
           id: blockDoc.id,
           title: blockDoc.data().name,
-          status: progressMap[blockDoc.id] || 'not_started',
+          status: userProgress?.status || 'not_started',
           totalQuestions: totalQuestions,
+          currentQuestion: userProgress?.currentQuestion || 0,
         }
       }),
     )
@@ -225,6 +230,7 @@ export async function getExerciseSubPage(
     const completedCount = exercises.filter((e) => e.status === 'completed').length
 
     return {
+      courseId,
       topicTitle: courseData.name,
       topicImg: courseData.icon,
       statusText: completedCount === exercises.length ? 'All done!' : 'Keep going',

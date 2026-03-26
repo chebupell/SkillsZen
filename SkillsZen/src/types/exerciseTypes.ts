@@ -1,9 +1,10 @@
-export interface ExerciseSubPage {
+export interface CourseSubPage {
   blockName: string
   blockProgress: string
 }
 
-export interface ExerciseSubPageProps {
+export interface CourseSubPageProps {
+  courseId: string
   topicTitle: string
   topicImg: string
   statusText: string
@@ -18,10 +19,5 @@ export interface ExerciseItem {
   title: string
   status: ExerciseStatus
   totalQuestions: number
-}
-
-export interface APIBlock {
-  id: number
-  name: string
-  status: ExerciseStatus
+  currentQuestion?: number
 }
