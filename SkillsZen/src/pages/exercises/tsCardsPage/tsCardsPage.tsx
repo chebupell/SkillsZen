@@ -173,7 +173,7 @@ const TsCards: React.FC = () => {
                     >
                       <div className="flex flex-col items-center justify-center">
                         <div>
-                          <img src="icons/flower-icon.png" alt="flower" className="w-30" />
+                          <img src={`ts-cards-images/${card.icon}`} alt="flower" className="h-20" />
                         </div>
                         <div>{card.front}</div>
                         <input type="checkbox"
