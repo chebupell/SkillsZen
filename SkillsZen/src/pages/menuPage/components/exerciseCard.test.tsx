@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 describe("Exercise card", () => {
         const exerciseCard = <MemoryRouter>
-            <ExerciseCard id={1} name="JS" icon="js" description="some desc" />
+            <ExerciseCard key={1} name="JS" icon="js" description="some desc" id={""} />
         </MemoryRouter>
 
     it("renders js exercise card description", () => {
