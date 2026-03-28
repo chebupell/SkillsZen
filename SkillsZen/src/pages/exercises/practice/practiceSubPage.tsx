@@ -33,12 +33,11 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
   }, [question?.id])
 
   if (!question) {
-    return  (<PageLoader />)
+    return <PageLoader />
   }
 
   const isLastQuestion = total_questions > 0 && current_question === total_questions - 1
-  const resultCorrectCount =
-    feedback && feedback.correct ? correct_count + 1 : correct_count
+  const resultCorrectCount = feedback && feedback.correct ? correct_count + 1 : correct_count
 
   const handleAnswerClick = async (answerId: number | string) => {
     if (selectedId !== null || loading || !question) return
