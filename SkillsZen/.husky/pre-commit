@@ -1,3 +1,3 @@
-cd SkillsZen && npm run lint
-cd SkillsZen && npm run format
+cd ./SkillsZen && npm run lint
+cd ./SkillsZen && npm run format
 git add .
