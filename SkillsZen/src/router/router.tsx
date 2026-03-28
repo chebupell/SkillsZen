@@ -68,6 +68,7 @@ export const router = createBrowserRouter([
               },
               { path: 'practice/:blockId', element: <PracticePage /> },
               { path: 'results', element: <BlockResultPage /> },
+              { path: 'ts-cards', element: <TsCards /> },
               { path: 'stats', element: <StatsPage /> },
             ],
           },
