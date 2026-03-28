@@ -4,11 +4,15 @@ import { ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 interface SeeResultsProps {
-  onClick?: () => void
   disabled?: boolean
+  result: {
+    block_id: string
+    total_questions: number
+    correct_count: number
+  }
 }
 
-const SeeResultsButton: React.FC<SeeResultsProps> = ({ disabled }) => {
+const SeeResultsButton: React.FC<SeeResultsProps> = ({ disabled, result }) => {
   const navigate = useNavigate()
   return (
     <Button
@@ -21,7 +25,7 @@ const SeeResultsButton: React.FC<SeeResultsProps> = ({ disabled }) => {
             }
           : {}
       }
-      onClick={() => navigate('/results')}
+      onClick={() => navigate('/results', { state: result })}
       className="group flex justify-self-center bg-blue-500 text-white transition-all duration-200 gap-2 rounded-xl shadow-lg border-none m-4 hover:bg-blue-600 hover:scale-[1.02] active:bg-blue-700 active:scale-100 active:shadow-inner disabled:cursor-not-allowed disabled:pointer-events-auto disabled:opacity-100 disabled:hover:scale-100"
     >
       <span>See Results</span>

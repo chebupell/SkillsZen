@@ -6,6 +6,7 @@ import BackButton from '../../../components/shared/backButton'
 import { ProgressBar } from '../../../components/shared/ProgressBar'
 import { practiceService } from '../../../services/practiceService'
 import SeeResultsButton from '../../../components/shared/seeResultsButton'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 export interface AnswerResponse {
   correct: boolean
@@ -32,12 +33,12 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
   }, [question?.id])
 
   if (!question) {
-    return (
-      <div className="p-4 sm:p-10 min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading question...</div>
-      </div>
-    )
+    return  (<PageLoader />)
   }
+
+  const isLastQuestion = total_questions > 0 && current_question === total_questions - 1
+  const resultCorrectCount =
+    feedback && feedback.correct ? correct_count + 1 : correct_count
 
   const handleAnswerClick = async (answerId: number | string) => {
     if (selectedId !== null || loading || !question) return
@@ -154,8 +155,15 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
           )}
         </div>
       </Card>
-      {total_questions > 0 && current_question === total_questions - 1 ? (
-        <SeeResultsButton disabled={!feedback} onClick={onNext} />
+      {isLastQuestion ? (
+        <SeeResultsButton
+          disabled={!feedback}
+          result={{
+            block_id,
+            total_questions,
+            correct_count: resultCorrectCount,
+          }}
+        />
       ) : (
         <ContinueButton disabled={!feedback} onClick={onNext} />
       )}
