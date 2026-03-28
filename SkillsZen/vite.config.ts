@@ -19,15 +19,15 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-      }
-    }
+      },
+    },
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  test: {
+  test: { //my test works only with this option
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/vitest.setup.ts',
