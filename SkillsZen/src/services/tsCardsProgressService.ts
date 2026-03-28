@@ -7,7 +7,7 @@ import {
   arrayRemove,
   updateDoc,
 } from 'firebase/firestore'
-import { db } from './login'
+import { db } from './firebase'
 
 type TsCardsProgress = {
   checkedCardIds: string[]

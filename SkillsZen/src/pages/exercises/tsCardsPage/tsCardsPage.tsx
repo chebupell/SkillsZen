@@ -13,6 +13,7 @@ import {
   setTsCardCheckedState,
 } from '../../../services/tsCardsProgressService'
 import Garden from './garden'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards
 
@@ -148,9 +149,7 @@ const TsCards: React.FC = () => {
     return <Garden onBack={() => setShowGarden(false)} />
   }
 
-  if (isLoadingProgress) {
-    return <div className="bg-white text-center p-20 text-2xl">Loading...</div>
-  }
+  if (isLoadingProgress) { return <PageLoader /> }
 
   const isGardenFinished = checkedCardIds.length === allCards.length && allCards.length > 0
 
