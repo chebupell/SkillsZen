@@ -19,8 +19,13 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       <CardTitle className="text-2xl text-center">{name}</CardTitle>
       <CardDescription className="text-xl text-center">{description}</CardDescription>
       <CardContent className="text-xl text-center">{progress}</CardContent>
-      <Button variant="taskBtn">
-        <Link to={'/' + route}>Continue</Link>
+      <Button
+        size="lg"
+        className="px-8 py-6 text-lg rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out hover:shadow-lg active:scale-95"
+      >
+        <Link to={'/' + route} className="flex items-center gap-3 font-bold">
+          <span>Continue</span>
+        </Link>
       </Button>
     </Card>
   )

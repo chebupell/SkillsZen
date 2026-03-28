@@ -2,8 +2,9 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { ErrorFallback } from './ErrorFallback'
+
 import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
+import { ErrorFallback } from '../components/shared/ErrorFallback'
 
 vi.mock('react-router-dom', () => ({
   useRouteError: vi.fn(),

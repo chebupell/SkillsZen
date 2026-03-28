@@ -31,29 +31,29 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
   exercisesProgress,
   exercises,
 }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { user } = useAuth()
 
   useEffect(() => {
-    localStorage.setItem('lastCategory', location.pathname);
-  }, [location]);
+    localStorage.setItem('lastCategory', location.pathname)
+  }, [location])
 
   const handleExerciseClick = async (itemId: string, status: string) => {
     if (status === 'completed' || status === 'try_again') {
       try {
         if (user?.uid) {
-          await practiceService.restartBlock(user.uid, itemId, courseId);
+          await practiceService.restartBlock(user.uid, itemId, courseId)
         }
       } catch (error) {
-        console.error("Failed to restart block:", error);
+        console.error('Failed to restart block:', error)
       }
     }
-    navigate(`/practice/${itemId}`);
-  };
+    navigate(`/practice/${itemId}`)
+  }
 
   return (
-    <div className="p-4 sm:p-10 min-h-screen">
+    <div className="p-4 sm:p-10 min-h-full">
       <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-3">
         <div className="flex justify-start">
           <BackButton />
@@ -62,7 +62,9 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
         <div className="hidden sm:block w-25" aria-hidden="true"></div>
       </div>
 
-      <p className="text-right sm:text-center text-gray-600 mb-4">{exercisesProgress} completed blocks</p>
+      <p className="text-right sm:text-center text-gray-600 mb-4">
+        {exercisesProgress} completed blocks
+      </p>
 
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
@@ -75,12 +77,12 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
               <img src={topicImg} alt="" className="max-h-10 rounded-lg" />
               <div className="text-left">
                 <h3 className="font-semibold text-lg">{item.title}</h3>
-                <p className="text-sm text-gray-500">
-                  {item.totalQuestions} questions
-                </p>
+                <p className="text-sm text-gray-500">{item.totalQuestions} questions</p>
               </div>
             </div>
-            <div className="mt-2 md:mt-0 md:ml-auto">{getStatusTag(item.status, item.currentQuestion, item.totalQuestions)}</div>
+            <div className="mt-2 md:mt-0 md:ml-auto">
+              {getStatusTag(item.status, item.currentQuestion, item.totalQuestions)}
+            </div>
           </div>
         ))}
       </div>

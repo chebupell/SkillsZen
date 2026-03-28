@@ -39,4 +39,20 @@ export const userStorageService = {
   isAuthenticated(): boolean {
     return !!localStorage.getItem(STORAGE_KEY)
   },
+
+  updateTaskInStorage(taskId: string, status: 'passed' | 'failed'): UserSession | null {
+    const session = this.getSession()
+    if (!session) return null
+
+    const updatedSession: UserSession = {
+      ...session,
+      completedTasks: {
+        ...(session.completedTasks || {}),
+        [taskId]: status,
+      },
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession))
+    return updatedSession
+  },
 }

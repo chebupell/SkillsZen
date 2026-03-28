@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { RouterProvider, Outlet } from 'react-router-dom'
-import { router } from './router'
+import { router } from '../router/router'
 
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(() => ({ isAuthenticated: false })),
