@@ -149,7 +149,9 @@ const TsCards: React.FC = () => {
     return <Garden onBack={() => setShowGarden(false)} />
   }
 
-  if (isLoadingProgress) { return <PageLoader /> }
+  if (isLoadingProgress) {
+    return <PageLoader />
+  }
 
   const isGardenFinished = checkedCardIds.length === allCards.length && allCards.length > 0
 

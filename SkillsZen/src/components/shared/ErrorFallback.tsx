@@ -33,7 +33,7 @@ export function ErrorFallback({
   }
 
   return (
-    <div className="flex items-center justify-center p-6 w-full min-h-[400px] animate-in fade-in duration-500">
+    <div className="flex items-center justify-center p-6 w-full min-h-100 animate-in fade-in duration-500">
       <Card className="w-full max-w-md border-destructive/20 shadow-xl bg-card/50 backdrop-blur">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2 text-destructive">
@@ -47,7 +47,7 @@ export function ErrorFallback({
             <AlertTitle className="font-semibold text-xs uppercase tracking-wider opacity-70">
               Stack Trace / Message
             </AlertTitle>
-            <AlertDescription className="font-mono text-[11px] mt-2 leading-relaxed break-all max-h-[150px] overflow-auto custom-scrollbar">
+            <AlertDescription className="font-mono text-[11px] mt-2 leading-relaxed break-all min-h-37.5 overflow-auto custom-scrollbar">
               {message}
             </AlertDescription>
           </Alert>

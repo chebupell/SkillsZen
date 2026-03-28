@@ -70,9 +70,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
             onClick={() => navigate('/ts-cards')}
             className="group flex items-center gap-3 bg-primary text-primary-foreground font-bold px-7 py-4 rounded-2xl shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300 border border-white/20 backdrop-blur-md"
           >
-            <span className="md:inline tracking-tight text-sm uppercase">
-              TS Cards
-            </span>
+            <span className="md:inline tracking-tight text-sm uppercase">TS Cards</span>
             <ArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform opacity-70"
