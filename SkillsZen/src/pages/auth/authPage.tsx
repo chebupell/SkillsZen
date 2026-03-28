@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useNavigate } from 'react-router-dom'
-import { signupService } from '../../services/login'
+import { signupService } from '../../services/firebase'
 import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
 import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
