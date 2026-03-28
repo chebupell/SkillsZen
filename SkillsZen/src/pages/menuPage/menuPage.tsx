@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageLayout from '../../components/shared/PageLayout'
+import PageLayout from '../../components/shared/PageLayout/PageLayout'
 import { Button } from '../../components/ui/button'
 import { ExerciseCard } from './components/exerciseCard'
 import type { ExerciseCardProps } from '../../types/menuTypes'
 import { useAuth } from '../../services/AuthContext'
-import { getAllCoursesWithProgress } from '../../services/firebase'
-import { PageLoader } from '../../components/shared/PageLoader'
+import { getAllCoursesWithProgress } from '../../services/login'
 
 const Menu: React.FC = () => {
   const { user } = useAuth()
@@ -20,6 +19,9 @@ const Menu: React.FC = () => {
       try {
         const data = await getAllCoursesWithProgress(user.uid)
         setCards(data)
+        console.log(data)
+      } catch (error) {
+        console.log('Failed to fetch exercises:', error)
       } finally {
         setLoading(false)
       }
@@ -29,7 +31,7 @@ const Menu: React.FC = () => {
   }, [user?.uid])
 
   if (loading) {
-    return <PageLoader />
+    return <div className="bg-white text-center p-20 text-2xl">Loading exercises...</div>
   }
 
   if (cards.length === 0) {
@@ -37,10 +39,7 @@ const Menu: React.FC = () => {
   }
 
   return (
-    <PageLayout
-      backgroundImage="main-page-background.png"
-      className="flex flex-col items-center min-h-full"
-    >
+    <PageLayout backgroundImage="main-page-background.png" className="flex items-center">
       <h2 className="text-center text-4xl text-secondary-foreground mb-10">
         Welcome, {user?.name || 'Guest'}!
       </h2>
