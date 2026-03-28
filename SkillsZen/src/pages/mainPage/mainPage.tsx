@@ -13,7 +13,6 @@ const MainPage: React.FC = () => {
   const { pathname } = useLocation()
 
   const isMenuPage = pathname === '/'
-  const isEditorMode = pathname.includes('/editor')
   const isLoading = state === 'loading'
 
   return (
@@ -47,7 +46,7 @@ const MainPage: React.FC = () => {
         </div>
       </main>
 
-      {!isEditorMode && <Footer />}
+      {isMenuPage && <Footer />}
     </div>
   )
 }

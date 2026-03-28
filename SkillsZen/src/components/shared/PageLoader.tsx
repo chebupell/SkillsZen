@@ -3,9 +3,8 @@ import { Loader2, Sparkles } from 'lucide-react'
 export const PageLoader = () => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-background/30 backdrop-blur-[2px] z-[9999]">
-      
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-primary/20 rounded-full blur-[100px] animate-pulse pointer-events-none" />
-      
+
       <div className="relative flex flex-col items-center space-y-8 animate-in zoom-in-95 duration-700 ease-out">
         <div className="relative group">
           <div className="absolute -inset-8 bg-gradient-to-tr from-primary/30 to-transparent rounded-[3rem] blur-3xl opacity-60 group-hover:opacity-100 transition duration-1000"></div>
@@ -16,7 +15,7 @@ export const PageLoader = () => {
               className="w-16 h-16 object-contain animate-pulse"
             />
           </div>
-          
+
           <div className="absolute -top-2 -right-2 bg-primary p-2 rounded-xl shadow-lg border-2 border-background animate-bounce text-primary-foreground">
             <Sparkles className="h-4 w-4" />
           </div>
@@ -29,7 +28,7 @@ export const PageLoader = () => {
               Preparing <span className="text-primary">Skills</span>Zen
             </span>
           </div>
-          
+
           <div className="h-1.5 w-36 bg-primary/10 rounded-full overflow-hidden border border-white/20">
             <div className="h-full bg-primary rounded-full animate-progress-loading shadow-[0_0_15px_rgba(var(--primary),0.8)]" />
           </div>
@@ -42,5 +41,3 @@ export const PageLoader = () => {
     </div>
   )
 }
-
-
