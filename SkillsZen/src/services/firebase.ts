@@ -104,6 +104,24 @@ export const updateFirebaseUser = async (uid: string, data: ProfileValues): Prom
   )
 }
 
+export const updateTaskStatusFirebase = async (
+  uid: string,
+  taskId: string,
+  status: 'passed' | 'failed',
+) => {
+  const userRef = doc(db, 'users', uid)
+  await setDoc(
+    userRef,
+    {
+      completedTasks: {
+        [taskId]: status,
+      },
+      updatedAt: new Date().toISOString(),
+    },
+    { merge: true },
+  )
+}
+
 export const fetchFirestoreUserData = async (uid: string) => {
   const userRef = doc(db, 'users', uid)
   const docSnap = await getDoc(userRef)
@@ -145,7 +163,6 @@ export async function getAllCoursesWithProgress(userId: string): Promise<Exercis
           completedBlocks++
         }
       })
-      console.log(courseDoc.id)
       results.push({
         id: courseDoc.id,
         name: courseData.name,
@@ -175,8 +192,6 @@ export async function getCourseSubPage(
     const blocksSnap = await getDocs(
       query(collection(db, 'courses', courseId, 'blocks'), orderBy('order')),
     )
-    console.log(blocksSnap)
-
     const progressSnap = await getDocs(
       query(
         collection(db, 'user_progress'),
@@ -226,4 +241,92 @@ export async function getCourseSubPage(
     console.error('Error fetching subpage data:', error)
     return null
   }
+}
+
+export interface CodingTask {
+  id: string
+  name: string
+  order: number
+  status?: string
+  description?: string
+}
+
+export type UserProgressMap = Record<string, 'completed' | 'in_progress' | string>
+
+export const getCodingTasksAndProgress = async (
+  userId?: string,
+): Promise<{
+  tasks: CodingTask[]
+  progress: UserProgressMap
+}> => {
+  try {
+    const jsBlocksRef = collection(db, 'coding', 'js', 'blocks')
+    const tasksQuery = query(jsBlocksRef, orderBy('order', 'asc'))
+
+    const tasksSnap = await getDocs(tasksQuery)
+    const tasks = tasksSnap.docs.map(
+      (d) =>
+        ({
+          id: d.id,
+          ...d.data(),
+        }) as CodingTask,
+    )
+
+    let progress: UserProgressMap = {}
+
+    if (userId) {
+      const progressDocRef = doc(db, 'users', userId, 'progress', 'js')
+      const progressSnap = await getDoc(progressDocRef)
+
+      if (progressSnap.exists()) {
+        progress = progressSnap.data() as UserProgressMap
+      }
+    }
+
+    return { tasks, progress }
+  } catch (err) {
+    console.error('[getCodingTasksAndProgress] Failed to fetch data:', err)
+    throw new Error('Could not retrieve tasks. Please check your connection.')
+  }
+}
+
+export const getTaskData = async (taskId: string) => {
+  try {
+    const taskDocRef = doc(db, 'coding', 'js', 'blocks', taskId, 'questions', 'task_data')
+    const taskSnap = await getDoc(taskDocRef)
+
+    if (taskSnap.exists()) {
+      return taskSnap.data()
+    }
+    throw new Error('Task not found')
+  } catch (err) {
+    console.error('Error fetching task data:', err)
+    throw err
+  }
+}
+
+export const runCodeInBrowser = (
+  code: string,
+  tests: string,
+): Promise<{ output: string; error?: string; success: boolean }> => {
+  return new Promise((resolve) => {
+    const worker = new Worker('/worker/js-worker.js')
+
+    const timeout = setTimeout(() => {
+      worker.terminate()
+      resolve({
+        success: false,
+        error: 'Execution Timeout: Possible infinite loop detected.',
+        output: '',
+      })
+    }, 5000)
+
+    worker.onmessage = (e) => {
+      clearTimeout(timeout)
+      worker.terminate()
+      resolve(e.data)
+    }
+
+    worker.postMessage({ code, tests })
+  })
 }

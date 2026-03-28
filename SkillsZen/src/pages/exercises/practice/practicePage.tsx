@@ -1,66 +1,63 @@
-import React, { useEffect, useState } from "react";
-import PageLayout from "../../../components/shared/PageLayout";
-import PracticeSubPage from "./practiceSubPage";
-import type { PracticePageProps } from "../../../types/practiceTypes";
-import { auth } from "../../../services/login";
-import { onAuthStateChanged } from 'firebase/auth';
-import { practiceService } from "../../../services/practiceService";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import PageLayout from '../../../components/shared/PageLayout'
+import PracticeSubPage from './practiceSubPage'
+import type { PracticePageProps } from '../../../types/practiceTypes'
+import { auth } from '../../../services/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+import { practiceService } from '../../../services/practiceService'
+import { useParams } from 'react-router-dom'
+import { PageLoader } from '../../../components/shared/PageLoader'
 
 const PracticePage: React.FC = () => {
-  const { blockId } = useParams<{ blockId: string }>();
-  const [practice, setPractice] = useState<PracticePageProps | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const { blockId } = useParams<{ blockId: string }>()
+  const [practice, setPractice] = useState<PracticePageProps | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
 
   const handleNext = () => {
-    setRefreshTrigger(prev => prev + 1);
-  };
+    setRefreshTrigger((prev) => prev + 1)
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const loadData = async () => {
-          if (!blockId) return;
-          setLoading(true);
+          if (!blockId) return
+          setLoading(true)
           try {
-            const data = await practiceService.getPracticeData(blockId, user.uid);
+            const data = await practiceService.getPracticeData(blockId, user.uid)
 
             if (data) {
               if (data.questions.length === 0) {
-                console.warn("No questions found for this block!");
+                console.warn('No questions found for this block!')
               }
-              const currentQuestion = data.questions[data.progress.current_question];
+              const currentQuestion = data.questions[data.progress.current_question]
               setPractice({
                 ...data.progress,
                 userId: user.uid,
-                question: currentQuestion
-              });
+                question: currentQuestion,
+              })
             }
           } catch (error) {
-            console.error('Failed to fetch practice: ', error);
+            console.error('Failed to fetch practice: ', error)
           } finally {
-            setLoading(false);
-          };
+            setLoading(false)
+          }
         }
         loadData()
       } else {
-        setLoading(false);
+        setLoading(false)
       }
     })
-    return () => unsubscribe();
+    return () => unsubscribe()
   }, [blockId, refreshTrigger])
 
   if (loading) {
-    return (
-      <div className="bg-white text-center p-20 text-2xl">Loading...</div>
-    )
-  };
+    return <PageLoader />
+  }
 
   if (!practice) {
-    return (
-      <div className="bg-white text-center p-20 text-2xl">No exercises found.</div>
-    )
+    return <div className="bg-white text-center p-20 text-2xl">No exercises found.</div>
   }
 
   return (
@@ -68,6 +65,6 @@ const PracticePage: React.FC = () => {
       <PracticeSubPage {...practice} onNext={handleNext} />
     </PageLayout>
   )
-};
+}
 
-export default PracticePage;
+export default PracticePage

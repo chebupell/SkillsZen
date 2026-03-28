@@ -1,26 +1,23 @@
-import { Button } from "../ui/button";
-import { ArrowLeft } from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button'
+import { ArrowLeft } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function BackButton() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const handleBack = () => {
-    const lastCategory = localStorage.getItem('lastCategory') || '/';
+    const lastCategory = localStorage.getItem('lastCategory') || '/'
 
     if (location.pathname === lastCategory) {
-      navigate('/');
+      navigate('/')
     } else {
-      navigate(lastCategory);
+      navigate(lastCategory)
     }
-  };
+  }
 
   return (
-    <Button
-      variant="back"
-      onClick={handleBack}
-    >
+    <Button variant="back" onClick={handleBack}>
       <ArrowLeft size={20} />
       <span>Back</span>
     </Button>
