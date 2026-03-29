@@ -6,6 +6,7 @@ import Menu from '../pages/menuPage/menuPage'
 import { ProtectedRoute } from './protectedRoute'
 import { ErrorFallback } from '../components/shared/ErrorFallback'
 import { NotFound } from '../pages/404Page/notFound'
+import TsCards from '../pages/exercises/tsCardsPage/tsCardsPage'
 import PracticePage from '../pages/exercises/practice/practicePage'
 import BlockResultPage from '../pages/exercises/blockResultPage/blockResultPage'
 import { SuspenseLayout } from '../components/shared/SuspenseLayout'
@@ -16,7 +17,6 @@ const LoginPage = lazy(() =>
 )
 const CodingTasks = lazy(() => import('../pages/coding/CodingTasks'))
 const EditorPage = lazy(() => import('../pages/coding/EditorPage'))
-const StatsPage = lazy(() => import('../pages/stats/stats'))
 const ProfilePage = lazy(() => import('../pages/profilePage/ProfilePage'))
 
 export const router = createBrowserRouter([
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
           {
             element: <SuspenseLayout />,
             children: [
-              { index: true, element: <Menu /> },
+              { index: true, element: <Menu backgroundImage="main-page-background.webp" /> },
               {
                 path: 'coding-tasks',
                 children: [
@@ -50,24 +50,24 @@ export const router = createBrowserRouter([
               {
                 path: 'js',
                 element: (
-                  <CoursePage courseId="js_course" backgroundImage="js-page-background.png" />
+                  <CoursePage courseId="js_course" backgroundImage="js-page-background.webp" />
                 ),
               },
               {
                 path: 'ts',
                 element: (
-                  <CoursePage courseId="ts_course" backgroundImage="ts-page-background.png" />
+                  <CoursePage courseId="ts_course" backgroundImage="ts-page-background.webp" />
                 ),
               },
               {
                 path: 'algo',
                 element: (
-                  <CoursePage courseId="algo_course" backgroundImage="algo-page-background.png" />
+                  <CoursePage courseId="algo_course" backgroundImage="algo-page-background.webp" />
                 ),
               },
               { path: 'practice/:blockId', element: <PracticePage /> },
               { path: 'results', element: <BlockResultPage /> },
-              { path: 'stats', element: <StatsPage /> },
+              { path: 'ts-cards', element: <TsCards /> },
             ],
           },
         ],

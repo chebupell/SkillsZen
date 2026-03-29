@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import PageLayout from '../../../components/shared/PageLayout'
+import PageLayout from '../../../components/shared/PageLayout.tsx'
 import PracticeSubPage from './practiceSubPage'
 import type { PracticePageProps } from '../../../types/practiceTypes'
 import { auth } from '../../../services/firebase'
@@ -61,7 +61,7 @@ const PracticePage: React.FC = () => {
   }
 
   return (
-    <PageLayout backgroundImage="practice-background.png">
+    <PageLayout backgroundImage="practice-background.webp">
       <PracticeSubPage {...practice} onNext={handleNext} />
     </PageLayout>
   )

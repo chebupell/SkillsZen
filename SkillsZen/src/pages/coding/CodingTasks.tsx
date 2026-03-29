@@ -50,7 +50,7 @@ const CodingTasks: React.FC = () => {
   if (loading) return <PageLoader />
 
   return (
-    <div className="min-h-screen flex flex-col bg-[url('/background-images/main-page-background.png')] bg-cover bg-center bg-fixed px-4 py-8">
+    <div className="min-h-screen flex flex-col bg-[url('/background-images/main-page-background.webp')] bg-cover bg-center px-4 py-8">
       <div className="max-w-4xl mx-auto w-full mb-6">
         <button
           onClick={() => navigate('/')}

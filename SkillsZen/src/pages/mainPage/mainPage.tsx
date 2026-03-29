@@ -12,6 +12,8 @@ const MainPage: React.FC = () => {
   const { state } = useNavigation()
   const { pathname } = useLocation()
 
+  const isLoginPage = pathname === '/sign-in'
+  const isSignUpPage = pathname === '/sign-up'
   const isMenuPage = pathname === '/'
   const isLoading = state === 'loading'
 
@@ -20,12 +22,12 @@ const MainPage: React.FC = () => {
       <Toaster position="top-right" richColors theme="light" />
       {isLoading && <PageLoader />}
       <Header />
-      <main className="flex-1 overflow-y-auto bg-[url('/background-images/main-page-background.png')] bg-cover bg-center bg-fixed relative">
+      <main className="flex-1 overflow-y-auto bg-white bg-cover bg-center relative">
         <div className="flex flex-col min-h-full">
           <Outlet />
 
           {user && isMenuPage && (
-            <div className="sticky bottom-10 left-full ml-auto mr-10 w-fit z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 pb-1">
+            <div className="fixed right-6 bottom-6 md:right-10 md:bottom-10 w-fit z-40 animate-in fade-in slide-in-from-bottom-6 duration-500">
               <button
                 onClick={() => navigate('/coding-tasks')}
                 className="group flex items-center gap-3 bg-primary text-primary-foreground font-bold px-7 py-4 rounded-2xl shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300 border border-white/20 backdrop-blur-md"
@@ -46,7 +48,7 @@ const MainPage: React.FC = () => {
         </div>
       </main>
 
-      {isMenuPage && <Footer />}
+      {isLoginPage || isSignUpPage ? <Footer /> : null}
     </div>
   )
 }
