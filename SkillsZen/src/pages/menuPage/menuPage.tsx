@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageLayout from '../../components/shared/PageLayout/PageLayout'
+import PageLayout from '../../components/shared/PageLayout'
 import { Button } from '../../components/ui/button'
 import { ExerciseCard } from './components/exerciseCard'
 import type { ExerciseCardProps } from '../../types/menuTypes'
 import { useAuth } from '../../services/AuthContext'
-import { getAllCoursesWithProgress } from '../../services/login'
+import { getAllCoursesWithProgress } from '../../services/firebase'
 
 const Menu: React.FC = () => {
   const { user } = useAuth()

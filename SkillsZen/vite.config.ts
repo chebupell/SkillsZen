@@ -27,9 +27,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  test: { //my test works only with this option
+  test: {
+    //my test works only with this option
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/vitest.setup.ts',
-  }
+  },
 })

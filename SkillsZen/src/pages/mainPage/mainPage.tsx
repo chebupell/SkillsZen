@@ -20,7 +20,7 @@ const MainPage: React.FC = () => {
       <Toaster position="top-right" richColors theme="light" />
       {isLoading && <PageLoader />}
       <Header />
-      <main className="flex-1 overflow-y-auto bg-[url('/background-images/main-page-background.webp')] bg-cover bg-center bg-fixed relative">
+      <main className="flex-1 overflow-y-auto bg-[url('/background-images/main-page-background.webp')] bg-cover bg-center relative">
         <div className="flex flex-col min-h-full">
           <Outlet />
 
