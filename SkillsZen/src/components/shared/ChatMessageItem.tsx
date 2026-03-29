@@ -17,8 +17,6 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({ msg, userPhoto
   const [avatarError, setAvatarError] = useState(false)
 
   const MarkdownComponents: Components = {
-    // В новых версиях react-markdown пропс 'inline' отсутствует.
-    // Мы определяем блочный код по наличию className (например, 'language-js').
     code({ className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || '')
       const language = match ? match[1] : ''
