@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import PageLayout from '../../../components/shared/PageLayout'
+import PageLayout from '../../../components/shared/PageLayout.tsx'
 import BackButton from '../../../components/shared/backButton'
 import cards from '../../../data/ts-cards.json'
 import type { TsCard } from '../../../types/tsCardsTypes'

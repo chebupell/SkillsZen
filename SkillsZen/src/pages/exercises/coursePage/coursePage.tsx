@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import PageLayout from '../../../components/shared/PageLayout'
+import PageLayout from '../../../components/shared/PageLayout.tsx'
 import { CourseSubPage } from '../courseSubPage/courseSubPage'
 import { useAuth } from '../../../services/AuthContext'
 import { getCourseSubPage } from '../../../services/firebase'

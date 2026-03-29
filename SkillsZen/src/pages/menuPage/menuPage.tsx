@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageLayout from '../../components/shared/PageLayout'
+import PageLayout from '../../components/shared/PageLayout.tsx'
 import { Button } from '../../components/ui/button'
 import { ExerciseCard } from './components/exerciseCard'
 import type { ExerciseCardProps } from '../../types/menuTypes'
