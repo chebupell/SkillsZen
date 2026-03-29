@@ -38,7 +38,7 @@ const Menu: React.FC = () => {
 
   return (
     <PageLayout
-      backgroundImage="main-page-background.png"
+      backgroundImage="main-page-background.webp"
       className="flex flex-col items-center min-h-full"
     >
       <h2 className="text-center text-4xl text-secondary-foreground mb-10">
@@ -51,7 +51,7 @@ const Menu: React.FC = () => {
             key={card.id}
             id={card.id}
             name={card.name}
-            icon={`${card.icon.toLowerCase()}-icon.png`}
+            icon={`${card.icon.toLowerCase()}-icon.webp`}
             description={card.description}
             progress={`${card.completed_blocks}/${card.total_blocks} blocks completed`}
             route={card.icon.toLocaleLowerCase()}

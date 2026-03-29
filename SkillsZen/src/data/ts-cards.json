@@ -3,7 +3,7 @@
   "cards": [
     {
       "id": "string",
-      "icon": "0.png",
+      "icon": "0.webp",
       "category": "primitive",
       "difficulty": "easy",
       "front": "string",
@@ -15,7 +15,7 @@
     },
     {
       "id": "number",
-      "icon": "1.png",
+      "icon": "1.webp",
       "category": "primitive",
       "difficulty": "easy",
       "front": "number",
@@ -27,7 +27,7 @@
     },
     {
       "id": "boolean",
-      "icon": "2.png",
+      "icon": "2.webp",
       "category": "primitive",
       "difficulty": "easy",
       "front": "boolean",
@@ -39,7 +39,7 @@
     },
     {
       "id": "bigint",
-      "icon": "3.png",
+      "icon": "3.webp",
       "category": "primitive",
       "difficulty": "medium",
       "front": "bigint",
@@ -51,7 +51,7 @@
     },
     {
       "id": "symbol",
-      "icon": "4.png",
+      "icon": "4.webp",
       "category": "primitive",
       "difficulty": "medium",
       "front": "symbol",
@@ -63,7 +63,7 @@
     },
     {
       "id": "null",
-      "icon": "5.png",
+      "icon": "5.webp",
       "category": "primitive",
       "difficulty": "easy",
       "front": "null",
@@ -75,7 +75,7 @@
     },
     {
       "id": "undefined",
-      "icon": "6.png",
+      "icon": "6.webp",
       "category": "primitive",
       "difficulty": "easy",
       "front": "undefined",
@@ -87,7 +87,7 @@
     },
     {
       "id": "any",
-      "icon": "7.png",
+      "icon": "7.webp",
       "category": "special",
       "difficulty": "easy",
       "front": "any",
@@ -99,7 +99,7 @@
     },
     {
       "id": "unknown",
-      "icon": "8.png",
+      "icon": "8.webp",
       "category": "special",
       "difficulty": "medium",
       "front": "unknown",
@@ -111,7 +111,7 @@
     },
     {
       "id": "void",
-      "icon": "9.png",
+      "icon": "9.webp",
       "category": "special",
       "difficulty": "easy",
       "front": "void",
@@ -123,7 +123,7 @@
     },
     {
       "id": "never",
-      "icon": "10.png",
+      "icon": "10.webp",
       "category": "special",
       "difficulty": "hard",
       "front": "never",
@@ -135,7 +135,7 @@
     },
     {
       "id": "object",
-      "icon": "11.png",
+      "icon": "11.webp",
       "category": "object",
       "difficulty": "easy",
       "front": "object",
@@ -147,7 +147,7 @@
     },
     {
       "id": "array",
-      "icon": "12.png",
+      "icon": "12.webp",
       "category": "object",
       "difficulty": "easy",
       "front": "T[] / Array<T>",
@@ -159,7 +159,7 @@
     },
     {
       "id": "tuple",
-      "icon": "13.png",
+      "icon": "13.webp",
       "category": "object",
       "difficulty": "medium",
       "front": "tuple",
@@ -171,7 +171,7 @@
     },
     {
       "id": "function",
-      "icon": "14.png",
+      "icon": "14.webp",
       "category": "object",
       "difficulty": "easy",
       "front": "function",
@@ -183,7 +183,7 @@
     },
     {
       "id": "type-alias",
-      "icon": "15.png",
+      "icon": "15.webp",
       "category": "structure",
       "difficulty": "easy",
       "front": "type",
@@ -195,7 +195,7 @@
     },
     {
       "id": "interface",
-      "icon": "16.png",
+      "icon": "16.webp",
       "category": "structure",
       "difficulty": "easy",
       "front": "interface",
@@ -207,7 +207,7 @@
     },
     {
       "id": "enum",
-      "icon": "17.png",
+      "icon": "17.webp",
       "category": "structure",
       "difficulty": "medium",
       "front": "enum",
@@ -219,7 +219,7 @@
     },
     {
       "id": "union",
-      "icon": "18.png",
+      "icon": "18.webp",
       "category": "advanced",
       "difficulty": "medium",
       "front": "| (union)",
@@ -231,7 +231,7 @@
     },
     {
       "id": "intersection",
-      "icon": "19.png",
+      "icon": "19.webp",
       "category": "advanced",
       "difficulty": "hard",
       "front": "& (intersection)",
@@ -243,7 +243,7 @@
     },
     {
       "id": "literal",
-      "icon": "20.png",
+      "icon": "20.webp",
       "category": "advanced",
       "difficulty": "medium",
       "front": "literal types",
@@ -255,7 +255,7 @@
     },
     {
       "id": "generic",
-      "icon": "21.png",
+      "icon": "21.webp",
       "category": "advanced",
       "difficulty": "hard",
       "front": "<T>",
@@ -267,7 +267,7 @@
     },
     {
       "id": "keyof",
-      "icon": "22.png",
+      "icon": "22.webp",
       "category": "advanced",
       "difficulty": "medium",
       "front": "keyof",
@@ -279,7 +279,7 @@
     },
     {
       "id": "typeof",
-      "icon": "23.png",
+      "icon": "23.webp",
       "category": "advanced",
       "difficulty": "easy",
       "front": "typeof",
@@ -291,7 +291,7 @@
     },
     {
       "id": "indexed-access",
-      "icon": "24.png",
+      "icon": "24.webp",
       "category": "advanced",
       "difficulty": "medium",
       "front": "T[K]",
@@ -303,7 +303,7 @@
     },
     {
       "id": "mapped",
-      "icon": "25.png",
+      "icon": "25.webp",
       "category": "advanced",
       "difficulty": "hard",
       "front": "mapped types",
@@ -315,7 +315,7 @@
     },
     {
       "id": "conditional",
-      "icon": "26.png",
+      "icon": "26.webp",
       "category": "advanced",
       "difficulty": "hard",
       "front": "conditional types",
@@ -327,7 +327,7 @@
     },
     {
       "id": "infer",
-      "icon": "27.png",
+      "icon": "27.webp",
       "category": "advanced",
       "difficulty": "hard",
       "front": "infer",
@@ -339,7 +339,7 @@
     },
     {
       "id": "partial",
-      "icon": "28.png",
+      "icon": "28.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Partial<T>",
@@ -351,7 +351,7 @@
     },
     {
       "id": "required",
-      "icon": "29.png",
+      "icon": "29.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Required<T>",
@@ -363,7 +363,7 @@
     },
     {
       "id": "readonly",
-      "icon": "30.png",
+      "icon": "30.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Readonly<T>",
@@ -375,7 +375,7 @@
     },
     {
       "id": "pick",
-      "icon": "31.png",
+      "icon": "31.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Pick<T, K>",
@@ -387,7 +387,7 @@
     },
     {
       "id": "omit",
-      "icon": "32.png",
+      "icon": "32.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Omit<T, K>",
@@ -399,7 +399,7 @@
     },
     {
       "id": "record",
-      "icon": "33.png",
+      "icon": "33.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Record<K, T>",
@@ -411,7 +411,7 @@
     },
     {
       "id": "exclude",
-      "icon": "34.png",
+      "icon": "34.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Exclude<T, U>",
@@ -423,7 +423,7 @@
     },
     {
       "id": "extract",
-      "icon": "35.png",
+      "icon": "35.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "Extract<T, U>",
@@ -435,7 +435,7 @@
     },
     {
       "id": "non nullable",
-      "icon": "36.png",
+      "icon": "36.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "NonNullable<T>",
@@ -447,7 +447,7 @@
     },
     {
       "id": "return type",
-      "icon": "37.png",
+      "icon": "37.webp",
       "category": "utility",
       "difficulty": "medium",
       "front": "ReturnType<T>",

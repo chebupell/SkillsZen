@@ -61,7 +61,7 @@ const PracticePage: React.FC = () => {
   }
 
   return (
-    <PageLayout backgroundImage="practice-background.png">
+    <PageLayout backgroundImage="practice-background.webp">
       <PracticeSubPage {...practice} onNext={handleNext} />
     </PageLayout>
   )

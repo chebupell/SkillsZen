@@ -57,7 +57,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
     <PageLayout backgroundImage={backgroundImage}>
       <CourseSubPage
         courseId={courseId}
-        topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.png`}
+        topicImg={`/icons/${data.topicImg.toLowerCase()}-icon.webp`}
         topicTitle={data.topicTitle}
         statusText={data.statusText}
         exercisesProgress={data.exercisesProgress}

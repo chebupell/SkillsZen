@@ -51,19 +51,19 @@ export const router = createBrowserRouter([
               {
                 path: 'js',
                 element: (
-                  <CoursePage courseId="js_course" backgroundImage="js-page-background.png" />
+                  <CoursePage courseId="js_course" backgroundImage="js-page-background.webp" />
                 ),
               },
               {
                 path: 'ts',
                 element: (
-                  <CoursePage courseId="ts_course" backgroundImage="ts-page-background.png" />
+                  <CoursePage courseId="ts_course" backgroundImage="ts-page-background.webp" />
                 ),
               },
               {
                 path: 'algo',
                 element: (
-                  <CoursePage courseId="algo_course" backgroundImage="algo-page-background.png" />
+                  <CoursePage courseId="algo_course" backgroundImage="algo-page-background.webp" />
                 ),
               },
               { path: 'practice/:blockId', element: <PracticePage /> },

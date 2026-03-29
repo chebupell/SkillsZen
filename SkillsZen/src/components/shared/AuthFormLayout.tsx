@@ -28,7 +28,7 @@ export function AuthFormLayout({
   })
 
   return (
-    <div className="flex flex-col justify-center flex-1 px-4 bg-[url('/background-images/auth-page-background.png')] bg-cover bg-center bg-fixed relative">
+    <div className="flex flex-col justify-center flex-1 px-4 bg-[url('/background-images/auth-page-background.webp')] bg-cover bg-center bg-fixed relative">
       <Card className="max-w-100 mx-auto w-full border-none shadow-2xl shadow-primary/5 bg-background/50 backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-8">
           <CardTitle className="text-3xl font-bold tracking-tight text-center">{title}</CardTitle>

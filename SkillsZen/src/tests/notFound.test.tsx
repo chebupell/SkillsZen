@@ -64,6 +64,6 @@ describe('NotFound Component', () => {
     )
 
     const container = screen.getByText('404').closest('div')?.parentElement?.parentElement
-    expect(container).toHaveClass("bg-[url('/background-images/main-page-background.png')]")
+    expect(container).toHaveClass("bg-[url('/background-images/main-page-background.webp')]")
   })
 })

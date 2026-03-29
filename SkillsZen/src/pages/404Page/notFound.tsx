@@ -9,7 +9,7 @@ export function NotFound() {
   const navigate = useNavigate()
 
   return (
-    <div className="flex w-full items-start justify-center bg-background p-4 pt-32 sm:pt-42 font-sans bg-[url('/background-images/main-page-background.png')] bg-cover bg-center">
+    <div className="flex w-full items-start justify-center bg-background p-4 pt-32 sm:pt-42 font-sans bg-[url('/background-images/main-page-background.webp')] bg-cover bg-center">
       <div className="relative w-full max-w-md">
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 opacity-[0.08] select-none pointer-events-none w-full text-center z-20">
           <span className="text-[140px] sm:text-[180px] font-black tracking-tighter leading-none">

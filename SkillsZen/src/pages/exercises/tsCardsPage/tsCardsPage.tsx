@@ -19,8 +19,8 @@ const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards
 
 const bgVariants = ['bg-slate-100/25', 'bg-sky-100/20', 'bg-indigo-100/20', 'bg-stone-100/25']
 
-const gardenImgDisabled = 'icons/zen-garden-disabled.png'
-const gardenImg = 'icons/zen-garden.png'
+const gardenImgDisabled = 'icons/zen-garden-disabled.webp'
+const gardenImg = 'icons/zen-garden.webp'
 
 const TsCards: React.FC = () => {
   const { user } = useAuth()
@@ -156,7 +156,7 @@ const TsCards: React.FC = () => {
   const isGardenFinished = checkedCardIds.length === allCards.length && allCards.length > 0
 
   return (
-    <PageLayout backgroundImage="ts-cards-background.png">
+    <PageLayout backgroundImage="ts-cards-background.webp">
       <div className="p-4 sm:p-10 min-h-screen">
         <div className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-2 mb-3">
           <div className="flex justify-start">

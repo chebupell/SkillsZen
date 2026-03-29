@@ -103,7 +103,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen px-4 py-12 bg-[url('/background-images/main-page-background.png')] bg-cover bg-center">
+    <div className="flex flex-col items-center min-h-screen px-4 py-12 bg-[url('/background-images/main-page-background.webp')] bg-cover bg-center">
       <Card className="w-full max-w-2xl border-none shadow-2xl shadow-primary/5 bg-background/50 backdrop-blur-md rounded-2xl overflow-hidden">
         <CardHeader className="flex flex-row items-center gap-6 pb-8 border-b border-border/50 bg-primary/5">
           <Avatar className="h-20 w-20 border-2 border-background shadow-sm">
