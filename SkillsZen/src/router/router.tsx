@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
           {
             element: <SuspenseLayout />,
             children: [
-              { index: true, element: <Menu backgroundImage='main-page-background.webp' /> },
+              { index: true, element: <Menu backgroundImage="main-page-background.webp" /> },
               {
                 path: 'coding-tasks',
                 children: [

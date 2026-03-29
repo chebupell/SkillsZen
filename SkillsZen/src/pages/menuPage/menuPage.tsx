@@ -34,7 +34,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
   }, [user?.uid])
 
   if (loading) {
-    return (<PageLoader />)
+    return <PageLoader />
   }
 
   if (cards.length === 0) {
