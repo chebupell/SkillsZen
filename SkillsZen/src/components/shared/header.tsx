@@ -25,7 +25,7 @@ export function Header() {
         </Link>
         <div className="flex items-center gap-4">
           {isAuthenticated ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <Link to="/profile" className="transition-all hover:scale-105 active:scale-95">
                 <Avatar className="h-8 w-8 border shadow-sm">
                   <AvatarImage src={user?.photo || ''} alt={user?.name || 'User'} />

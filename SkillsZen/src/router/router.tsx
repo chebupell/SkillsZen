@@ -17,7 +17,6 @@ const LoginPage = lazy(() =>
 )
 const CodingTasks = lazy(() => import('../pages/coding/CodingTasks'))
 const EditorPage = lazy(() => import('../pages/coding/EditorPage'))
-const StatsPage = lazy(() => import('../pages/stats/stats'))
 const ProfilePage = lazy(() => import('../pages/profilePage/ProfilePage'))
 
 export const router = createBrowserRouter([
@@ -39,7 +38,7 @@ export const router = createBrowserRouter([
           {
             element: <SuspenseLayout />,
             children: [
-              { index: true, element: <Menu /> },
+              { index: true, element: <Menu backgroundImage='main-page-background.webp' /> },
               {
                 path: 'coding-tasks',
                 children: [
@@ -69,7 +68,6 @@ export const router = createBrowserRouter([
               { path: 'practice/:blockId', element: <PracticePage /> },
               { path: 'results', element: <BlockResultPage /> },
               { path: 'ts-cards', element: <TsCards /> },
-              { path: 'stats', element: <StatsPage /> },
             ],
           },
         ],
