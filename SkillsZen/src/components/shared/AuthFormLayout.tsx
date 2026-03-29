@@ -5,7 +5,7 @@ import { Label } from '../../components/ui/label'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
 import { Loader2, ArrowRight } from 'lucide-react'
-import type { AuthFormProps, AuthValues } from '../../types/types'
+import type { AuthFormProps, AuthValues } from '../../types/UserTypes'
 
 export function AuthFormLayout({
   title,

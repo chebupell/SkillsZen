@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
-import type { AuthValues } from '../../types/types'
+import type { AuthValues } from '../../types/UserTypes'
 import { signinService } from '../../services/firebase'
 import { useNavigate } from 'react-router-dom'
 import { userStorageService } from '../../services/userService'

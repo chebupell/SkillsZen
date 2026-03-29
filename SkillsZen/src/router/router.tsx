@@ -18,6 +18,7 @@ const LoginPage = lazy(() =>
 const CodingTasks = lazy(() => import('../pages/coding/CodingTasks'))
 const EditorPage = lazy(() => import('../pages/coding/EditorPage'))
 const ProfilePage = lazy(() => import('../pages/profilePage/ProfilePage'))
+const AIChat = lazy(() => import('../pages/AIPage/AIPage'))
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
             element: <SuspenseLayout />,
             children: [
               { index: true, element: <Menu backgroundImage="main-page-background.webp" /> },
+              { path: 'ai-chat', element: <AIChat /> },
               {
                 path: 'coding-tasks',
                 children: [

@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 
 import { useAuth } from '../services/AuthContext'
 import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
-import type { UserSession } from '../types/types'
+import type { UserSession } from '../types/UserTypes'
 import CodingTasks from '../pages/coding/CodingTasks'
 
 vi.mock('../services/AuthContext', () => ({

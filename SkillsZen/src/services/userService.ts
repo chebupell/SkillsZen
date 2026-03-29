@@ -1,5 +1,6 @@
 import { type UserCredential } from 'firebase/auth'
-import { type UserSession } from '../types/types'
+import { type UserSession } from '../types/UserTypes'
+import type { ChatMessage } from '../types/chatTypes'
 
 const STORAGE_KEY = 'auth_user_session'
 
@@ -50,6 +51,19 @@ export const userStorageService = {
         ...(session.completedTasks || {}),
         [taskId]: status,
       },
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession))
+    return updatedSession
+  },
+
+  updateChatInStorage(messages: ChatMessage[]): UserSession | null {
+    const session = this.getSession()
+    if (!session) return null
+
+    const updatedSession: UserSession = {
+      ...session,
+      chatHistory: messages,
     }
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession))

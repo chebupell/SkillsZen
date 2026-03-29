@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 
-import type { UserSession } from '../types/types'
+import type { UserSession } from '../types/UserTypes'
 import type { ReactNode } from 'react'
 import { AuthProvider, useAuth } from '../services/AuthContext'
 import { userStorageService } from '../services/userService'

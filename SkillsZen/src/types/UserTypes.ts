@@ -1,5 +1,6 @@
 import type { Resolver } from 'react-hook-form'
 import z from 'zod'
+import type { ChatMessage } from './chatTypes'
 
 export const authFieldsSchema = z.object({
   login: z.string(),
@@ -35,13 +36,14 @@ export const profileSchema = z.object({
 export type ProfileValues = z.infer<typeof profileSchema>
 
 export interface UserSession {
-  uid: string
+  readonly uid: string
   email: string | null
   accessToken: string
   lastLogin: string
   name: string | null
   photo: string | null
   completedTasks?: Record<string, 'passed' | 'failed'>
+  chatHistory?: ChatMessage[]
 }
 
 export interface TaskData {

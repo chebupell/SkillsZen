@@ -19,12 +19,15 @@ import {
   getFirestore,
   orderBy,
   query,
+  serverTimestamp,
   setDoc,
   where,
 } from 'firebase/firestore'
-import type { ProfileValues } from '../types/types'
+import type { ProfileValues } from '../types/UserTypes'
 import type { ExerciseCardProps } from '../types/menuTypes'
 import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
+import { toast } from 'sonner'
+import type { ChatMessage } from '../types/chatTypes'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -329,4 +332,49 @@ export const runCodeInBrowser = (
 
     worker.postMessage({ code, tests })
   })
+}
+
+export const saveChatHistoryFirebase = async (
+  uid: string,
+  messages: ChatMessage[],
+): Promise<void> => {
+  if (!uid) return
+
+  try {
+    const chatRef = doc(db, 'users', uid, 'data', 'chat')
+    const truncatedMessages = messages.slice(-100)
+
+    await setDoc(
+      chatRef,
+      {
+        messages: truncatedMessages,
+        lastUpdate: serverTimestamp(),
+      },
+      { merge: true },
+    )
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Cloud sync failed: ${msg}`)
+    throw error
+  }
+}
+
+export const getChatHistoryFirebase = async (uid: string): Promise<ChatMessage[]> => {
+  if (!uid) return []
+
+  try {
+    const chatRef = doc(db, 'users', uid, 'data', 'chat')
+    const snap = await getDoc(chatRef)
+
+    if (snap.exists()) {
+      const data = snap.data()
+      return (data.messages as ChatMessage[]) || []
+    }
+
+    return []
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Failed to load history: ${msg}`)
+    return []
+  }
 }

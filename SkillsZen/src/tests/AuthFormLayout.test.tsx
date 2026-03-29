@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { AuthFormLayout } from '../components/shared/AuthFormLayout'
 import userEvent from '@testing-library/user-event'
 import type { Resolver, FieldErrors } from 'react-hook-form'
-import type { AuthValues } from '../types/types'
+import type { AuthValues } from '../types/UserTypes'
 
 const mockResolver: Resolver<AuthValues> = async (values) => {
   const errors: FieldErrors<AuthValues> = {}
