@@ -25,7 +25,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserSession | null>(() => userStorageService.getSession())
   const [isLoading, setIsLoading] = useState(false)
 
-  // Эффект для автоматической подгрузки истории из Firebase при логине
   useEffect(() => {
     const syncHistory = async () => {
       if (user?.uid && !user.chatHistory) {

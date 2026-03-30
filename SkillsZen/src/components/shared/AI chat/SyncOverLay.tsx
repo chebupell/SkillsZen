@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+import { Loader2 } from 'lucide-react'
 
 export const SyncOverlay = () => (
   <div className="absolute inset-0 z-50 bg-white/60 backdrop-blur-[2px] flex items-center justify-center">
@@ -7,4 +7,4 @@ export const SyncOverlay = () => (
       <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Syncing...</span>
     </div>
   </div>
-);
+)

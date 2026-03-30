@@ -1,4 +1,4 @@
-import { Bot } from "lucide-react";
+import { Bot } from 'lucide-react'
 
 export const EmptyChat: React.FC<{ name?: string }> = ({ name }) => (
   <div className="h-full flex flex-col items-center justify-center text-slate-300 opacity-60">
@@ -8,4 +8,4 @@ export const EmptyChat: React.FC<{ name?: string }> = ({ name }) => (
       Ask me anything about code or tasks.
     </p>
   </div>
-);
+)

@@ -2,7 +2,6 @@ import React from 'react'
 import { Send } from 'lucide-react'
 import { useAuth } from '../../../services/AuthContext'
 
-
 interface ChatInputProps {
   input: string
   setInput: (val: string) => void
