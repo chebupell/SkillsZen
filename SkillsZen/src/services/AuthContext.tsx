@@ -9,7 +9,7 @@ import {
 } from './firebase'
 import type { ChatMessage } from '../types/chatTypes'
 
-interface AuthContextType {
+export interface AuthContextType {
   user: UserSession | null
   isAuthenticated: boolean
   isLoading: boolean

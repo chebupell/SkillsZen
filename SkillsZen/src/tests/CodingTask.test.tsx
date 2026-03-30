@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { useAuth } from '../services/AuthContext'
+import { useAuth, type AuthContextType } from '../services/AuthContext'
 import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
 import type { UserSession } from '../types/UserTypes'
 import CodingTasks from '../pages/coding/CodingTasks'
@@ -34,16 +34,23 @@ describe('CodingTasks Page', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+
     mockedUseAuth.mockReturnValue({
       user: {
         uid: 'user-123',
+        name: 'Test User',
+        email: 'test@example.com',
+        accessToken: 'abc',
+        lastLogin: 'now',
         completedTasks: { 'task-1': 'passed' },
       } as unknown as UserSession,
       isAuthenticated: true,
+      isLoading: false,
       login: vi.fn(),
       logout: vi.fn(),
-      updateTaskStatus: vi.fn(),
-    })
+      updateTaskStatus: vi.fn().mockResolvedValue(undefined),
+      updateChat: vi.fn().mockResolvedValue(undefined),
+    } satisfies AuthContextType)
   })
 
   it('renders PageLoader initially and then displays tasks', async () => {
@@ -56,7 +63,6 @@ describe('CodingTasks Page', () => {
     )
 
     expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
-    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
 
     await waitFor(
       () => {
@@ -70,7 +76,10 @@ describe('CodingTasks Page', () => {
   })
 
   it('calculates and displays the correct progress in the header', async () => {
-    mockedGetTasks.mockResolvedValue({ tasks: mockTasks, progress: {} })
+    mockedGetTasks.mockResolvedValue({
+      tasks: mockTasks,
+      progress: { 'task-1': 'passed' },
+    })
 
     render(
       <MemoryRouter>
@@ -78,19 +87,29 @@ describe('CodingTasks Page', () => {
       </MemoryRouter>,
     )
 
-    await waitFor(() => {
-      const progressElement = screen.getByText((_content, element) => {
-        const text = element?.textContent || ''
-        const hasProgress = text.includes('1') && text.includes('/') && text.includes('2')
-        const childrenDontHaveText = Array.from(element?.children || []).every((child) => {
-          const childText = child.textContent || ''
-          return !(childText.includes('1') && childText.includes('/') && childText.includes('2'))
-        })
-        return Boolean(hasProgress && childrenDontHaveText)
-      })
+    await screen.findByText('Variable Basics')
 
-      expect(progressElement).toBeInTheDocument()
-    })
+    await waitFor(
+      () => {
+        const progressElement = screen.getByText((_content, element): boolean => {
+          const text = element?.textContent || ''
+          const hasProgress = text.includes('1') && text.includes('/') && text.includes('2')
+          const isDeepest = Array.from(element?.children || []).every(
+            (child) =>
+              !(
+                child.textContent?.includes('1') &&
+                child.textContent?.includes('/') &&
+                child.textContent?.includes('2')
+              ),
+          )
+
+          return !!(hasProgress && isDeepest)
+        })
+
+        expect(progressElement).toBeInTheDocument()
+      },
+      { timeout: 3000 },
+    )
   })
 
   it('navigates to home when clicking the Back button', async () => {

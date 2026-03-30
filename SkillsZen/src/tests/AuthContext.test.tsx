@@ -42,18 +42,18 @@ describe('AuthContext', () => {
 
   it('initializes with session and syncs chat history', async () => {
     const mockHistory: ChatMessage[] = [{ role: 'user', content: 'Hello' }]
-    
+
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
     vi.mocked(getChatHistoryFirebase).mockResolvedValue(mockHistory)
     vi.mocked(userStorageService.updateChatInStorage).mockReturnValue({
       ...mockSession,
-      chatHistory: mockHistory
+      chatHistory: mockHistory,
     })
 
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     expect(result.current.user).toEqual(mockSession)
-    
+
     await waitFor(() => {
       expect(getChatHistoryFirebase).toHaveBeenCalledWith(mockSession.uid)
       expect(result.current.user?.chatHistory).toEqual(mockHistory)
@@ -65,7 +65,7 @@ describe('AuthContext', () => {
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     const newMessages: ChatMessage[] = [{ role: 'user', content: 'New message' }]
-    
+
     await act(async () => {
       await result.current.updateChat(newMessages)
     })
@@ -76,12 +76,12 @@ describe('AuthContext', () => {
 
   it('handles loading state during history sync', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
-    
+
     let resolveSync: (val: ChatMessage[]) => void = () => {}
-    const promise = new Promise<ChatMessage[]>((resolve) => { 
-      resolveSync = resolve 
+    const promise = new Promise<ChatMessage[]>((resolve) => {
+      resolveSync = resolve
     })
-    
+
     vi.mocked(getChatHistoryFirebase).mockReturnValue(promise)
 
     const { result } = renderHook(() => useAuth(), { wrapper })
@@ -109,5 +109,3 @@ describe('AuthContext', () => {
     expect(userStorageService.clearSession).toHaveBeenCalled()
   })
 })
-
-

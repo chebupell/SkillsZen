@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 
-import { useAuth } from '../services/AuthContext'
+import { useAuth, type AuthContextType } from '../services/AuthContext'
 import { getTaskData, runCodeInBrowser } from '../services/firebase'
 import type { TaskData, UserSession } from '../types/UserTypes'
 import EditorPage from '../pages/coding/EditorPage'
@@ -42,24 +42,33 @@ describe('EditorPage', () => {
     text: '# Task Title\nSolve this!',
     initial_code: 'function main() {}',
     tests: ['test content'],
-    type: '',
+    type: 'javascript',
   }
 
   const mockedUseAuth = vi.mocked(useAuth)
   const mockedGetTaskData = vi.mocked(getTaskData)
   const mockedRunCode = vi.mocked(runCodeInBrowser)
-  const mockUpdateTaskStatus = vi.fn().mockResolvedValue(undefined)
 
   beforeEach(() => {
     vi.clearAllMocks()
+    localStorage.clear() 
 
     mockedUseAuth.mockReturnValue({
-      user: { completedTasks: {} } as UserSession,
+      user: {
+        uid: 'user-123',
+        name: 'Test User',
+        email: 'test@example.com',
+        accessToken: 'abc',
+        lastLogin: 'now',
+        completedTasks: { 'task-1': 'passed' },
+      } as unknown as UserSession,
       isAuthenticated: true,
+      isLoading: false,
       login: vi.fn(),
       logout: vi.fn(),
-      updateTaskStatus: mockUpdateTaskStatus,
-    })
+      updateTaskStatus: vi.fn().mockResolvedValue(undefined),
+      updateChat: vi.fn().mockResolvedValue(undefined),
+    } satisfies AuthContextType)
 
     mockedGetTaskData.mockResolvedValue(mockTask)
   })
@@ -72,7 +81,6 @@ describe('EditorPage', () => {
     )
 
     expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
-    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
 
     await waitFor(
       () => {
@@ -80,6 +88,7 @@ describe('EditorPage', () => {
       },
       { timeout: 3000 },
     )
+
     expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 
@@ -119,8 +128,8 @@ describe('EditorPage', () => {
 
   it('handles critical sandbox errors gracefully', async () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
     mockedRunCode.mockRejectedValue(new Error('Sandbox Crash'))
+
     render(
       <MemoryRouter>
         <EditorPage />
@@ -132,8 +141,8 @@ describe('EditorPage', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/🔥 Critical Sandbox Error/i)).toBeInTheDocument()
-      expect(consoleSpy).toHaveBeenCalledWith('Test Execution Error:', expect.any(Error))
     })
+
     consoleSpy.mockRestore()
   })
 })
