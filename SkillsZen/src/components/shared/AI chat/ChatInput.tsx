@@ -1,6 +1,7 @@
 import React from 'react'
 import { Send } from 'lucide-react'
-import { useAuth } from '../../services/AuthContext'
+import { useAuth } from '../../../services/AuthContext'
+
 
 interface ChatInputProps {
   input: string

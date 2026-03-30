@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Bot, User } from 'lucide-react'
-import type { ChatMessage } from '../../types/chatTypes'
+import type { ChatMessage } from '../../../types/chatTypes'
 import type { Components } from 'react-markdown'
 
 interface ChatMessageItemProps {
