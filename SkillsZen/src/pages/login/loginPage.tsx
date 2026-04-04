@@ -6,6 +6,7 @@ import { signinService } from '../../services/firebase'
 import { useNavigate } from 'react-router-dom'
 import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
+import { toast } from 'sonner'
 
 const loginSchema = z.object({
   login: z.string().email('Invalid email address').min(1, 'Email is required'),
@@ -24,16 +25,18 @@ export function LoginPage() {
   const navigate = useNavigate()
   const handleLogin = async (data: AuthValues) => {
     try {
-      const credential = await signinService(data.login, data.password)
-      await userStorageService.saveSession(credential)
+      const { user, profile } = await signinService(data.login, data.password)
+      await userStorageService.saveSession(user, profile)
       const session = userStorageService.getSession()
 
+      // 4. Now 'session' is type 'UserSession | null', which matches your login() function
       if (session) {
         login(session)
         navigate('/')
       }
-    } catch (error) {
-      console.error('Registration error:', error)
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Authentication failed'
+      toast.error(message)
     }
   }
 
@@ -42,7 +45,7 @@ export function LoginPage() {
       title="Sign in"
       resolver={zodResolver(loginSchema)}
       onSubmit={handleLogin}
-      loginLabel="Username"
+      loginLabel="User email"
       buttonText="Sign In"
       linkDescription="Don't have an account?"
       linkText="Sign up"

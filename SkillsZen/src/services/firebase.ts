@@ -8,6 +8,8 @@ import {
   signOut,
   updateProfile,
   deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from 'firebase/auth'
 import {
   collection,
@@ -21,9 +23,10 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore'
-import type { ProfileValues } from '../types/UserTypes'
+import type { ProfileValues, SigninResponse } from '../types/UserTypes'
 import type { ExerciseCardProps } from '../types/menuTypes'
 import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
 import { toast } from 'sonner'
@@ -72,11 +75,47 @@ export async function signupService(
   }
 }
 
-export const signinService = async (email: string, password: string): Promise<UserCredential> => {
+
+
+export const signinService = async (email: string, password: string): Promise<SigninResponse> => {
   try {
-    return await signInWithEmailAndPassword(auth, email, password)
-  } catch (error) {
-    console.error('Signin error:', error)
+    // 1. Авторизация
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    const { user } = userCredential
+
+    // 2. Получение данных из Firestore
+    const userDocRef = doc(db, 'users', user.uid)
+    const userDoc = await getDoc(userDocRef)
+
+    // Используем "as", так как структура в БД должна соответствовать схеме
+    const profile = userDoc.exists() ? (userDoc.data() as ProfileValues) : undefined
+
+    return {
+      user,
+      profile,
+      credential: userCredential,
+    }
+  } catch (error: unknown) {
+    let message = 'An unexpected error occurred'
+
+    // Типизируем ошибку Firebase вместо any
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          message = 'Invalid email or password'
+          break
+        case 'auth/network-request-failed':
+          message = 'Network error, please check your connection'
+          break
+        default:
+          message = error.message
+      }
+    } else if (error instanceof Error) {
+      message = error.message
+    }
+
+    toast.error(message)
     throw error
   }
 }
@@ -88,6 +127,17 @@ export const logout = async (): Promise<void> => {
     console.error('Logout error:', error)
     throw error
   }
+}
+
+export const reauthenticateUser = async (password: string) => {
+  const auth = getAuth()
+  const user = auth.currentUser
+
+  if (user && user.email) {
+    const credential = EmailAuthProvider.credential(user.email, password)
+    return await reauthenticateWithCredential(user, credential)
+  }
+  throw new Error('No user found')
 }
 
 export const updateFirebaseUser = async (uid: string, data: ProfileValues): Promise<void> => {
@@ -105,6 +155,30 @@ export const updateFirebaseUser = async (uid: string, data: ProfileValues): Prom
     },
     { merge: true },
   )
+}
+
+export const uploadUserAvatar = async (uid: string, file: File): Promise<string> => {
+  const currentUser = auth.currentUser
+  if (!currentUser) throw new Error('No authenticated user')
+
+  // 1. Convert File to Base64 string
+  const base64String = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = (error) => reject(error)
+  })
+
+  const userRef = doc(db, 'users', uid)
+  await updateDoc(userRef, {
+    photo: base64String,
+    updatedAt: new Date().toISOString(),
+  })
+
+  // 3. Update Firebase Auth Profile
+  await updateProfile(currentUser, { photoURL: base64String })
+
+  return base64String
 }
 
 export const updateTaskStatusFirebase = async (
@@ -132,12 +206,15 @@ export const fetchFirestoreUserData = async (uid: string) => {
 }
 
 export const deleteFirebaseUser = async (uid: string): Promise<void> => {
-  const user = auth.currentUser
-  if (!user || user.uid !== uid) throw new Error('No authenticated user found')
+  const currentUser = auth.currentUser
 
+  if (!currentUser || currentUser.uid !== uid) {
+    throw new Error('No authenticated user found or UID mismatch')
+  }
   const userRef = doc(db, 'users', uid)
   await deleteDoc(userRef)
-  await deleteUser(user)
+
+  await deleteUser(currentUser)
 }
 
 export async function getAllCoursesWithProgress(userId: string): Promise<ExerciseCardProps[]> {

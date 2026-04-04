@@ -5,6 +5,7 @@ import { signupService } from '../../services/firebase'
 import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
 import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
+import { toast } from 'sonner'
 
 const signupSchema = z.object({
   username: z.string().min(2, 'Name must be at least 2 characters').optional(),
@@ -21,21 +22,32 @@ export function AuthPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSignup = async (data: z.infer<typeof signupSchema>) => {
-    try {
-      const credential = await signupService(data.login, data.password, data.username)
+ const handleSignup = async (data: z.infer<typeof signupSchema>) => {
+  const toastId = toast.loading('Creating account...'); // 1. Показываем лоадер
+  
+  try {
+    // 2. Вызываем сервис (он возвращает UserCredential)
+    const credential = await signupService(data.login, data.password, data.username);
 
-      await userStorageService.saveSession(credential)
-      const session = userStorageService.getSession()
+    // 3. FIX: Передаем именно 'credential.user', так как saveSession ждет тип 'User'
+    await userStorageService.saveSession(credential.user);
 
-      if (session) {
-        login(session)
-        navigate('/')
-      }
-    } catch (error) {
-      console.error('Registration error:', error)
+    const session = userStorageService.getSession();
+
+    if (session) {
+      login(session);
+      toast.success('Registration successful!', { id: toastId });
+      navigate('/');
     }
+  } catch (error: unknown) {
+    // 4. Безопасно обрабатываем ошибку без 'any'
+    const message = error instanceof Error ? error.message : 'Registration failed';
+    
+    toast.error(message, { id: toastId });
+    console.error('Registration error:', message);
   }
+};
+
 
   return (
     <AuthFormLayout

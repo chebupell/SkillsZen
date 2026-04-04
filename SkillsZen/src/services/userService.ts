@@ -1,21 +1,29 @@
-import { type UserCredential } from 'firebase/auth'
-import { type UserSession } from '../types/UserTypes'
+import { type User} from 'firebase/auth'
+import { type ProfileValues, type UserSession } from '../types/UserTypes'
 import type { ChatMessage } from '../types/chatTypes'
 
 const STORAGE_KEY = 'auth_user_session'
 
 export const userStorageService = {
-  async saveSession(credential: UserCredential): Promise<void> {
-    const token = await credential.user.getIdToken()
+  async saveSession(user: User, profile?: ProfileValues): Promise<void> {
+    if (!user) throw new Error('No user provided')
+
+    const token = await user.getIdToken()
+
     const session: UserSession = {
-      uid: credential.user.uid,
-      email: credential.user.email,
-      accessToken: token || '',
+      uid: user.uid,
+      email: user.email,
+      accessToken: token,
       lastLogin: new Date().toISOString(),
-      name: credential.user.displayName,
-      photo: credential.user.photoURL,
+      name: profile?.name ?? user.displayName ?? '',
+      photo: profile?.photo ?? user.photoURL ?? '',
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+    } catch {
+      throw new Error('Local storage is unavailable')
+    }
   },
 
   getSession(): UserSession | null {
@@ -23,10 +31,10 @@ export const userStorageService = {
     return data ? (JSON.parse(data) as UserSession) : null
   },
 
-  syncLocalSession(updatedName: string): UserSession | null {
+  syncLocalSession(updates: Partial<UserSession>): UserSession | null {
     const session = this.getSession()
     if (session) {
-      const updated = { ...session, name: updatedName }
+      const updated = { ...session, ...updates }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
       return updated
     }

@@ -67,7 +67,7 @@ const AIChat: React.FC = () => {
 
     try {
       const response = await getGroqChatCompletion(updatedMessages)
-      const aiText = response.choices?.[0]?.message?.content || 'I could not generate a response.'
+      const aiText = response!.choices?.[0]?.message?.content || 'I could not generate a response.'
 
       setIsTyping(false)
       await typeEffect(aiText, updatedMessages)
@@ -91,14 +91,13 @@ const AIChat: React.FC = () => {
     }
   }
 
+ 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 px-4 py-8">
+    <div className="h-screen flex flex-col bg-slate-50 px-4 py-8 overflow-hidden">
       <ChatHeader user={user} onBack={() => navigate('/')} />
-
       <main className="max-w-4xl mx-auto w-full flex-1 flex flex-col min-h-0 bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl overflow-hidden relative">
         {isAuthLoading && messages.length === 0 && <SyncOverlay />}
-
-        <div className="p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
+        <div className="shrink-0 p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-primary rounded-2xl text-white shadow-lg shadow-primary/20">
               <Sparkles size={24} />
@@ -135,15 +134,16 @@ const AIChat: React.FC = () => {
           )}
 
           {isTyping && <TypingIndicator />}
-          <div ref={chatEndRef} className="h-2" />
+          <div ref={chatEndRef} className="h-2 shrink-0" />
         </div>
-
-        <ChatInput
-          input={input}
-          setInput={setInput}
-          onSend={handleSend}
-          disabled={isTyping || !!streamingText || isAuthLoading}
-        />
+        <div className="shrink-0">
+          <ChatInput
+            input={input}
+            setInput={setInput}
+            onSend={handleSend}
+            disabled={isTyping || !!streamingText || isAuthLoading}
+          />
+        </div>
       </main>
 
       <ConfirmationChatModal

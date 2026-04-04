@@ -23,13 +23,15 @@ const MainPage: React.FC = () => {
       <Toaster position="top-right" richColors theme="light" />
       {isLoading && <PageLoader />}
       <Header />
-      <main className="flex-1 overflow-y-auto bg-white bg-cover bg-center relative">
-        <div className="flex flex-col min-h-full">
+      <main
+        className={`flex-1 relative ${isAiChatPage ? 'overflow-hidden' : 'overflow-y-auto'} bg-white bg-cover bg-center`}
+        style={{ backgroundImage: "url('/background-images/main-page-background.webp')" }}
+      >
+        <div className={`flex flex-col ${isAiChatPage ? 'h-full' : 'min-h-full'}`}>
           <Outlet />
 
           {user && (isMenuPage || isAiChatPage) && (
             <div className="fixed right-6 bottom-6 md:right-10 md:bottom-10 flex flex-col items-end gap-3 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500">
-              {/* Новая кнопка AI Chat (показывается, если мы НЕ на странице чата) */}
               {!isAiChatPage && (
                 <button
                   onClick={() => navigate('/ai-chat')}

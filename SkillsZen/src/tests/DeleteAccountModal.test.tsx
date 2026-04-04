@@ -2,7 +2,8 @@ import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { DeleteAccountModal } from '../components/shared/DeleteAccountModal'
+import { DeleteAccountModal } from '../components/shared/Profile/DeleteAccountModal'
+
 
 describe('DeleteAccountModal', () => {
   const mockOnConfirm = vi.fn()
