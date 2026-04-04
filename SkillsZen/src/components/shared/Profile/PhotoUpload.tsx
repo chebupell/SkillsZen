@@ -1,16 +1,22 @@
-import { Camera, Check, Loader2 } from "lucide-react";
-import { Button } from "../../ui/button";
-import { cn } from "../../../lib/utils";
+import { Camera, Check, Loader2 } from 'lucide-react'
+import { Button } from '../../ui/button'
+import { cn } from '../../../lib/utils'
 
 interface PhotoUploadProps {
-  fileInputRef: React.RefObject<HTMLInputElement | null>; 
-  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isProcessing: boolean;
-  isAttached: boolean;
-  disabled: boolean;
+  fileInputRef: React.RefObject<HTMLInputElement | null>
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  isProcessing: boolean
+  isAttached: boolean
+  disabled: boolean
 }
 
-export const PhotoUpload = ({ fileInputRef, onFileChange, isProcessing, isAttached, disabled }: PhotoUploadProps) => (
+export const PhotoUpload = ({
+  fileInputRef,
+  onFileChange,
+  isProcessing,
+  isAttached,
+  disabled,
+}: PhotoUploadProps) => (
   <div className="flex justify-center pb-2 w-full px-1">
     <input
       type="file"
@@ -38,8 +44,12 @@ export const PhotoUpload = ({ fileInputRef, onFileChange, isProcessing, isAttach
         <Camera className="h-5 w-5" />
       )}
       <span className="tracking-tight">
-        {isProcessing ? 'Processing Photo...' : isAttached ? 'Photo Attached & Ready' : 'Change Profile Photo'}
+        {isProcessing
+          ? 'Processing Photo...'
+          : isAttached
+            ? 'Photo Attached & Ready'
+            : 'Change Profile Photo'}
       </span>
     </Button>
   </div>
-);
+)

@@ -6,6 +6,7 @@ import {
   updateTaskStatusFirebase,
   saveChatHistoryFirebase,
   getChatHistoryFirebase,
+  saveUserCodeDraft,
 } from './firebase'
 import type { ChatMessage } from '../types/chatTypes'
 
@@ -17,6 +18,9 @@ export interface AuthContextType {
   logout: () => void
   updateTaskStatus: (taskId: string, status: 'passed' | 'failed') => Promise<void>
   updateChat: (messages: ChatMessage[]) => Promise<void>
+  setDraftLocal: (taskId: string, code: string) => void
+  saveDraftToCloud: (taskId: string, code: string) => Promise<void>
+  resetDraft: (taskId: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -78,6 +82,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const setDraftLocal = useCallback((taskId: string, code: string) => {
+    setUser((prev) => {
+      if (prev?.drafts?.[taskId] === code) return prev
+      return userStorageService.updateDraftInStorage(taskId, code)
+    })
+  }, [])
+
+  const saveDraftToCloud = useCallback(
+    async (taskId: string, code: string) => {
+      if (!user?.uid) return
+      await saveUserCodeDraft(user.uid, taskId, code)
+    },
+    [user?.uid],
+  )
+
+  const resetDraft = async (taskId: string) => {
+    if (!user?.uid) return
+    const updated = userStorageService.updateDraftInStorage(taskId, '')
+    if (updated) setUser(updated)
+    try {
+      await saveUserCodeDraft(user.uid, taskId, '')
+    } catch (error) {
+      console.error('Failed to reset cloud draft', error)
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -88,6 +118,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         updateTaskStatus,
         updateChat,
+        saveDraftToCloud,
+        setDraftLocal,
+        resetDraft,
       }}
     >
       {children}

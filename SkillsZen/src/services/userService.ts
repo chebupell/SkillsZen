@@ -77,4 +77,21 @@ export const userStorageService = {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession))
     return updatedSession
   },
+
+  // userService.ts
+  updateDraftInStorage(taskId: string, code: string): UserSession | null {
+    const session = this.getSession()
+    if (!session) return null
+
+    const updatedSession: UserSession = {
+      ...session,
+      drafts: {
+        ...(session.drafts || {}),
+        [taskId]: code,
+      },
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedSession))
+    return updatedSession
+  },
 }

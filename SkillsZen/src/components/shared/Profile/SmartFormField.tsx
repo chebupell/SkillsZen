@@ -1,17 +1,24 @@
-import type { Control, FieldPath } from "react-hook-form";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form";
-import { Input } from "../../ui/input";
-import type { ProfileValues } from "../../../types/UserTypes";
+import type { Control, FieldPath } from 'react-hook-form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form'
+import { Input } from '../../ui/input'
+import type { ProfileValues } from '../../../types/UserTypes'
 
 interface SmartFormFieldProps {
-  control: Control<ProfileValues>; 
-  name: FieldPath<ProfileValues>; 
-  label: string;
-  placeholder?: string;
-  icon: React.ElementType;
-  type?: string;
+  control: Control<ProfileValues>
+  name: FieldPath<ProfileValues>
+  label: string
+  placeholder?: string
+  icon: React.ElementType
+  type?: string
 }
-export const SmartFormField = ({ control, name, label, placeholder, icon: Icon, type = "text" }: SmartFormFieldProps) => (
+export const SmartFormField = ({
+  control,
+  name,
+  label,
+  placeholder,
+  icon: Icon,
+  type = 'text',
+}: SmartFormFieldProps) => (
   <FormField
     control={control}
     name={name}
@@ -36,4 +43,4 @@ export const SmartFormField = ({ control, name, label, placeholder, icon: Icon, 
       </FormItem>
     )}
   />
-);
+)

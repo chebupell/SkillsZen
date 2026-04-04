@@ -7,7 +7,7 @@ import { getGroqChatCompletion } from '../../services/groq'
 
 import { ChatMessageItem } from '../../components/shared/AI chat/ChatMessageItem'
 import type { ChatMessage } from '../../types/chatTypes'
-import { ConfirmationChatModal } from '../../components/shared/ConfirmationChatModal'
+import { ConfirmationChatModal } from '../../components/shared/AI chat/ConfirmationChatModal'
 import { ChatHeader } from '../../components/shared/AI chat/ChatHeader'
 import { SyncOverlay } from '../../components/shared/AI chat/SyncOverLay'
 import { TypingIndicator } from '../../components/shared/AI chat/TypingIndicator'
@@ -92,68 +92,83 @@ const AIChat: React.FC = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-slate-50 px-4 py-8 overflow-hidden">
-      <ChatHeader user={user} onBack={() => navigate('/')} />
-      <main className="max-w-4xl mx-auto w-full flex-1 flex flex-col min-h-0 bg-white rounded-[2.5rem] border border-slate-200 shadow-2xl overflow-hidden relative">
-        {isAuthLoading && messages.length === 0 && <SyncOverlay />}
-        <div className="shrink-0 p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-primary rounded-2xl text-white shadow-lg shadow-primary/20">
-              <Sparkles size={24} />
-            </div>
-            <h2 className="text-slate-800 font-bold text-lg leading-tight">AI Assistant</h2>
+  <div className="flex-1 flex flex-col h-full min-h-0 w-full bg-slate-50/50 p-4 md:px-8 pt-4 md:pt-8 overflow-hidden">
+    <ChatHeader user={user} onBack={() => navigate('/')} />
+    <main className="flex-1 flex flex-col min-h-0 max-w-5xl mx-auto w-full bg-white md:rounded-[2.5rem] border-x border-t border-slate-200 shadow-2xl overflow-hidden relative">
+      {isAuthLoading && messages.length === 0 && <SyncOverlay />}
+      <div className="shrink-0 p-5 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="p-2.5 bg-primary rounded-xl text-white shadow-lg shadow-primary/20">
+            <Sparkles size={20} />
           </div>
-
-          {messages.length > 0 && (
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="text-slate-300 hover:text-red-500 p-2 rounded-xl transition-all hover:bg-red-50"
-            >
-              <Eraser size={20} />
-            </button>
-          )}
+          <div>
+            <h2 className="text-slate-800 font-bold text-base leading-none">AI Assistant</h2>
+            <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1.5">
+              {isTyping ? 'Thinking...' : 'Online'}
+            </p>
+          </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-slate-50/30">
-          {messages.length === 0 && !streamingText && !isAuthLoading && (
-            <div className="h-full flex flex-col items-center justify-center text-slate-300 opacity-60">
-              <Bot size={64} strokeWidth={1} className="mb-4" />
-              <p className="text-xs uppercase tracking-widest font-bold text-center leading-relaxed">
-                Welcome, {user?.name?.split(' ')[0] || 'Guest'}!<br />
-                Ask me anything about code or tasks.
-              </p>
-            </div>
-          )}
+        {messages.length > 0 && (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="text-slate-300 hover:text-red-500 p-2 rounded-xl transition-all hover:bg-red-50"
+          >
+            <Eraser size={18} />
+          </button>
+        )}
+      </div>
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-slate-50/30">
+        {messages.length === 0 && !streamingText && !isAuthLoading && (
+          <div className="h-full flex flex-col items-center justify-center text-slate-300/60">
+            <Bot size={56} strokeWidth={1} className="mb-4" />
+            <p className="text-[10px] uppercase tracking-[0.2em] font-black text-center leading-relaxed">
+              Welcome, {user?.name?.split(' ')[0] || 'Guest'}!<br />
+              <span className="text-slate-400">Ask me anything about code.</span>
+            </p>
+          </div>
+        )}
 
-          {messages.map((msg, idx) => (
-            <ChatMessageItem key={`${idx}-${msg.role}`} msg={msg} userPhoto={user?.photo} />
-          ))}
-
-          {streamingText && (
-            <ChatMessageItem msg={{ role: 'assistant', content: streamingText }} userPhoto={null} />
-          )}
-
-          {isTyping && <TypingIndicator />}
-          <div ref={chatEndRef} className="h-2 shrink-0" />
-        </div>
-        <div className="shrink-0">
-          <ChatInput
-            input={input}
-            setInput={setInput}
-            onSend={handleSend}
-            disabled={isTyping || !!streamingText || isAuthLoading}
+        {messages.map((msg, idx) => (
+          <ChatMessageItem 
+            key={`${idx}-${msg.role}`} 
+            msg={msg} 
+            userPhoto={msg.role === 'user' ? user?.photo : null} 
           />
-        </div>
-      </main>
+        ))}
+        {(streamingText || isTyping) && (
+          <div className="space-y-4">
+            {streamingText && (
+              <ChatMessageItem 
+                msg={{ role: 'assistant', content: streamingText }} 
+                userPhoto={null} 
+              />
+            )}
+            {isTyping && !streamingText && <TypingIndicator />}
+          </div>
+        )}
 
-      <ConfirmationChatModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleClearConfirm}
-        title="Clear History?"
-        message="This will permanently delete all messages from this conversation."
-      />
-    </div>
-  )
+        <div ref={chatEndRef} className="h-2 shrink-0" />
+      </div>
+      <div className="shrink-0 bg-white border-t border-slate-100 p-4 md:p-6 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
+        <ChatInput
+          input={input}
+          setInput={setInput}
+          onSend={handleSend}
+          disabled={isTyping || !!streamingText || isAuthLoading}
+        />
+      </div>
+    </main>
+
+    <ConfirmationChatModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onConfirm={handleClearConfirm}
+      title="Clear History?"
+      message="This will permanently delete all messages from this session."
+    />
+  </div>
+)
+
 }
 
 export default AIChat

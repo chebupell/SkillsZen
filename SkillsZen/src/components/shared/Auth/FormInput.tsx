@@ -1,20 +1,28 @@
-import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import { Label } from "../../ui/label";
-import { Input } from "../../ui/input";
-
+import type { FieldError, UseFormRegisterReturn } from 'react-hook-form'
+import { Label } from '../../ui/label'
+import { Input } from '../../ui/input'
 
 interface FormInputProps {
-  id: string;
-  label: string;
-  type?: string;
-  placeholder: string;
-  error?: FieldError;
-  register: UseFormRegisterReturn;
+  id: string
+  label: string
+  type?: string
+  placeholder: string
+  error?: FieldError
+  register: UseFormRegisterReturn
 }
 
-export const FormInput = ({ id, label, type = 'text', placeholder, error, register }: FormInputProps) => (
+export const FormInput = ({
+  id,
+  label,
+  type = 'text',
+  placeholder,
+  error,
+  register,
+}: FormInputProps) => (
   <div className="grid gap-2">
-    <Label htmlFor={id} className="text-sm font-medium ml-1">{label}</Label>
+    <Label htmlFor={id} className="text-sm font-medium ml-1">
+      {label}
+    </Label>
     <Input
       id={id}
       type={type}

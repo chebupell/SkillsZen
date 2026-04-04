@@ -13,7 +13,6 @@ export function NotFound() {
         <div className="relative w-full max-w-md">
           <Card className="relative z-10 border-white/40 bg-white/70 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in duration-700 rounded-[2.5rem] ring-1 ring-black/5 overflow-hidden">
             <CardHeader className="text-center pt-12 pb-4">
-              {/* 404 is now the MAIN element inside the card */}
               <div className="relative mb-6">
                 <span className="text-[100px] sm:text-[130px] font-black tracking-tighter leading-none bg-gradient-to-b from-primary to-primary/40 bg-clip-text text-transparent drop-shadow-sm">
                   404
@@ -43,7 +42,6 @@ export function NotFound() {
             </CardContent>
 
             <CardFooter className="flex flex-col gap-3 pt-8 pb-12 px-10">
-              {/* Button styled like Sign In - light background, solid on hover */}
               <Button
                 onClick={() => navigate('/')}
                 className="w-full h-12 px-5 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out hover:shadow-md active:scale-95 font-bold uppercase tracking-widest text-[10px]"

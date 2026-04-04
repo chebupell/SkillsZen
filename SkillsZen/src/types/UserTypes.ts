@@ -43,24 +43,13 @@ export interface UserSession {
   accessToken: string
   lastLogin: string
   name: string | null
-  photo: string | null // URL из Firebase Storage
-  photoFile?: File // Для временного хранения выбранного файла
+  photo: string | null
+  photoFile?: File
   completedTasks?: Record<string, 'passed' | 'failed'>
   chatHistory?: ChatMessage[]
+  drafts?: Record<string, string>
 }
 
-export interface TaskData {
-  text: string
-  initial_code: string
-  tests: string[]
-  type: string
-}
-
-export interface ExecutionResult {
-  output: string
-  error: string
-  success: boolean
-}
 
 export interface SigninResponse {
   user: User

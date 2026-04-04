@@ -2,10 +2,12 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, Code2 } from 'lucide-react'
 import { useAuth } from '../../services/AuthContext'
-import { getCodingTasksAndProgress, type CodingTask } from '../../services/firebase'
+import { getCodingTasksAndProgress} from '../../services/firebase'
 import { PageLoader } from '../../components/shared/PageLoader'
-import TasksHeader from '../../components/shared/TasksCodingHeader'
-import TaskCard from '../../components/shared/TaskCodingCard'
+
+import TaskCard from '../../components/shared/Coding/TaskCodingCard'
+import TasksHeader from '../../components/shared/Coding/TasksCodingHeader'
+import type { CodingTask } from '../../types/codingTasksTypes'
 
 const CodingTasks: React.FC = () => {
   const { user } = useAuth()

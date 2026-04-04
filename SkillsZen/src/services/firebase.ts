@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { FirebaseError, initializeApp } from 'firebase/app'
 import {
   getAuth,
@@ -31,10 +30,8 @@ import type { ExerciseCardProps } from '../types/menuTypes'
 import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
 import { toast } from 'sonner'
 import type { ChatMessage } from '../types/chatTypes'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import type { CodingTask, UserProgressMap } from '../types/codingTasksTypes'
 
-// Your web app's Firebase configuration
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -77,15 +74,12 @@ export async function signupService(
 
 export const signinService = async (email: string, password: string): Promise<SigninResponse> => {
   try {
-    // 1. Авторизация
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const { user } = userCredential
 
-    // 2. Получение данных из Firestore
     const userDocRef = doc(db, 'users', user.uid)
     const userDoc = await getDoc(userDocRef)
 
-    // Используем "as", так как структура в БД должна соответствовать схеме
     const profile = userDoc.exists() ? (userDoc.data() as ProfileValues) : undefined
 
     return {
@@ -96,7 +90,6 @@ export const signinService = async (email: string, password: string): Promise<Si
   } catch (error: unknown) {
     let message = 'An unexpected error occurred'
 
-    // Типизируем ошибку Firebase вместо any
     if (error instanceof FirebaseError) {
       switch (error.code) {
         case 'auth/wrong-password':
@@ -158,8 +151,6 @@ export const updateFirebaseUser = async (uid: string, data: ProfileValues): Prom
 export const uploadUserAvatar = async (uid: string, file: File): Promise<string> => {
   const currentUser = auth.currentUser
   if (!currentUser) throw new Error('No authenticated user')
-
-  // 1. Convert File to Base64 string
   const base64String = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -172,8 +163,6 @@ export const uploadUserAvatar = async (uid: string, file: File): Promise<string>
     photo: base64String,
     updatedAt: new Date().toISOString(),
   })
-
-  // 3. Update Firebase Auth Profile
   await updateProfile(currentUser, { photoURL: base64String })
 
   return base64String
@@ -321,15 +310,14 @@ export async function getCourseSubPage(
   }
 }
 
-export interface CodingTask {
-  id: string
-  name: string
-  order: number
-  status?: string
-  description?: string
-}
+export const saveUserCodeDraft = async (uid: string, taskId: string, code: string) => {
+  const draftRef = doc(db, 'users', uid);
+  await updateDoc(draftRef, {
+    [`drafts.${taskId}`]: code
+  });
+};
 
-export type UserProgressMap = Record<string, 'completed' | 'in_progress' | string>
+
 
 export const getCodingTasksAndProgress = async (
   userId?: string,

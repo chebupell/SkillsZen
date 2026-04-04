@@ -1,4 +1,5 @@
 import React from 'react'
+import type { ProgressBarProps } from '../../types/codingTasksTypes'
 
 interface InProgressTagProps {
   current?: number
@@ -18,12 +19,6 @@ export const ProgressBar: React.FC<InProgressTagProps> = ({ current = 0, total =
   )
 }
 
-interface ProgressBarProps {
-  progress: number
-  isCompleted?: boolean
-  showStats?: boolean
-  size?: 'sm' | 'md' | 'lg'
-}
 
 const ProgressBarCoding: React.FC<ProgressBarProps> = ({
   progress,
