@@ -1,5 +1,6 @@
-import InProgressTag from './inProgressTag'
+
 import { render, screen } from '@testing-library/react'
+import InProgressTag from '../pages/exercises/tags/inProgressTag'
 
 describe('InProgressTag', () => {
   it('should contain Title "In Progress"', () => {

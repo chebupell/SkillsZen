@@ -1,5 +1,6 @@
-import SuccessTag from './successTag'
+
 import { render, screen } from '@testing-library/react'
+import SuccessTag from '../pages/exercises/tags/successTag'
 
 describe('SuccessTag', () => {
   it('should contain "Completed"', () => {
