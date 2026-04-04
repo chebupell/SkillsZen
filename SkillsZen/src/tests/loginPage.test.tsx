@@ -65,7 +65,7 @@ describe('LoginPage', () => {
       </MemoryRouter>,
     )
 
-    it('successful login flow with full data sync', async () => {
+  it('successful login flow with full data sync', async () => {
     const user = userEvent.setup()
     const { login } = mockedUseAuth()
     const mockFirebaseUser = {
@@ -79,12 +79,12 @@ describe('LoginPage', () => {
 
     mockedSignin.mockResolvedValue({
       user: mockFirebaseUser,
-      profile: { 
-        name: 'Test User', 
-        photo: '', 
+      profile: {
+        name: 'Test User',
+        photo: '',
         country: 'Belarus',
         birthDate: '1990-01-01',
-        phone: '+123' 
+        phone: '+123',
       } as ProfileValues,
       credential: { user: mockFirebaseUser } as UserCredential,
     })
@@ -98,29 +98,32 @@ describe('LoginPage', () => {
     await user.type(loginInput, VALID_EMAIL)
     await user.type(passInput, VALID_PASSWORD)
 
-    await waitFor(() => {
-      expect(submitBtn).toBeEnabled()
-    }, { timeout: 2000 })
+    await waitFor(
+      () => {
+        expect(submitBtn).toBeEnabled()
+      },
+      { timeout: 2000 },
+    )
 
     // 4. Кликаем по активной кнопке
     await user.click(submitBtn)
 
+    await waitFor(
+      () => {
+        expect(mockedSignin).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD)
 
-    await waitFor(() => {
-      expect(mockedSignin).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD)
-      
-      expect(login).toHaveBeenCalledWith(
-        expect.objectContaining({
-          uid: 'u1',
-          email: VALID_EMAIL,
-        } as Partial<UserSession>)
-      )
-      
-      expect(mockNavigate).toHaveBeenCalledWith('/')
-    }, { timeout: 3000 })
+        expect(login).toHaveBeenCalledWith(
+          expect.objectContaining({
+            uid: 'u1',
+            email: VALID_EMAIL,
+          } as Partial<UserSession>),
+        )
+
+        expect(mockNavigate).toHaveBeenCalledWith('/')
+      },
+      { timeout: 3000 },
+    )
   })
-
-
 
   it('displays toast error when signinService fails', async () => {
     const user = userEvent.setup()
@@ -145,9 +148,17 @@ describe('LoginPage', () => {
   it('shows loading state on submit button during submission', async () => {
     const user = userEvent.setup()
 
-    let resolvePromise: (value: { user: User; profile: ProfileValues; credential: UserCredential }) => void
-    const pendingPromise = new Promise<{ user: User; profile: ProfileValues; credential: UserCredential }>((resolve) => { 
-      resolvePromise = resolve 
+    let resolvePromise: (value: {
+      user: User
+      profile: ProfileValues
+      credential: UserCredential
+    }) => void
+    const pendingPromise = new Promise<{
+      user: User
+      profile: ProfileValues
+      credential: UserCredential
+    }>((resolve) => {
+      resolvePromise = resolve
     })
     mockedSignin.mockReturnValue(pendingPromise)
 
@@ -158,7 +169,7 @@ describe('LoginPage', () => {
 
     const submitBtn = screen.getByRole('button', { name: /sign in|login/i })
     await waitFor(() => expect(submitBtn).not.toBeDisabled())
-    
+
     await user.click(submitBtn)
 
     await waitFor(() => {
@@ -167,10 +178,10 @@ describe('LoginPage', () => {
       expect(submitBtn).toBeDisabled()
     })
 
-    resolvePromise!({ 
-      user: { uid: 'u1' } as User, 
-      profile: {} as ProfileValues, 
-      credential: {} as UserCredential 
+    resolvePromise!({
+      user: { uid: 'u1' } as User,
+      profile: {} as ProfileValues,
+      credential: {} as UserCredential,
     })
   })
 })

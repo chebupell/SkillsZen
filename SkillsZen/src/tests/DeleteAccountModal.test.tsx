@@ -16,7 +16,6 @@ if (!window.PointerEvent) {
 }
 
 describe('DeleteAccountModal', () => {
-
   type ConfirmFn = (password: string) => Promise<void>
 
   const mockOnConfirm = vi.fn<ConfirmFn>()
@@ -30,31 +29,25 @@ describe('DeleteAccountModal', () => {
 
   it('opens dialog, requires password and calls onConfirm', async () => {
     const user = userEvent.setup()
-    
 
     render(<DeleteAccountModal onConfirm={mockOnConfirm} isDeleting={false} />)
 
     const triggerBtn = screen.getByRole('button', { name: /delete profile/i })
     await user.click(triggerBtn)
 
-
     const passwordInput = await screen.findByPlaceholderText('••••••••')
     const confirmBtn = screen.getByRole('button', { name: /confirm deletion/i })
 
-
     expect(confirmBtn).toBeDisabled()
 
-  
     await user.type(passwordInput, 'mypassword123')
     expect(confirmBtn).toBeEnabled()
 
-  
     await user.click(confirmBtn)
 
     expect(mockOnConfirm).toHaveBeenCalledWith('mypassword123')
     expect(mockOnConfirm).toHaveBeenCalledTimes(1)
   })
-
 
   it('shows loading spinner and disables buttons when isDeleting is true', async () => {
     const user = userEvent.setup()
@@ -62,12 +55,12 @@ describe('DeleteAccountModal', () => {
 
     await user.click(screen.getByRole('button', { name: /delete profile/i }))
 
-    const actionBtn = screen.getByRole('button', { name: '' }) 
+    const actionBtn = screen.getByRole('button', { name: '' })
     const cancelBtn = screen.getByRole('button', { name: /cancel/i })
 
     expect(actionBtn).toBeDisabled()
     expect(cancelBtn).toBeDisabled()
-    
+
     const loader = actionBtn.querySelector('.animate-spin')
     expect(loader).toBeInTheDocument()
   })
@@ -92,4 +85,3 @@ describe('DeleteAccountModal', () => {
     expect(inputAfterReopen).toHaveValue('')
   })
 })
-

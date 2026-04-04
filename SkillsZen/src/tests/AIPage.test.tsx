@@ -53,7 +53,7 @@ describe('AIChat Page', () => {
     vi.useRealTimers()
     window.HTMLElement.prototype.scrollIntoView = vi.fn()
 
-   mockedUseAuth.mockReturnValue({
+    mockedUseAuth.mockReturnValue({
       user: mockUser,
       isLoading: false,
       isAuthenticated: true,
@@ -64,7 +64,7 @@ describe('AIChat Page', () => {
       setDraftLocal: vi.fn(),
       saveDraftToCloud: vi.fn().mockResolvedValue(undefined),
       resetDraft: vi.fn().mockResolvedValue(undefined),
-    } as AuthContextType) 
+    } as AuthContextType)
   })
 
   const renderChat = () =>
@@ -79,11 +79,11 @@ describe('AIChat Page', () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
 
     const aiText = 'Hello! I am your assistant.'
-    
+
     mockedGroq.mockImplementation(async () => {
       await new Promise((resolve) => setTimeout(resolve, 100))
-      return { 
-        choices: [{ message: { content: aiText, role: 'assistant' } }] 
+      return {
+        choices: [{ message: { content: aiText, role: 'assistant' } }],
       } as Awaited<ReturnType<typeof getGroqChatCompletion>>
     })
 
@@ -97,29 +97,27 @@ describe('AIChat Page', () => {
 
     await act(async () => {
       vi.advanceTimersByTime(5000)
-      await vi.runAllTimersAsync() 
+      await vi.runAllTimersAsync()
     })
 
     await waitFor(() => {
       expect(screen.getByText(aiText)).toBeInTheDocument()
       expect(mockUpdateChat).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({ role: 'assistant', content: aiText })
-        ])
+        expect.arrayContaining([expect.objectContaining({ role: 'assistant', content: aiText })]),
       )
     })
 
     vi.useRealTimers()
   })
 
-    it('clears chat history through confirmation modal', async () => {
+  it('clears chat history through confirmation modal', async () => {
     const user = userEvent.setup()
     const history: ChatMessage[] = [{ role: 'user', content: 'Old message' }]
 
     mockedUseAuth.mockReturnValue({
-        user: { ...mockUser, chatHistory: history },
-        isLoading: false,
-        updateChat: mockUpdateChat.mockResolvedValue(undefined),
+      user: { ...mockUser, chatHistory: history },
+      isLoading: false,
+      updateChat: mockUpdateChat.mockResolvedValue(undefined),
     } as unknown as AuthContextType)
 
     renderChat()
@@ -127,7 +125,7 @@ describe('AIChat Page', () => {
     const openModalBtn = await screen.findByLabelText(/clear history/i)
     await user.click(openModalBtn)
 
-    const confirmBtn = await screen.findByRole('button', { name: /^clear all$/i }) 
+    const confirmBtn = await screen.findByRole('button', { name: /^clear all$/i })
     await user.click(confirmBtn)
 
     await waitFor(() => {
@@ -135,7 +133,6 @@ describe('AIChat Page', () => {
       expect(toast.success).toHaveBeenCalledWith('Chat history cleared')
     })
   })
-
 
   it('handles API failure and restores input text', async () => {
     const user = userEvent.setup()
@@ -153,4 +150,3 @@ describe('AIChat Page', () => {
     })
   })
 })
-

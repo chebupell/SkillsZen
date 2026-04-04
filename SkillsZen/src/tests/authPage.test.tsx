@@ -113,7 +113,6 @@ describe('AuthPage', () => {
 
     renderPage()
 
-  
     const nameInput = await screen.findByPlaceholderText(/john doe/i)
     const emailInput = screen.getByPlaceholderText('name@example.com')
     const passInput = screen.getByPlaceholderText('••••••••')

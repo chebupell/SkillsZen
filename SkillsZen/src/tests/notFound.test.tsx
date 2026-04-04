@@ -18,11 +18,12 @@ describe('NotFound Component', () => {
     vi.clearAllMocks()
   })
 
-  const renderComponent = () => render(
-    <MemoryRouter>
-      <NotFound />
-    </MemoryRouter>
-  )
+  const renderComponent = () =>
+    render(
+      <MemoryRouter>
+        <NotFound />
+      </MemoryRouter>,
+    )
 
   it('renders 404 text and main heading', () => {
     renderComponent()
@@ -43,5 +44,4 @@ describe('NotFound Component', () => {
     fireEvent.click(backBtn)
     expect(mockNavigate).toHaveBeenCalledWith(-1)
   })
-
 })

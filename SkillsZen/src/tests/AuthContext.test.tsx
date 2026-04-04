@@ -7,11 +7,11 @@ import type { UserSession } from '../types/UserTypes'
 import type { ChatMessage } from '../types/chatTypes'
 import { AuthProvider, useAuth } from '../services/AuthContext'
 import { userStorageService } from '../services/userService'
-import { 
-  getChatHistoryFirebase, 
+import {
+  getChatHistoryFirebase,
   updateTaskStatusFirebase,
-  saveUserCodeDraft, 
-  saveChatHistoryFirebase
+  saveUserCodeDraft,
+  saveChatHistoryFirebase,
 } from '../services/firebase'
 import { toast } from 'sonner'
 
@@ -86,9 +86,9 @@ describe('AuthContext', () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
     vi.mocked(userStorageService.updateTaskInStorage).mockReturnValue({
       ...mockSession,
-      completedTasks: { 'task-1': 'passed' }
+      completedTasks: { 'task-1': 'passed' },
     })
-    
+
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     await act(async () => {
@@ -100,47 +100,41 @@ describe('AuthContext', () => {
     expect(result.current.user?.completedTasks?.['task-1']).toBe('passed')
   })
 
-   it('manages code drafts (local and cloud)', async () => {
+  it('manages code drafts (local and cloud)', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
-    
+
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     await waitFor(() => {
       expect(result.current.user?.uid).toBe(mockSession.uid)
     })
 
-    const updatedUser = { 
-      ...mockSession, 
-      drafts: { 'task-1': 'const x = 1;' } 
+    const updatedUser = {
+      ...mockSession,
+      drafts: { 'task-1': 'const x = 1;' },
     } as UserSession
     vi.mocked(userStorageService.updateDraftInStorage).mockReturnValue(updatedUser)
 
     await act(async () => {
       result.current.setDraftLocal('task-1', 'const x = 1;')
     })
-    
+
     expect(userStorageService.updateDraftInStorage).toHaveBeenCalledWith('task-1', 'const x = 1;')
-    
+
     expect(result.current.user?.uid).toBe(mockSession.uid)
 
     await act(async () => {
       await result.current.saveDraftToCloud('task-1', 'const x = 1;')
     })
 
-    expect(saveUserCodeDraft).toHaveBeenCalledWith(
-      mockSession.uid, 
-      'task-1', 
-      'const x = 1;'
-    )
+    expect(saveUserCodeDraft).toHaveBeenCalledWith(mockSession.uid, 'task-1', 'const x = 1;')
   })
-
-
 
   it('resets draft correctly', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
     vi.mocked(userStorageService.updateDraftInStorage).mockReturnValue({
       ...mockSession,
-      drafts: { 'task-1': '' }
+      drafts: { 'task-1': '' },
     })
 
     const { result } = renderHook(() => useAuth(), { wrapper })
@@ -165,18 +159,16 @@ describe('AuthContext', () => {
     expect(result.current.isAuthenticated).toBe(true)
   })
 
-
-    it('updates chat history: calls firebase, updates storage and state', async () => {
-
+  it('updates chat history: calls firebase, updates storage and state', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
-    
+
     // Подготавливаем обновленного пользователя, которого вернет хранилище
     const newMessages: ChatMessage[] = [{ role: 'user', content: 'Hello AI' }]
-    const updatedUser: UserSession = { 
-      ...mockSession, 
-      chatHistory: newMessages 
+    const updatedUser: UserSession = {
+      ...mockSession,
+      chatHistory: newMessages,
     }
-    
+
     vi.mocked(userStorageService.updateChatInStorage).mockReturnValue(updatedUser)
 
     const { result } = renderHook(() => useAuth(), { wrapper })
@@ -192,13 +184,12 @@ describe('AuthContext', () => {
     expect(result.current.user?.chatHistory).toEqual(newMessages)
   })
 
-    it('handles chat sync failure and shows toast error', async () => {
-
+  it('handles chat sync failure and shows toast error', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
-    
+
     const firestoreError = new Error('Firestore connection lost')
     vi.mocked(saveChatHistoryFirebase).mockRejectedValue(firestoreError)
-    
+
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     await waitFor(() => expect(result.current.user).not.toBeNull())
@@ -208,14 +199,13 @@ describe('AuthContext', () => {
     })
 
     expect(toast.error).toHaveBeenCalledWith(
-      expect.stringContaining('History sync error: Firestore connection lost')
+      expect.stringContaining('History sync error: Firestore connection lost'),
     )
   })
 
-
   it('does nothing if user is not authenticated', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(null)
-    
+
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     await act(async () => {
@@ -226,7 +216,4 @@ describe('AuthContext', () => {
     expect(saveChatHistoryFirebase).not.toHaveBeenCalled()
     expect(userStorageService.updateChatInStorage).not.toHaveBeenCalled()
   })
-
-
 })
-

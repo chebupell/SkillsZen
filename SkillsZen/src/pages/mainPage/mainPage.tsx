@@ -48,7 +48,6 @@ const MainPage: React.FC = () => {
         <div className={cn('flex-1 flex flex-col w-full relative', isAiChatPage && 'min-h-0')}>
           <Outlet />
 
-          {/* Плавающие кнопки действий */}
           {user && (isMenuPage || isAiChatPage) && (
             <div className="fixed right-6 bottom-6 md:right-10 md:bottom-10 flex flex-col items-end gap-3 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500">
               {!isAiChatPage && (
