@@ -50,7 +50,6 @@ export interface UserSession {
   drafts?: Record<string, string>
 }
 
-
 export interface SigninResponse {
   user: User
   profile?: ProfileValues

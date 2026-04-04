@@ -19,7 +19,6 @@ export const ProgressBar: React.FC<InProgressTagProps> = ({ current = 0, total =
   )
 }
 
-
 const ProgressBarCoding: React.FC<ProgressBarProps> = ({
   progress,
   isCompleted = false,

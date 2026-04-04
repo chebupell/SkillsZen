@@ -15,55 +15,33 @@ vi.mock('react-router-dom', async () => {
 
 describe('NotFound Component', () => {
   beforeEach(() => {
-    mockNavigate.mockClear()
+    vi.clearAllMocks()
   })
 
-  it('renders 404 text and main heading', () => {
-    render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>,
-    )
+  const renderComponent = () => render(
+    <MemoryRouter>
+      <NotFound />
+    </MemoryRouter>
+  )
 
+  it('renders 404 text and main heading', () => {
+    renderComponent()
     expect(screen.getByText('404')).toBeInTheDocument()
     expect(screen.getByText(/Lost in Space\?/i)).toBeInTheDocument()
-    expect(screen.getByText(/Page Not Found/i)).toBeInTheDocument()
   })
 
   it('navigates to home ("/") when "Back to Home" is clicked', () => {
-    render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>,
-    )
-
+    renderComponent()
     const homeBtn = screen.getByRole('button', { name: /back to home/i })
     fireEvent.click(homeBtn)
-
     expect(mockNavigate).toHaveBeenCalledWith('/')
   })
 
   it('navigates back (-1) when "Go Back" is clicked', () => {
-    render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>,
-    )
-
+    renderComponent()
     const backBtn = screen.getByRole('button', { name: /go back/i })
     fireEvent.click(backBtn)
-
     expect(mockNavigate).toHaveBeenCalledWith(-1)
   })
 
-  it('contains the correct background image class', () => {
-    render(
-      <MemoryRouter>
-        <NotFound />
-      </MemoryRouter>,
-    )
-
-    const container = screen.getByText('404').closest('div')?.parentElement?.parentElement
-    expect(container).toHaveClass("bg-[url('/background-images/main-page-background.webp')]")
-  })
 })

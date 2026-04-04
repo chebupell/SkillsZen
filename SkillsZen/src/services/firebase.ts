@@ -32,7 +32,6 @@ import { toast } from 'sonner'
 import type { ChatMessage } from '../types/chatTypes'
 import type { CodingTask, UserProgressMap } from '../types/codingTasksTypes'
 
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -311,13 +310,11 @@ export async function getCourseSubPage(
 }
 
 export const saveUserCodeDraft = async (uid: string, taskId: string, code: string) => {
-  const draftRef = doc(db, 'users', uid);
+  const draftRef = doc(db, 'users', uid)
   await updateDoc(draftRef, {
-    [`drafts.${taskId}`]: code
-  });
-};
-
-
+    [`drafts.${taskId}`]: code,
+  })
+}
 
 export const getCodingTasksAndProgress = async (
   userId?: string,

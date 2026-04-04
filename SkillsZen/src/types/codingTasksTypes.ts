@@ -21,7 +21,6 @@ export interface ExecutionResult {
   success: boolean
 }
 
-
 export interface ProgressBarProps {
   progress: number
   isCompleted?: boolean

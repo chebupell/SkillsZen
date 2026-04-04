@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, Code2 } from 'lucide-react'
 import { useAuth } from '../../services/AuthContext'
-import { getCodingTasksAndProgress} from '../../services/firebase'
+import { getCodingTasksAndProgress } from '../../services/firebase'
 import { PageLoader } from '../../components/shared/PageLoader'
 
 import TaskCard from '../../components/shared/Coding/TaskCodingCard'

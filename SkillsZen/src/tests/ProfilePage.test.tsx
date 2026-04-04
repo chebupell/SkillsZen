@@ -1,22 +1,32 @@
 import '@testing-library/jest-dom/vitest'
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
+import { toast } from 'sonner'
+import type { UserCredential } from 'firebase/auth'
 
-import { useAuth } from '../services/AuthContext'
+import { useAuth, type AuthContextType } from '../services/AuthContext'
 import {
   fetchFirestoreUserData,
   updateFirebaseUser,
   deleteFirebaseUser,
+  reauthenticateUser,
 } from '../services/firebase'
 import { userStorageService } from '../services/userService'
+import type { ProfileValues, UserSession } from '../types/UserTypes'
 import ProfilePage from '../pages/profilePage/ProfilePage'
+import { compressImage } from '../services/imageHelper'
+
+vi.mock('../services/imageHelper', () => ({
+  compressImage: vi.fn(),
+}))
 
 vi.mock('sonner', () => ({
   toast: {
     success: vi.fn(),
     error: vi.fn(),
+    loading: vi.fn().mockReturnValue('toast-id'),
   },
 }))
 
@@ -28,6 +38,7 @@ vi.mock('../services/firebase', () => ({
   fetchFirestoreUserData: vi.fn(),
   updateFirebaseUser: vi.fn(),
   deleteFirebaseUser: vi.fn(),
+  reauthenticateUser: vi.fn(),
 }))
 
 vi.mock('../services/userService', () => ({
@@ -37,6 +48,10 @@ vi.mock('../services/userService', () => ({
   },
 }))
 
+vi.mock('../utils/imageUtils', () => ({
+  compressImage: vi.fn(),
+}))
+
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -44,23 +59,42 @@ vi.mock('react-router-dom', async () => {
 })
 
 describe('ProfilePage', () => {
-  const mockLogin = vi.fn()
-  const mockLogout = vi.fn()
-  const mockUser = { uid: '123', name: 'Original Name', email: 'test@test.com' }
+  const mockedUseAuth = vi.mocked(useAuth)
 
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(vi.mocked(useAuth) as Mock).mockReturnValue({
-      user: mockUser,
-      login: mockLogin,
-      logout: mockLogout,
-    })
-    ;(vi.mocked(fetchFirestoreUserData) as Mock).mockResolvedValue({
-      name: 'Original Name',
+
+    mockedUseAuth.mockReturnValue({
+      user: {
+        uid: 'u1',
+        name: 'Test User',
+        email: 'test@example.com',
+        accessToken: 'token-123',
+        lastLogin: '2023-01-01',
+        photo: '',
+        drafts: {},
+        completedTasks: {},
+      } as UserSession,
+      isAuthenticated: true,
+      isLoading: false,
+      login: vi.fn(),
+      logout: vi.fn(),
+      setDraftLocal: vi.fn(),
+      saveDraftToCloud: vi.fn().mockResolvedValue(undefined),
+      resetDraft: vi.fn().mockResolvedValue(undefined),
+      updateTaskStatus: vi.fn().mockResolvedValue(undefined),
+      updateChat: vi.fn().mockResolvedValue(undefined),
+    } satisfies AuthContextType)
+
+    vi.mocked(fetchFirestoreUserData).mockResolvedValue({
+      name: 'Test User',
       country: 'Belarus',
       birthDate: '1990-01-01',
       phone: '+375291234567',
-    })
+      photo: '',
+    } satisfies ProfileValues)
+
+    vi.mocked(compressImage).mockResolvedValue('data:image/png;base64,mock')
   })
 
   const renderPage = () =>
@@ -70,65 +104,85 @@ describe('ProfilePage', () => {
       </MemoryRouter>,
     )
 
-  it('successfully updates profile and calls toast', async () => {
+  it('successfully updates name and triggers session sync', async () => {
     const user = userEvent.setup()
-    const updatedSession = { ...mockUser, name: 'New Name' }
-    ;(vi.mocked(userStorageService.syncLocalSession) as Mock).mockReturnValue(updatedSession)
+    const { login } = mockedUseAuth()
+
+    vi.mocked(userStorageService.syncLocalSession).mockReturnValue({
+      uid: 'u1',
+      name: 'New Name',
+    } as UserSession)
 
     renderPage()
 
-    const nameInput = await screen.findByLabelText(/full name/i)
-
+    const nameInput = await screen.findByPlaceholderText(/john doe/i)
     await user.clear(nameInput)
     await user.type(nameInput, 'New Name')
 
-    const saveBtn = await screen.findByRole('button', { name: /save changes/i })
-    await user.click(saveBtn)
+    await user.click(screen.getByRole('button', { name: /update profile/i }))
 
     await waitFor(() => {
       expect(updateFirebaseUser).toHaveBeenCalledWith(
-        '123',
+        'u1',
         expect.objectContaining({ name: 'New Name' }),
       )
-      expect(mockLogin).toHaveBeenCalledWith(updatedSession)
+      expect(userStorageService.syncLocalSession).toHaveBeenCalled()
+      expect(login).toHaveBeenCalled()
+      expect(toast.success).toHaveBeenCalledWith('Profile updated successfully', expect.anything())
     })
   })
 
-  it('shows error state on validation failure', async () => {
-    const user = userEvent.setup()
+  it('handles image compression flow', async () => {
     renderPage()
 
-    const nameInput = await screen.findByLabelText(/full name/i)
-    await user.clear(nameInput)
+    const file = new File(['img'], 'avatar.png', { type: 'image/png' })
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement
 
-    const saveBtn = await screen.findByRole('button', { name: /save changes/i })
-    await user.click(saveBtn)
+    fireEvent.change(input, { target: { files: [file] } })
 
-    const errorMsg = await screen.findByText((content) => {
-      return (
-        content.toLowerCase().includes('required') ||
-        content.toLowerCase().includes('at least') ||
-        content.toLowerCase().includes('required')
+    await waitFor(() => {
+      expect(compressImage).toHaveBeenCalledWith(file, 300)
+      expect(toast.success).toHaveBeenCalledWith(
+        expect.stringContaining('Photo attached'),
+        expect.anything(),
       )
     })
-
-    expect(errorMsg).toBeInTheDocument()
-    expect(errorMsg).toHaveClass('text-destructive')
   })
 
-  it('handles account deletion through the modal', async () => {
+  it('completes account deletion with password re-auth', async () => {
     const user = userEvent.setup()
+    const { logout } = mockedUseAuth()
+    vi.mocked(reauthenticateUser).mockResolvedValue({} as UserCredential)
+
     renderPage()
 
-    const deleteBtn = screen.getByRole('button', { name: /delete my account/i })
-    await user.click(deleteBtn)
+    const openModalBtn = await screen.findByRole('button', { name: /delete profile/i })
+    await user.click(openModalBtn)
 
-    const confirmBtn = await screen.findByRole('button', { name: /yes, delete/i })
+    const passInput = await screen.findByPlaceholderText('••••••••')
+
+    await user.type(passInput, 'mypassword123')
+
+    const confirmBtn = screen.getByRole('button', { name: /delete|confirm/i })
     await user.click(confirmBtn)
 
     await waitFor(() => {
-      expect(deleteFirebaseUser).toHaveBeenCalledWith('123')
+      expect(reauthenticateUser).toHaveBeenCalledWith('mypassword123')
+      expect(deleteFirebaseUser).toHaveBeenCalledWith('u1')
+      expect(logout).toHaveBeenCalled()
       expect(mockNavigate).toHaveBeenCalledWith('/')
     })
+  })
+
+  it('prevents submission when Zod validation fails', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    const nameInput = await screen.findByPlaceholderText(/john doe/i)
+    await user.clear(nameInput)
+    await user.click(screen.getByRole('button', { name: /update profile/i }))
+
+    expect(await screen.findByText(/at least 2 characters/i)).toBeInTheDocument()
+    expect(updateFirebaseUser).not.toHaveBeenCalled()
   })
 })

@@ -23,13 +23,11 @@ export function AuthPage() {
   const navigate = useNavigate()
 
   const handleSignup = async (data: z.infer<typeof signupSchema>) => {
-    const toastId = toast.loading('Creating account...') // 1. Показываем лоадер
+    const toastId = toast.loading('Creating account...')
 
     try {
-      // 2. Вызываем сервис (он возвращает UserCredential)
       const credential = await signupService(data.login, data.password, data.username)
 
-      // 3. FIX: Передаем именно 'credential.user', так как saveSession ждет тип 'User'
       await userStorageService.saveSession(credential.user)
 
       const session = userStorageService.getSession()

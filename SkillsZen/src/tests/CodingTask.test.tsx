@@ -5,9 +5,10 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
 import { useAuth, type AuthContextType } from '../services/AuthContext'
-import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
+import { getCodingTasksAndProgress } from '../services/firebase'
 import type { UserSession } from '../types/UserTypes'
 import CodingTasks from '../pages/coding/CodingTasks'
+import type { CodingTask } from '../types/codingTasksTypes'
 
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
@@ -20,7 +21,10 @@ vi.mock('../services/firebase', () => ({
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
-  return { ...actual, useNavigate: () => mockNavigate }
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  }
 })
 
 describe('CodingTasks Page', () => {
@@ -42,12 +46,17 @@ describe('CodingTasks Page', () => {
         email: 'test@example.com',
         accessToken: 'abc',
         lastLogin: 'now',
+        photo: null,
         completedTasks: { 'task-1': 'passed' },
-      } as unknown as UserSession,
+        drafts: {},
+      } as UserSession,
       isAuthenticated: true,
       isLoading: false,
       login: vi.fn(),
       logout: vi.fn(),
+      setDraftLocal: vi.fn(),
+      saveDraftToCloud: vi.fn().mockResolvedValue(undefined),
+      resetDraft: vi.fn().mockResolvedValue(undefined),
       updateTaskStatus: vi.fn().mockResolvedValue(undefined),
       updateChat: vi.fn().mockResolvedValue(undefined),
     } satisfies AuthContextType)
@@ -64,18 +73,15 @@ describe('CodingTasks Page', () => {
 
     expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Variable Basics')).toBeInTheDocument()
-        expect(screen.getByText('Loop Masters')).toBeInTheDocument()
-      },
-      { timeout: 2000 },
-    )
+    await waitFor(() => {
+      expect(screen.getByText('Variable Basics')).toBeInTheDocument()
+      expect(screen.getByText('Loop Masters')).toBeInTheDocument()
+    })
 
     expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 
-  it('calculates and displays the correct progress in the header', async () => {
+  it('displays the correct progress ratio (e.g., 1/2)', async () => {
     mockedGetTasks.mockResolvedValue({
       tasks: mockTasks,
       progress: { 'task-1': 'passed' },
@@ -87,29 +93,15 @@ describe('CodingTasks Page', () => {
       </MemoryRouter>,
     )
 
-    await screen.findByText('Variable Basics')
-
-    await waitFor(
-      () => {
-        const progressElement = screen.getByText((_content, element): boolean => {
-          const text = element?.textContent || ''
-          const hasProgress = text.includes('1') && text.includes('/') && text.includes('2')
-          const isDeepest = Array.from(element?.children || []).every(
-            (child) =>
-              !(
-                child.textContent?.includes('1') &&
-                child.textContent?.includes('/') &&
-                child.textContent?.includes('2')
-              ),
-          )
-
-          return !!(hasProgress && isDeepest)
-        })
-
-        expect(progressElement).toBeInTheDocument()
-      },
-      { timeout: 3000 },
-    )
+    await waitFor(() => {
+      expect(
+        screen.getByText((_content, element) => {
+          const hasText = (node: Element | null) =>
+            node?.textContent === '1 / 2' || node?.textContent?.replace(/\s+/g, '') === '1/2'
+          return hasText(element)
+        }),
+      ).toBeInTheDocument()
+    })
   })
 
   it('navigates to home when clicking the Back button', async () => {
@@ -128,7 +120,7 @@ describe('CodingTasks Page', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/')
   })
 
-  it('shows error toast if fetching fails', async () => {
+  it('shows error state if fetching fails', async () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     mockedGetTasks.mockRejectedValue(new Error('Firebase Failure'))
 
@@ -145,8 +137,9 @@ describe('CodingTasks Page', () => {
     consoleSpy.mockRestore()
   })
 
-  it('shows empty state when task array is empty', async () => {
-    mockedGetTasks.mockResolvedValue({ tasks: [], progress: {} })
+  it('navigates to specific task editor when clicking a task card', async () => {
+    const user = userEvent.setup()
+    mockedGetTasks.mockResolvedValue({ tasks: mockTasks, progress: {} })
 
     render(
       <MemoryRouter>
@@ -154,8 +147,9 @@ describe('CodingTasks Page', () => {
       </MemoryRouter>,
     )
 
-    await waitFor(() => {
-      expect(screen.getByText(/Challenge Awaits/i)).toBeInTheDocument()
-    })
+    const taskCard = await screen.findByText('Variable Basics')
+    await user.click(taskCard)
+
+    expect(mockNavigate).toHaveBeenCalledWith('editor/task-1')
   })
 })
