@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import EditorHeader from '../components/shared/Coding/EditorHeader'
+import EditorHeader from '../components/shared/EditorHeader'
 
 describe('EditorHeader', () => {
   const defaultProps = {

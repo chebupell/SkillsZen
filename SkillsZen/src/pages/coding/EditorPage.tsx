@@ -7,7 +7,7 @@ import { useAuth } from '../../services/AuthContext'
 
 import TestResultsModal from '../../components/shared/Coding/TestResultsModal'
 import ResetConfirmModal from '../../components/shared/Coding/ResetConfirmModal'
-import EditorHeader from '../../components/shared/Coding/EditorHeader'
+import EditorHeader from '../../components/shared/EditorHeader'
 import TaskDescription from '../../components/shared/Coding/TaskDescription'
 import TerminalConsole from '../../components/shared/Coding/TerminalConsole'
 import type { CodingTask, TaskData } from '../../types/codingTasksTypes'
