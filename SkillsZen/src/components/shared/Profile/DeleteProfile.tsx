@@ -3,9 +3,8 @@ import { Trash2, ShieldAlert } from 'lucide-react'
 import { Card } from '../../ui/card'
 import { DeleteAccountModal } from './DeleteAccountModal'
 
-
 interface DeleteProfileProps {
-  onDelete: (password: string) => Promise<void> 
+  onDelete: (password: string) => Promise<void>
   isDeleting: boolean
 }
 

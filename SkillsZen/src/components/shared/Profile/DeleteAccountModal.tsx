@@ -1,14 +1,22 @@
 import React, { useState } from 'react'
 import { Loader2, AlertTriangle, ShieldCheck } from 'lucide-react'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../../ui/alert-dialog'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '../../ui/alert-dialog'
 import { Button } from '../../ui/button'
 
 import { Input } from '../../ui/input'
 import { Label } from '../../ui/label'
 
-
 interface DeleteAccountModalProps {
-  // onConfirm now accepts the password string
   onConfirm: (password: string) => Promise<void>
   isDeleting: boolean
 }
@@ -26,8 +34,8 @@ export function DeleteAccountModal({ onConfirm, isDeleting }: DeleteAccountModal
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button 
-          variant="destructive" 
+        <Button
+          variant="destructive"
           className="rounded-xl px-6 font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-destructive/20 transition-all active:scale-95"
         >
           Delete Profile
@@ -39,19 +47,24 @@ export function DeleteAccountModal({ onConfirm, isDeleting }: DeleteAccountModal
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
             <AlertTriangle size={28} className="animate-pulse" />
           </div>
-          
+
           <div className="space-y-2 text-center">
             <AlertDialogTitle className="text-2xl font-black tracking-tight text-slate-800">
               Confirm Identity
             </AlertDialogTitle>
             <AlertDialogDescription className="text-slate-500 font-medium text-sm leading-relaxed">
-              For security reasons, please enter your <span className="font-bold text-destructive">password</span> to permanently delete your profile.
+              For security reasons, please enter your{' '}
+              <span className="font-bold text-destructive">password</span> to permanently delete
+              your profile.
             </AlertDialogDescription>
           </div>
         </AlertDialogHeader>
 
         <div className="my-6 space-y-2">
-          <Label htmlFor="confirm-password" className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">
+          <Label
+            htmlFor="confirm-password"
+            className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1"
+          >
             Account Password
           </Label>
           <div className="relative">
@@ -74,14 +87,10 @@ export function DeleteAccountModal({ onConfirm, isDeleting }: DeleteAccountModal
             disabled={isDeleting || !password}
             className="w-full h-12 rounded-2xl bg-destructive text-white font-black uppercase tracking-widest text-[10px] hover:bg-destructive/90 shadow-lg shadow-destructive/20 active:scale-95 transition-all"
           >
-            {isDeleting ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              'Confirm Deletion'
-            )}
+            {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Confirm Deletion'}
           </AlertDialogAction>
-          
-          <AlertDialogCancel 
+
+          <AlertDialogCancel
             disabled={isDeleting}
             className="w-full h-12 rounded-2xl border-slate-200 text-slate-400 font-bold uppercase tracking-widest text-[10px] hover:bg-slate-50"
             onClick={() => setPassword('')}

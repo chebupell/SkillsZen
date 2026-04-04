@@ -18,7 +18,7 @@ export const BackButton: React.FC<BackButtonProps> = memo(({ label = 'Back', cla
 
     // List of pages that should always redirect to Home
     const forceHomePages = ['/coding', '/ai-chat']
-    const isForceHomePage = forceHomePages.some(page => path.includes(page))
+    const isForceHomePage = forceHomePages.some((page) => path.includes(page))
 
     if (isForceHomePage || path === lastCategory) {
       navigate('/')
@@ -44,4 +44,3 @@ export const BackButton: React.FC<BackButtonProps> = memo(({ label = 'Back', cla
 })
 
 BackButton.displayName = 'BackButton'
-

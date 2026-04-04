@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { signupService } from '../../services/firebase'
-import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
+import { AuthFormLayout } from '../../components/shared/Auth/AuthFormLayout'
 import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
 import { toast } from 'sonner'
@@ -22,32 +22,30 @@ export function AuthPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
- const handleSignup = async (data: z.infer<typeof signupSchema>) => {
-  const toastId = toast.loading('Creating account...'); // 1. Показываем лоадер
-  
-  try {
-    // 2. Вызываем сервис (он возвращает UserCredential)
-    const credential = await signupService(data.login, data.password, data.username);
+  const handleSignup = async (data: z.infer<typeof signupSchema>) => {
+    const toastId = toast.loading('Creating account...') // 1. Показываем лоадер
 
-    // 3. FIX: Передаем именно 'credential.user', так как saveSession ждет тип 'User'
-    await userStorageService.saveSession(credential.user);
+    try {
+      // 2. Вызываем сервис (он возвращает UserCredential)
+      const credential = await signupService(data.login, data.password, data.username)
 
-    const session = userStorageService.getSession();
+      // 3. FIX: Передаем именно 'credential.user', так как saveSession ждет тип 'User'
+      await userStorageService.saveSession(credential.user)
 
-    if (session) {
-      login(session);
-      toast.success('Registration successful!', { id: toastId });
-      navigate('/');
+      const session = userStorageService.getSession()
+
+      if (session) {
+        login(session)
+        toast.success('Registration successful!', { id: toastId })
+        navigate('/')
+      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Registration failed'
+
+      toast.error(message, { id: toastId })
+      console.error('Registration error:', message)
     }
-  } catch (error: unknown) {
-    // 4. Безопасно обрабатываем ошибку без 'any'
-    const message = error instanceof Error ? error.message : 'Registration failed';
-    
-    toast.error(message, { id: toastId });
-    console.error('Registration error:', message);
   }
-};
-
 
   return (
     <AuthFormLayout

@@ -91,7 +91,6 @@ const AIChat: React.FC = () => {
     }
   }
 
- 
   return (
     <div className="h-screen flex flex-col bg-slate-50 px-4 py-8 overflow-hidden">
       <ChatHeader user={user} onBack={() => navigate('/')} />

@@ -1,4 +1,4 @@
-import { type User} from 'firebase/auth'
+import { type User } from 'firebase/auth'
 import { type ProfileValues, type UserSession } from '../types/UserTypes'
 import type { ChatMessage } from '../types/chatTypes'
 

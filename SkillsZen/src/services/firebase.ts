@@ -75,8 +75,6 @@ export async function signupService(
   }
 }
 
-
-
 export const signinService = async (email: string, password: string): Promise<SigninResponse> => {
   try {
     // 1. Авторизация

@@ -62,9 +62,8 @@ export interface ExecutionResult {
   success: boolean
 }
 
-
 export interface SigninResponse {
-  user: User;
-  profile?: ProfileValues;
-  credential: UserCredential;
+  user: User
+  profile?: ProfileValues
+  credential: UserCredential
 }

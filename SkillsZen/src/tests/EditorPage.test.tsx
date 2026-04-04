@@ -51,7 +51,7 @@ describe('EditorPage', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    localStorage.clear() 
+    localStorage.clear()
 
     mockedUseAuth.mockReturnValue({
       user: {

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
+import { AuthFormLayout } from '../../components/shared/Auth/AuthFormLayout'
 import type { AuthValues } from '../../types/UserTypes'
 import { signinService } from '../../services/firebase'
 import { useNavigate } from 'react-router-dom'
@@ -28,8 +28,6 @@ export function LoginPage() {
       const { user, profile } = await signinService(data.login, data.password)
       await userStorageService.saveSession(user, profile)
       const session = userStorageService.getSession()
-
-      // 4. Now 'session' is type 'UserSession | null', which matches your login() function
       if (session) {
         login(session)
         navigate('/')
