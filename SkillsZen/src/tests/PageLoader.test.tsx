@@ -35,20 +35,19 @@ describe('PageLoader', () => {
   })
 
   it('has correct overlay and blur styles', () => {
-    const { container } = render(<PageLoader />)
-    const overlay = container.firstChild as HTMLElement
-
-    expect(overlay).toHaveClass('fixed', 'inset-0', 'flex')
-    expect(overlay.className).toMatch(/backdrop-blur-\[2px\]/)
+    render(<PageLoader />)
+    const overlay = screen.getByTestId('page-loader')
+    expect(overlay).toHaveClass('fixed', 'inset-0', 'flex', 'flex-col')
+    expect(overlay.className).toContain('backdrop-blur')
     expect(overlay.className).toMatch(/bg-background\/\d+/)
+    expect(overlay).toHaveClass('z-[9999]')
   })
 
   it('contains the progress bar with shadow and animation', () => {
-    const { container } = render(<PageLoader />)
-    const progressFill = container.querySelector('.animate-progress-loading')
+    render(<PageLoader />)
+    const progressFill = screen.getByTestId('progress-fill')
 
-    expect(progressFill).toBeInTheDocument()
-    expect(progressFill).toHaveClass('bg-primary')
+    expect(progressFill).toHaveClass('animate-progress-loading bg-primary')
   })
 
   it('checks for the decorative glow pulse circle', () => {

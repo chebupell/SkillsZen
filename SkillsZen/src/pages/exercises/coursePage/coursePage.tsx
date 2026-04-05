@@ -7,6 +7,7 @@ import type { CourseSubPageProps } from '../../../types/exerciseTypes'
 import { PageLoader } from '../../../components/shared/PageLoader'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface CoursePageProps {
   courseId: string
@@ -32,7 +33,9 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
           setData(result)
         }
       } catch (error) {
-        console.error(`Failed to fetch ${courseId} exercises:`, error)
+        const message = error instanceof Error ? error.message : 'Unknown error'
+        toast.error(`Failed to fetch ${courseId} exercises: ${message}`)
+
       } finally {
         setLoading(false)
       }

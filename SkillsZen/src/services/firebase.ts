@@ -114,7 +114,8 @@ export const logout = async (): Promise<void> => {
   try {
     return await signOut(auth)
   } catch (error) {
-    console.error('Logout error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Logout error: ${errorMessage}`)
     throw error
   }
 }
@@ -241,7 +242,8 @@ export async function getAllCoursesWithProgress(userId: string): Promise<Exercis
 
     return results
   } catch (error) {
-    console.error('Error fetching courses:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Error fetching courses: ${errorMessage}`)
     return []
   }
 }
@@ -304,7 +306,8 @@ export async function getCourseSubPage(
       exercises: exercises,
     }
   } catch (error) {
-    console.error('Error fetching subpage data:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Error fetching subpage data: ${errorMessage}`)
     return null
   }
 }
@@ -348,7 +351,8 @@ export const getCodingTasksAndProgress = async (
 
     return { tasks, progress }
   } catch (err) {
-    console.error('[getCodingTasksAndProgress] Failed to fetch data:', err)
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+    toast.error(`[getCodingTasksAndProgress] Failed to fetch data: ${errorMessage}`)
     throw new Error('Could not retrieve tasks. Please check your connection.')
   }
 }
@@ -363,7 +367,8 @@ export const getTaskData = async (taskId: string) => {
     }
     throw new Error('Task not found')
   } catch (err) {
-    console.error('Error fetching task data:', err)
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+    toast.error(`Error fetching task data: ${errorMessage}`)
     throw err
   }
 }

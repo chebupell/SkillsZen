@@ -1,4 +1,3 @@
-
 import { render, screen } from '@testing-library/react'
 import StartTag from '../pages/exercises/tags/startTag'
 

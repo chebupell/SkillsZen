@@ -10,7 +10,6 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }))
 
-// Эмуляция PointerEvents (без этого AlertDialog может не реагировать на клики в JSDOM)
 if (!window.PointerEvent) {
   window.PointerEvent = class PointerEvent extends MouseEvent {} as typeof PointerEvent
 }
@@ -49,21 +48,20 @@ describe('DeleteAccountModal', () => {
     expect(mockOnConfirm).toHaveBeenCalledTimes(1)
   })
 
-  it('shows loading spinner and disables buttons when isDeleting is true', async () => {
+ it('shows loading spinner and disables buttons when isDeleting is true', async () => {
     const user = userEvent.setup()
     render(<DeleteAccountModal onConfirm={mockOnConfirm} isDeleting={true} />)
-
-    await user.click(screen.getByRole('button', { name: /delete profile/i }))
-
-    const actionBtn = screen.getByRole('button', { name: '' })
+    const trigger = screen.getByRole('button', { name: /delete profile/i })
+    await user.click(trigger)
+    const actionBtn = screen.getByRole('button', { name: '' }) 
     const cancelBtn = screen.getByRole('button', { name: /cancel/i })
-
     expect(actionBtn).toBeDisabled()
     expect(cancelBtn).toBeDisabled()
+    expect(actionBtn.querySelector('.animate-spin')).toBeInTheDocument()
+})
 
-    const loader = actionBtn.querySelector('.animate-spin')
-    expect(loader).toBeInTheDocument()
-  })
+
+
 
   it('resets password state when cancel is clicked', async () => {
     const user = userEvent.setup()

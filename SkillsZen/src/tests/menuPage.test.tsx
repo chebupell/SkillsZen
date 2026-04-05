@@ -29,11 +29,11 @@ describe('Menu Component', () => {
   const mockUser: UserSession = {
     uid: 'user-123',
     name: 'John Doe',
-    email: 'john@example.com', 
-    accessToken: 'mock-token', 
+    email: 'john@example.com',
+    accessToken: 'mock-token',
     lastLogin: '2026-04-05',
     photo: 'https://example.com',
-    chatHistory: [], 
+    chatHistory: [],
   }
 
   const mockCourses: ExerciseCardProps[] = [
@@ -86,8 +86,16 @@ describe('Menu Component', () => {
       expect(screen.queryByTestId('page-loader')).not.toBeInTheDocument()
     })
 
-    expect(screen.getByText(/Welcome, John!/i)).toBeInTheDocument()
-  })
+    expect(screen.getByText((_content, element) => {
+      const hasText = (node: Element | null) => node?.textContent === "Welcome, John!";
+      const nodeHasText = hasText(element);
+      const childrenDontHaveText = Array.from(element?.children || []).every(
+        child => !hasText(child as Element)
+      );
+      return nodeHasText && childrenDontHaveText;
+    })).toBeInTheDocument()
+})
+
 
   it('renders exercise cards correctly after loading', async () => {
     renderComponent()

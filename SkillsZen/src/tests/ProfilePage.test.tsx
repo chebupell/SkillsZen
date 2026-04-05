@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -160,10 +160,10 @@ describe('ProfilePage', () => {
     await user.click(openModalBtn)
 
     const passInput = await screen.findByPlaceholderText('••••••••')
-
     await user.type(passInput, 'mypassword123')
 
     const confirmBtn = screen.getByRole('button', { name: /delete|confirm/i })
+
     await user.click(confirmBtn)
 
     await waitFor(() => {

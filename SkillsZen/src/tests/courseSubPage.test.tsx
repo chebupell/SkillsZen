@@ -32,7 +32,6 @@ describe('ExerciseSubPage', () => {
     } as AuthContextType)
   })
 
-
   const renderWithRouter = (props: CourseSubPageProps) => {
     return render(
       <BrowserRouter>

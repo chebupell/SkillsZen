@@ -104,7 +104,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await saveUserCodeDraft(user.uid, taskId, '')
     } catch (error) {
-      console.error('Failed to reset cloud draft', error)
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Failed to reset cloud draft: ${message}`)
     }
   }
 

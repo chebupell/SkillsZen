@@ -24,8 +24,7 @@ const CodingTasks: React.FC = () => {
       try {
         const { tasks: fetchedTasks } = await getCodingTasksAndProgress(user?.uid)
         if (isMounted) setTasks(fetchedTasks)
-      } catch (err) {
-        console.error('Error loading tasks:', err)
+      } catch {
         if (isMounted) setError('Failed to load tasks. Please try again later.')
       } finally {
         if (isMounted) setLoading(false)

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import type { User, UserCredential } from 'firebase/auth'
@@ -105,7 +105,6 @@ describe('LoginPage', () => {
       { timeout: 2000 },
     )
 
-    // 4. Кликаем по активной кнопке
     await user.click(submitBtn)
 
     await waitFor(
@@ -178,10 +177,17 @@ describe('LoginPage', () => {
       expect(submitBtn).toBeDisabled()
     })
 
-    resolvePromise!({
-      user: { uid: 'u1' } as User,
-      profile: {} as ProfileValues,
-      credential: {} as UserCredential,
+    await act(async () => {
+      resolvePromise!({
+        user: { uid: 'u1' } as User,
+        profile: {} as ProfileValues,
+        credential: {} as UserCredential,
+      })
+      await pendingPromise 
+    })
+
+    await waitFor(() => {
+      expect(submitBtn.querySelector('.animate-spin')).not.toBeInTheDocument()
     })
   })
 })

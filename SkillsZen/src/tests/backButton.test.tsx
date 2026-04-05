@@ -55,10 +55,8 @@ describe('BackButton', () => {
   it('should apply custom className without type errors', () => {
     const customClass = 'mt-10'
     render(<BackButton className={customClass} />)
-    
+
     const button = screen.getByRole('button')
     expect(button).toHaveClass(customClass)
   })
 })
-
-

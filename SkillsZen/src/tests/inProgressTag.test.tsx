@@ -1,4 +1,3 @@
-
 import { render, screen } from '@testing-library/react'
 import InProgressTag from '../pages/exercises/tags/inProgressTag'
 

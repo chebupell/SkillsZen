@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { practiceService } from '../../../services/practiceService'
 import { useAuth } from '../../../services/AuthContext'
+import { toast } from 'sonner'
 
 const getStatusTag = (status: string, currentQuestion?: number, totalQuestions?: number) => {
   switch (status) {
@@ -46,7 +47,8 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
           await practiceService.restartBlock(user.uid, itemId, courseId)
         }
       } catch (error) {
-        console.error('Failed to restart block:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        toast.error(`Failed to restart block: ${errorMessage}`)
       }
     }
     navigate(`/practice/${itemId}`)
@@ -58,7 +60,12 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
         <div className="flex justify-start">
           <BackButton />
         </div>
-        <div className="text-2xl sm:text-4xl text-right sm:text-center">{topicTitle}</div>
+        <div className="flex flex-col items-end sm:items-center space-y-1 mb-8">
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-800 dark:text-slate-100 text-right sm:text-center leading-tight">
+            {topicTitle}
+          </h1>
+        </div>
+
         <div className="hidden sm:block w-25" aria-hidden="true"></div>
       </div>
 

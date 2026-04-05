@@ -14,6 +14,7 @@ import {
 } from '../../../services/tsCardsProgressService'
 import Garden from './garden'
 import { PageLoader } from '../../../components/shared/PageLoader'
+import { toast } from 'sonner'
 
 const allCards: TsCard[] = (cards as { cards: TsCard[] }).cards
 
@@ -116,7 +117,8 @@ const TsCards: React.FC = () => {
     try {
       await setTsCardCheckedState(user.uid, cardId, nextIsChecked)
     } catch (error) {
-      console.error('Failed to save progress', error)
+      const message = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Failed to save progress: ${message}`)
       setCheckedCardIds(previousCheckedCardIds)
     }
   }
@@ -140,7 +142,8 @@ const TsCards: React.FC = () => {
     try {
       await resetTsCardsProgress(user.uid)
     } catch (error) {
-      console.error('Failed to reset progress', error)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Failed to reset progress: ${errorMessage}`)
       setCheckedCardIds(previousCheckedCardIds)
     }
   }

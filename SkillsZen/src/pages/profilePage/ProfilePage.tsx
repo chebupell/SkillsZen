@@ -36,7 +36,6 @@ export default function ProfilePage() {
   useEffect(() => {
     if (user?.uid) {
       fetchFirestoreUserData(user.uid).then((data) => {
-        console.log(data)
         if (data) {
           const profile = data as ProfileValues
           form.reset({

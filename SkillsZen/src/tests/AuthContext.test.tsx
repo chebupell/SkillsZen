@@ -18,6 +18,7 @@ import { toast } from 'sonner'
 vi.mock('../services/userService', () => ({
   userStorageService: {
     getSession: vi.fn(),
+    saveSession: vi.fn(),
     clearSession: vi.fn(),
     updateChatInStorage: vi.fn(),
     updateTaskInStorage: vi.fn(),
@@ -57,9 +58,11 @@ describe('AuthContext', () => {
     vi.mocked(getChatHistoryFirebase).mockResolvedValue([])
   })
 
-  it('initializes with session from storage', () => {
+  it('initializes with session from storage', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
     const { result } = renderHook(() => useAuth(), { wrapper })
+
+    await act(async () => {})
 
     expect(result.current.user).toEqual(mockSession)
     expect(result.current.isAuthenticated).toBe(true)
@@ -148,16 +151,15 @@ describe('AuthContext', () => {
   })
 
   it('login sets user session and isAuthenticated to true', async () => {
-    vi.mocked(userStorageService.getSession).mockReturnValue(null)
-    const { result } = renderHook(() => useAuth(), { wrapper })
-
-    act(() => {
-      result.current.login(mockSession)
-    })
-
-    expect(result.current.user).toEqual(mockSession)
-    expect(result.current.isAuthenticated).toBe(true)
+  vi.mocked(userStorageService.getSession).mockReturnValue(null)
+  const { result } = renderHook(() => useAuth(), { wrapper })
+  await act(async () => {
+    result.current.login(mockSession)
   })
+  expect(result.current.user).toEqual(mockSession)
+  expect(result.current.isAuthenticated).toBe(true)
+})
+
 
   it('updates chat history: calls firebase, updates storage and state', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)

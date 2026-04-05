@@ -7,6 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { practiceService } from '../../../services/practiceService'
 import { useParams } from 'react-router-dom'
 import { PageLoader } from '../../../components/shared/PageLoader'
+import { toast } from 'sonner'
 
 const PracticePage: React.FC = () => {
   const { blockId } = useParams<{ blockId: string }>()
@@ -29,7 +30,7 @@ const PracticePage: React.FC = () => {
 
             if (data) {
               if (data.questions.length === 0) {
-                console.warn('No questions found for this block!')
+                toast.error('No questions found for this block!')
               }
               const currentQuestion = data.questions[data.progress.current_question]
               setPractice({
@@ -39,7 +40,8 @@ const PracticePage: React.FC = () => {
               })
             }
           } catch (error) {
-            console.error('Failed to fetch practice: ', error)
+            const message = error instanceof Error ? error.message : 'Unknown error'
+            toast.error(`Failed to fetch practice: ${message}`)
           } finally {
             setLoading(false)
           }

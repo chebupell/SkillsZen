@@ -10,6 +10,7 @@ import { ActionButton } from '../../components/shared/ActionButton' // Импо�
 import { useAuth } from '../../services/AuthContext'
 import { getAllCoursesWithProgress } from '../../services/firebase'
 import type { ExerciseCardProps } from '../../types/menuTypes'
+import { toast } from 'sonner'
 
 interface MenuProps {
   backgroundImage: string
@@ -29,7 +30,8 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
         const data = await getAllCoursesWithProgress(user.uid)
         setCards(data)
       } catch (error) {
-        console.error('Failed to fetch exercises:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        toast.error(`Failed to fetch exercises: ${errorMessage}`)
       } finally {
         setLoading(false)
       }
@@ -42,11 +44,13 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
 
   return (
     <PageLayout backgroundImage={backgroundImage}>
-      <h2 className="text-center text-4xl text-secondary-foreground mb-10 font-bold">
-        Welcome, {user?.name?.split(' ')[0] || 'Guest'}!
+      <h2 className="text-center mb-12 flex flex-col items-center gap-2">
+        <span className="text-4xl md:text-5xl font-black tracking-tight text-slate-800">
+          Welcome, <span className="text-primary">{user?.name?.split(' ')[0] || 'Guest'}</span>!
+        </span>
       </h2>
 
-      <div className="flex gap-8 justify-center flex-wrap px-4 pb-24"> {/* Добавили pb-24, чтобы кнопки не перекрывали контент */}
+      <div className="flex gap-8 justify-center flex-wrap px-4 pb-24">
         {cards.length > 0 ? (
           cards.map((card) => (
             <ExerciseCard
@@ -84,4 +88,3 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
 }
 
 export default Menu
-

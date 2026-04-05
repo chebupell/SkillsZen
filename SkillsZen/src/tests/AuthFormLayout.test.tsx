@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor, act } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { AuthFormLayout } from '../components/shared/Auth/AuthFormLayout'
 import userEvent from '@testing-library/user-event'
@@ -91,8 +91,8 @@ describe('AuthFormLayout', () => {
 
   it('shows loading state during submission', async () => {
     const { container } = renderComponent()
-
     const user = userEvent.setup()
+
     let resolveSubmit: (value: void | PromiseLike<void>) => void
     const submitPromise = new Promise<void>((resolve) => {
       resolveSubmit = resolve
@@ -102,20 +102,16 @@ describe('AuthFormLayout', () => {
 
     await user.type(screen.getByLabelText(defaultProps.loginLabel), 'test@example.com')
     await user.type(screen.getByLabelText(/password/i), 'password123')
+
     const submitBtn = screen.getByRole('button')
     await waitFor(() => expect(submitBtn).toBeEnabled())
 
     await user.click(submitBtn)
 
     expect(submitBtn).toBeDisabled()
+    expect(container.querySelector('.animate-spin')).toBeInTheDocument()
 
-    const loader = container.querySelector('.animate-spin')
-    expect(loader).toBeInTheDocument()
-
-    await act(async () => {
-      resolveSubmit!(undefined)
-      await submitPromise
-    })
+    resolveSubmit!(undefined)
 
     await waitFor(() => {
       expect(container.querySelector('.animate-spin')).not.toBeInTheDocument()

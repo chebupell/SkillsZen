@@ -11,6 +11,7 @@ import EditorHeader from '../../components/shared/EditorHeader'
 import TaskDescription from '../../components/shared/Coding/TaskDescription'
 import TerminalConsole from '../../components/shared/Coding/TerminalConsole'
 import type { CodingTask, TaskData } from '../../types/codingTasksTypes'
+import { toast } from 'sonner'
 
 const EditorPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>()
@@ -62,8 +63,8 @@ const EditorPage: React.FC = () => {
           setUserCode(initialCode)
           latestCodeRef.current = initialCode
         }
-      } catch (err) {
-        console.error('Initialization error:', err)
+      } catch {
+        toast.error('Failed to initialize page data. Please try again.')
       } finally {
         if (isMounted) setLoading(false)
       }
@@ -115,7 +116,8 @@ const EditorPage: React.FC = () => {
       const status = failed === 0 && passed > 0 ? 'passed' : 'failed'
       await updateTaskStatus(taskId, status)
     } catch (error) {
-      console.error('Execution Error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Execution Error: ${errorMessage}`)
       setOutput('🔥 Sandbox Error. Check your syntax or connection.')
     } finally {
       setIsRunning(false)
