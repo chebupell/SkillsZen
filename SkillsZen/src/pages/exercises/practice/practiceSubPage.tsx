@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Card } from '../../../components/ui/card'
 import ContinueButton from '../../../components/shared/nextQuestionButton'
 import type { PracticePageProps } from '../../../types/practiceTypes'
-import BackButton from '../../../components/shared/backButton'
+import { BackButton } from '../../../components/shared/backButton'
 import { ProgressBar } from '../../../components/shared/ProgressBar'
 import { practiceService } from '../../../services/practiceService'
 import SeeResultsButton from '../../../components/shared/seeResultsButton'
 import { PageLoader } from '../../../components/shared/PageLoader'
+import { toast } from 'sonner'
 
 export interface AnswerResponse {
   correct: boolean
@@ -76,7 +77,8 @@ export const PracticeSubPage: React.FC<PracticePageProps> = ({
         status: status,
       })
     } catch (error) {
-      console.error('Failed to update progress:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Failed to update progress: ${errorMessage}`)
     } finally {
       setLoading(false)
     }
