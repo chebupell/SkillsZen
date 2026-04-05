@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Sparkles, Code2 } from 'lucide-react'
+import { Sparkles, Code2, Layers } from 'lucide-react'
 
 import PageLayout from '../../components/shared/PageLayout.tsx'
 import { ExerciseCard } from './components/exerciseCard'
@@ -78,12 +78,14 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
             onClick={() => navigate('/coding-tasks')}
             variant="primary"
           />
-          <ActionButton 
-            label='TS Cards'
-            icon
-            onClick={() => navigate('/ts-cards')}
-            variant='indigo'
-          />
+          <div className="[&>button]:bg-[#3178C6] [&>button]:text-white [&>button]:border-none [&>button]:shadow-lg [&>button]:shadow-blue-500/40">
+            <ActionButton
+              label="TS Cards"
+              icon={<Layers size={20} strokeWidth={2.5} />}
+              onClick={() => navigate('/ts-cards')}
+              variant="primary"
+            />
+          </div>
         </div>
       </div>
 
