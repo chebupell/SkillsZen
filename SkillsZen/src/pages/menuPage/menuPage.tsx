@@ -65,7 +65,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
         ) : (
           <div className="text-center p-20 text-slate-400">No courses available.</div>
         )}
-        <div className="md:right-10 md:bottom-10 flex items-center gap-15 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 flex-wrap">
+        <div className="md:right-10 md:bottom-10 flex justify-center gap-10 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 flex-wrap">
           <ActionButton
             label="AI Chat"
             icon={<Sparkles size={20} />}
