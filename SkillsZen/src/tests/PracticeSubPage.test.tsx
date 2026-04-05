@@ -12,12 +12,10 @@ vi.mock('../services/practiceService', () => ({
   },
 }))
 
-
 vi.mock('../components/shared/backButton', () => ({ BackButton: () => <button>Back</button> }))
 vi.mock('../components/shared/ProgressBar', () => ({
   ProgressBar: () => <div data-testid="progress-bar" />,
 }))
-
 
 vi.mock('../components/shared/seeResultsButton', () => ({
   default: ({ disabled }: { disabled: boolean }) => (

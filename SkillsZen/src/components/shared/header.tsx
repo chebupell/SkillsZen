@@ -17,11 +17,29 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex h-[7.9vh] items-center justify-between px-4 mx-auto">
-        <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <img src={logo} alt="SkillsZen Logo" className="h-8 w-8 object-contain" />
-          <span className="text-xl font-bold tracking-tight text-primary">
-            Skills<span className="text-muted-foreground font-medium">Zen</span>
-          </span>
+        <Link
+          to="/"
+          className="group flex items-center gap-3.5 hover:opacity-100 transition-all duration-500"
+        >
+          <div className="relative">
+            <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <img
+              src={logo}
+              alt="SkillsZen Logo"
+              className="relative h-9 w-9 object-contain drop-shadow-[0_0_8px_rgba(var(--primary),0.3)] group-hover:scale-110 transition-transform duration-500 ease-out"
+            />
+          </div>
+          <div className="flex flex-col -space-y-1">
+            <span className="text-2xl font-black tracking-tighter text-primary flex items-center">
+              Skills
+              <span className="text-slate-400 font-medium tracking-normal ml-0.5 group-hover:text-primary transition-colors duration-500">
+                Zen
+              </span>
+            </span>
+            <span className="text-[7px] font-bold uppercase tracking-[0.3em] text-muted-foreground/40 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-1 group-hover:translate-y-0">
+              Mindful Growth
+            </span>
+          </div>
         </Link>
         <div className="flex items-center gap-4">
           {isAuthenticated ? (
