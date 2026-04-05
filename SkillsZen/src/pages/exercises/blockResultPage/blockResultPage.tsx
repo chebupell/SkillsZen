@@ -15,21 +15,22 @@ const BlockResultPage: React.FC = () => {
   const { state } = useLocation()
   const { block_id, total_questions, correct_count } = (state || {}) as ResultProps
   
-  const getFeedback = (score:number) => {
-    if (score >= 90) return "Ты — легенда! 🏆";
-    if (score >= 70) return "Блестяще! 🔥";
-    if (score >= 50) return "Неплохо для начала 👍";
-    return "Есть куда расти 🌱";
-  };
+  const getFeedback = (score: number) => {
+    if (score >= 90) return "You're a legend! 🏆";
+    if (score >= 70) return "Brilliant! 🔥";
+    if (score >= 50) return "Not bad for a start 👍";
+    return "Room for improvement 🌱";
+};
+
 
   return (
     <PageLayout backgroundImage="main-page-background.webp">
       <ToMenuButton />
       <Card className='mt-20 flex items-center justify-center'>
-      <div className='text-4xl text-secondary-foreground mb-10 max-w-100'>Your results</div>
-      <div className='text-4xl text-secondary-foreground mb-10 max-w-100'>Topic: {block_id}</div>
-      <div className='text-4xl text-secondary-foreground mb-10 max-w-100'>{Math.floor(correct_count/total_questions*100)}%</div>
-      <div className='text-4xl text-secondary-foreground mb-10 max-w-100'>{getFeedback(Math.floor(correct_count/total_questions*100))}</div>
+      <div className='text-3xl text-secondary-foreground mb-10 max-w-100'>Your results</div>
+      <div className='text-3xl text-secondary-foreground mb-10 max-w-100'>Topic: {block_id}</div>
+      <div className='text-3xl text-secondary-foreground mb-10 max-w-100'>{Math.floor(correct_count/total_questions*100)}%</div>
+      <div className='text-3xl text-secondary-foreground mb-10 max-w-100 text-center'>{getFeedback(Math.floor(correct_count/total_questions*100))}</div>
       </Card>
     </PageLayout>
   )
