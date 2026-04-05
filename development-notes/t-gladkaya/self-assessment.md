@@ -8,13 +8,20 @@
 
 Код:<br>
 [coursePage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/coursePage/coursePage.tsx), <br>
-[courseSubPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/courseSubPage/courseSubPage.tsx)
+[courseSubPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/courseSubPage/courseSubPage.tsx),<br>
+[startTag.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tags/startTag.tsx),<br>
+[inProgressTag.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tags/inProgressTag.tsx),<br>
+[successTag.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tags/successTag.tsx),<br>
+[retryTag.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tags/retryTag.tsx)
 
 - **Complex Component** – Practice Page (+25): страница практики с загрузкой вопросов, прогрессом, выбором ответа и переходом к следующему вопросу.
 
 Код:<br>
 [practicePage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/practice/practicePage.tsx),<br>
 [practiceSubPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/practice/practiceSubPage.tsx),<br>
+[ProgressBar.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/components/shared/ProgressBar.tsx),<br>
+[nextQuestionButton.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/components/shared/nextQuestionButton.tsx),<br>
+[seeResultsButton.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/components/shared/seeResultsButton.tsx),<br>
 [practiceService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/practiceService.ts)<br>
 
 - **Complex Component** – TS Cards Page (+25): страница карточек по типам TypeScript с переворотом карт, отметкой изученных и сохранением прогресса.
