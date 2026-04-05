@@ -86,16 +86,17 @@ describe('Menu Component', () => {
       expect(screen.queryByTestId('page-loader')).not.toBeInTheDocument()
     })
 
-    expect(screen.getByText((_content, element) => {
-      const hasText = (node: Element | null) => node?.textContent === "Welcome, John!";
-      const nodeHasText = hasText(element);
-      const childrenDontHaveText = Array.from(element?.children || []).every(
-        child => !hasText(child as Element)
-      );
-      return nodeHasText && childrenDontHaveText;
-    })).toBeInTheDocument()
-})
-
+    expect(
+      screen.getByText((_content, element) => {
+        const hasText = (node: Element | null) => node?.textContent === 'Welcome, John!'
+        const nodeHasText = hasText(element)
+        const childrenDontHaveText = Array.from(element?.children || []).every(
+          (child) => !hasText(child as Element),
+        )
+        return nodeHasText && childrenDontHaveText
+      }),
+    ).toBeInTheDocument()
+  })
 
   it('renders exercise cards correctly after loading', async () => {
     renderComponent()

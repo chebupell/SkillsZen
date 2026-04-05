@@ -183,7 +183,7 @@ describe('LoginPage', () => {
         profile: {} as ProfileValues,
         credential: {} as UserCredential,
       })
-      await pendingPromise 
+      await pendingPromise
     })
 
     await waitFor(() => {

@@ -33,7 +33,10 @@ export const PageLoader = () => {
           </div>
 
           <div className="h-1.5 w-36 bg-primary/10 rounded-full overflow-hidden border border-white/20">
-            <div data-testid="progress-fill" className="h-full bg-primary rounded-full animate-progress-loading shadow-[0_0_15px_rgba(var(--primary),0.8)]" />
+            <div
+              data-testid="progress-fill"
+              className="h-full bg-primary rounded-full animate-progress-loading shadow-[0_0_15px_rgba(var(--primary),0.8)]"
+            />
           </div>
         </div>
       </div>

@@ -1,5 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter, useNavigation, useLocation, type Navigation, type Location } from 'react-router-dom'
+import {
+  MemoryRouter,
+  useNavigation,
+  useLocation,
+  type Navigation,
+  type Location,
+} from 'react-router-dom'
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 
 import { useAuth } from '../services/AuthContext'
@@ -21,15 +27,19 @@ vi.mock('react-router-dom', async (importOriginal) => {
 })
 
 vi.mock('../components/shared/header', () => ({ Header: () => <header>Header</header> }))
-vi.mock('../components/shared/footer', () => ({ Footer: () => <footer role="contentinfo">Footer</footer> }))
-vi.mock('../components/shared/PageLoader', () => ({ PageLoader: () => <div data-testid="page-loader" /> }))
+vi.mock('../components/shared/footer', () => ({
+  Footer: () => <footer role="contentinfo">Footer</footer>,
+}))
+vi.mock('../components/shared/PageLoader', () => ({
+  PageLoader: () => <div data-testid="page-loader" />,
+}))
 
 describe('MainPage Layout', () => {
   const mockedUseAuth = useAuth as Mock
 
   beforeEach(() => {
     vi.clearAllMocks()
-    
+
     // Provide default auth state
     mockedUseAuth.mockReturnValue({
       user: { name: 'John Doe' },
@@ -45,7 +55,7 @@ describe('MainPage Layout', () => {
     render(
       <MemoryRouter>
         <MainPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
 
     expect(screen.getByText('Header')).toBeInTheDocument()
@@ -53,40 +63,45 @@ describe('MainPage Layout', () => {
   })
 
   it('shows PageLoader when navigation state is loading', () => {
-    vi.mocked(useNavigation).mockReturnValue({ state: 'loading' } as Partial<Navigation> as Navigation)
-    
+    vi.mocked(useNavigation).mockReturnValue({
+      state: 'loading',
+    } as Partial<Navigation> as Navigation)
+
     render(
       <MemoryRouter>
         <MainPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
 
     expect(screen.getByTestId('page-loader')).toBeInTheDocument()
   })
 
   it('renders Footer only on Auth pages', () => {
-    vi.mocked(useLocation).mockReturnValue({ pathname: '/sign-in' } as Partial<Location> as Location)
-    
+    vi.mocked(useLocation).mockReturnValue({
+      pathname: '/sign-in',
+    } as Partial<Location> as Location)
+
     render(
       <MemoryRouter>
         <MainPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
 
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
   })
 
   it('verifies AI Chat specific styles', () => {
-    vi.mocked(useLocation).mockReturnValue({ pathname: '/ai-chat' } as Partial<Location> as Location)
-    
+    vi.mocked(useLocation).mockReturnValue({
+      pathname: '/ai-chat',
+    } as Partial<Location> as Location)
+
     const { container } = render(
       <MemoryRouter>
         <MainPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
 
     const rootDiv = container.firstChild as HTMLElement
     expect(rootDiv).toHaveClass('h-screen', 'overflow-hidden')
   })
 })
-

@@ -48,20 +48,17 @@ describe('DeleteAccountModal', () => {
     expect(mockOnConfirm).toHaveBeenCalledTimes(1)
   })
 
- it('shows loading spinner and disables buttons when isDeleting is true', async () => {
+  it('shows loading spinner and disables buttons when isDeleting is true', async () => {
     const user = userEvent.setup()
     render(<DeleteAccountModal onConfirm={mockOnConfirm} isDeleting={true} />)
     const trigger = screen.getByRole('button', { name: /delete profile/i })
     await user.click(trigger)
-    const actionBtn = screen.getByRole('button', { name: '' }) 
+    const actionBtn = screen.getByRole('button', { name: '' })
     const cancelBtn = screen.getByRole('button', { name: /cancel/i })
     expect(actionBtn).toBeDisabled()
     expect(cancelBtn).toBeDisabled()
     expect(actionBtn.querySelector('.animate-spin')).toBeInTheDocument()
-})
-
-
-
+  })
 
   it('resets password state when cancel is clicked', async () => {
     const user = userEvent.setup()

@@ -151,15 +151,14 @@ describe('AuthContext', () => {
   })
 
   it('login sets user session and isAuthenticated to true', async () => {
-  vi.mocked(userStorageService.getSession).mockReturnValue(null)
-  const { result } = renderHook(() => useAuth(), { wrapper })
-  await act(async () => {
-    result.current.login(mockSession)
+    vi.mocked(userStorageService.getSession).mockReturnValue(null)
+    const { result } = renderHook(() => useAuth(), { wrapper })
+    await act(async () => {
+      result.current.login(mockSession)
+    })
+    expect(result.current.user).toEqual(mockSession)
+    expect(result.current.isAuthenticated).toBe(true)
   })
-  expect(result.current.user).toEqual(mockSession)
-  expect(result.current.isAuthenticated).toBe(true)
-})
-
 
   it('updates chat history: calls firebase, updates storage and state', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)

@@ -35,7 +35,6 @@ const CoursePage: React.FC<CoursePageProps> = ({ courseId, backgroundImage }) =>
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error'
         toast.error(`Failed to fetch ${courseId} exercises: ${message}`)
-
       } finally {
         setLoading(false)
       }

@@ -17,9 +17,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
       className="toaster group"
       toastOptions={{
         classNames: {
-          toast: "group-[.toaster]:text-lg group-[.toaster]:p-6 group-[.toaster]:rounded-2xl group-[.toaster]:shadow-2xl",
-          title: "group-[.toast]:font-bold",
-          description: "group-[.toast]:text-base",
+          toast:
+            'group-[.toaster]:text-lg group-[.toaster]:p-6 group-[.toaster]:rounded-2xl group-[.toaster]:shadow-2xl',
+          title: 'group-[.toast]:font-bold',
+          description: 'group-[.toast]:text-base',
         },
       }}
       icons={{
@@ -35,13 +36,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--normal-text': 'var(--popover-foreground)',
           '--normal-border': 'var(--border)',
           '--border-radius': 'var(--radius)',
-          '--width': '420px', 
+          '--width': '420px',
         } as React.CSSProperties
       }
       {...props}
     />
   )
 }
-
 
 export { Toaster }

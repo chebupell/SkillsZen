@@ -41,7 +41,6 @@ export function AuthPage() {
       const message = error instanceof Error ? error.message : 'Registration failed'
 
       toast.error(message, { id: toastId })
-
     }
   }
 
