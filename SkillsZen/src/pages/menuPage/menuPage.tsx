@@ -44,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
 
   return (
     <PageLayout backgroundImage={backgroundImage}>
-      <h2 className="text-center mb-12 flex flex-col items-center gap-2">
+      <h2 className="text-center mb-8 flex flex-col items-center gap-2">
         <span className="text-4xl md:text-5xl font-black tracking-tight text-slate-800">
           Welcome, <span className="text-primary">{user?.name?.split(' ')[0] || 'Guest'}</span>!
         </span>
@@ -90,7 +90,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
       </div>
 
 
-      <div className="mt-6 mb-4 flex flex-col items-center text-center space-y-8 animate-in fade-in duration-1000 delay-500">
+      <div className="mt-6 mb-4 flex flex-col items-center text-center space-y-3 animate-in fade-in duration-1000 delay-500">
         <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="max-w-2xl space-y-4">
