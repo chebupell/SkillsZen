@@ -78,6 +78,12 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
             onClick={() => navigate('/coding-tasks')}
             variant="primary"
           />
+          <ActionButton 
+            label='TS Cards'
+            icon
+            onClick={() => navigate('/ts-cards')}
+            variant='indigo'
+          />
         </div>
       </div>
 
