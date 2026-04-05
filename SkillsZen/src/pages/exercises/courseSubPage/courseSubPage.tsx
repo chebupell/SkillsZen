@@ -4,11 +4,12 @@ import SuccessTag from '../tags/successTag'
 import RetryTag from '../tags/retryTag'
 import InProgressTag from '../tags/inProgressTag'
 import StartTag from '../tags/startTag'
-import BackButton from '../../../components/shared/backButton'
+import { BackButton } from '../../../components/shared/backButton'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { practiceService } from '../../../services/practiceService'
 import { useAuth } from '../../../services/AuthContext'
+import { toast } from 'sonner'
 
 const getStatusTag = (status: string, currentQuestion?: number, totalQuestions?: number) => {
   switch (status) {
@@ -46,7 +47,8 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
           await practiceService.restartBlock(user.uid, itemId, courseId)
         }
       } catch (error) {
-        console.error('Failed to restart block:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        toast.error(`Failed to restart block: ${errorMessage}`)
       }
     }
     navigate(`/practice/${itemId}`)
@@ -61,11 +63,9 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
         <div className="text-2xl sm:text-4xl text-right sm:text-center">{topicTitle}</div>
         <div className="hidden sm:block w-25" aria-hidden="true"></div>
       </div>
-
       <p className="text-right sm:text-center text-gray-600 mb-4">
         {exercisesProgress} completed blocks
       </p>
-
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
           <div

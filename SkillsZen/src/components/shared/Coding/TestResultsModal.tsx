@@ -1,4 +1,4 @@
-import { CheckCircle, XCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle, XCircle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const TestResultsModal = ({
@@ -6,11 +6,13 @@ const TestResultsModal = ({
   onClose,
   summary,
   fullOutput,
+  nextTaskId,
 }: {
   isOpen: boolean
   onClose: () => void
   summary: { passed: number; failed: number }
   fullOutput: string
+  nextTaskId?: string | null
 }) => {
   const navigate = useNavigate()
   if (!isOpen) return null
@@ -57,10 +59,23 @@ const TestResultsModal = ({
           </button>
           {isAllPassed && (
             <button
-              onClick={() => navigate('/coding-tasks')}
-              className="px-6 py-2 rounded-xl font-bold bg-yellow-500 text-black hover:bg-yellow-400 transition-all"
+              onClick={() => {
+                if (nextTaskId) {
+                  // Если есть следующая или нерешенная задача — идем к ней
+                  navigate(`/coding-tasks/editor/${nextTaskId}`)
+                } else {
+                  // Если абсолютно всё пройдено — в общее меню
+                  navigate('/coding-tasks')
+                }
+                onClose() // Обязательно закрываем модалку перед переходом
+              }}
+              className="flex items-center gap-2 px-6 py-2 rounded-xl font-bold bg-yellow-500 text-black hover:bg-yellow-400 active:scale-95 transition-all group"
             >
-              Next Task
+              {/* Динамический текст в зависимости от наличия следующей задачи */}
+              <span>{nextTaskId ? 'Next Task' : 'All Completed! Menu'}</span>
+
+              {/* Иконка стрелки с анимацией при наведении (group-hover) */}
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           )}
         </div>

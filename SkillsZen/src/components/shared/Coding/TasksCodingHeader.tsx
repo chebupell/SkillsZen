@@ -1,6 +1,6 @@
 import React from 'react'
 import { Code2, Trophy } from 'lucide-react'
-import ProgressBar from './ProgressBar'
+import ProgressBarCoding from '../ProgressBar'
 
 interface TasksHeaderProps {
   completedCount: number
@@ -56,7 +56,7 @@ const TasksHeader: React.FC<TasksHeaderProps> = ({
           </div>
         </div>
         <div className="relative pt-2">
-          <ProgressBar progress={progressPercentage} isCompleted={isFullyCompleted} />
+          <ProgressBarCoding progress={progressPercentage} isCompleted={isFullyCompleted} />
 
           {isFullyCompleted && (
             <div className="absolute -top-1 right-0 text-[10px] font-black text-yellow-600 uppercase tracking-widest animate-pulse">

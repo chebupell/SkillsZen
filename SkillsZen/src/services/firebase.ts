@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { FirebaseError, initializeApp } from 'firebase/app'
 import {
   getAuth,
@@ -8,6 +7,8 @@ import {
   signOut,
   updateProfile,
   deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from 'firebase/auth'
 import {
   collection,
@@ -19,16 +20,17 @@ import {
   getFirestore,
   orderBy,
   query,
+  serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore'
-import type { ProfileValues } from '../types/types'
+import type { ProfileValues, SigninResponse } from '../types/UserTypes'
 import type { ExerciseCardProps } from '../types/menuTypes'
 import type { ExerciseItem, ExerciseStatus, CourseSubPageProps } from '../types/exerciseTypes'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+import { toast } from 'sonner'
+import type { ChatMessage } from '../types/chatTypes'
+import type { CodingTask, UserProgressMap } from '../types/codingTasksTypes'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -69,11 +71,41 @@ export async function signupService(
   }
 }
 
-export const signinService = async (email: string, password: string): Promise<UserCredential> => {
+export const signinService = async (email: string, password: string): Promise<SigninResponse> => {
   try {
-    return await signInWithEmailAndPassword(auth, email, password)
-  } catch (error) {
-    console.error('Signin error:', error)
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    const { user } = userCredential
+
+    const userDocRef = doc(db, 'users', user.uid)
+    const userDoc = await getDoc(userDocRef)
+
+    const profile = userDoc.exists() ? (userDoc.data() as ProfileValues) : undefined
+
+    return {
+      user,
+      profile,
+      credential: userCredential,
+    }
+  } catch (error: unknown) {
+    let message = 'An unexpected error occurred'
+
+    if (error instanceof FirebaseError) {
+      switch (error.code) {
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+          message = 'Invalid email or password'
+          break
+        case 'auth/network-request-failed':
+          message = 'Network error, please check your connection'
+          break
+        default:
+          message = error.message
+      }
+    } else if (error instanceof Error) {
+      message = error.message
+    }
+
+    toast.error(message)
     throw error
   }
 }
@@ -82,9 +114,21 @@ export const logout = async (): Promise<void> => {
   try {
     return await signOut(auth)
   } catch (error) {
-    console.error('Logout error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Logout error: ${errorMessage}`)
     throw error
   }
+}
+
+export const reauthenticateUser = async (password: string) => {
+  const auth = getAuth()
+  const user = auth.currentUser
+
+  if (user && user.email) {
+    const credential = EmailAuthProvider.credential(user.email, password)
+    return await reauthenticateWithCredential(user, credential)
+  }
+  throw new Error('No user found')
 }
 
 export const updateFirebaseUser = async (uid: string, data: ProfileValues): Promise<void> => {
@@ -102,6 +146,26 @@ export const updateFirebaseUser = async (uid: string, data: ProfileValues): Prom
     },
     { merge: true },
   )
+}
+
+export const uploadUserAvatar = async (uid: string, file: File): Promise<string> => {
+  const currentUser = auth.currentUser
+  if (!currentUser) throw new Error('No authenticated user')
+  const base64String = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = (error) => reject(error)
+  })
+
+  const userRef = doc(db, 'users', uid)
+  await updateDoc(userRef, {
+    photo: base64String,
+    updatedAt: new Date().toISOString(),
+  })
+  await updateProfile(currentUser, { photoURL: base64String })
+
+  return base64String
 }
 
 export const updateTaskStatusFirebase = async (
@@ -129,12 +193,15 @@ export const fetchFirestoreUserData = async (uid: string) => {
 }
 
 export const deleteFirebaseUser = async (uid: string): Promise<void> => {
-  const user = auth.currentUser
-  if (!user || user.uid !== uid) throw new Error('No authenticated user found')
+  const currentUser = auth.currentUser
 
+  if (!currentUser || currentUser.uid !== uid) {
+    throw new Error('No authenticated user found or UID mismatch')
+  }
   const userRef = doc(db, 'users', uid)
   await deleteDoc(userRef)
-  await deleteUser(user)
+
+  await deleteUser(currentUser)
 }
 
 export async function getAllCoursesWithProgress(userId: string): Promise<ExerciseCardProps[]> {
@@ -175,7 +242,8 @@ export async function getAllCoursesWithProgress(userId: string): Promise<Exercis
 
     return results
   } catch (error) {
-    console.error('Error fetching courses:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Error fetching courses: ${errorMessage}`)
     return []
   }
 }
@@ -238,20 +306,18 @@ export async function getCourseSubPage(
       exercises: exercises,
     }
   } catch (error) {
-    console.error('Error fetching subpage data:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Error fetching subpage data: ${errorMessage}`)
     return null
   }
 }
 
-export interface CodingTask {
-  id: string
-  name: string
-  order: number
-  status?: string
-  description?: string
+export const saveUserCodeDraft = async (uid: string, taskId: string, code: string) => {
+  const draftRef = doc(db, 'users', uid)
+  await updateDoc(draftRef, {
+    [`drafts.${taskId}`]: code,
+  })
 }
-
-export type UserProgressMap = Record<string, 'completed' | 'in_progress' | string>
 
 export const getCodingTasksAndProgress = async (
   userId?: string,
@@ -285,7 +351,8 @@ export const getCodingTasksAndProgress = async (
 
     return { tasks, progress }
   } catch (err) {
-    console.error('[getCodingTasksAndProgress] Failed to fetch data:', err)
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+    toast.error(`[getCodingTasksAndProgress] Failed to fetch data: ${errorMessage}`)
     throw new Error('Could not retrieve tasks. Please check your connection.')
   }
 }
@@ -300,7 +367,8 @@ export const getTaskData = async (taskId: string) => {
     }
     throw new Error('Task not found')
   } catch (err) {
-    console.error('Error fetching task data:', err)
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+    toast.error(`Error fetching task data: ${errorMessage}`)
     throw err
   }
 }
@@ -329,4 +397,49 @@ export const runCodeInBrowser = (
 
     worker.postMessage({ code, tests })
   })
+}
+
+export const saveChatHistoryFirebase = async (
+  uid: string,
+  messages: ChatMessage[],
+): Promise<void> => {
+  if (!uid) return
+
+  try {
+    const chatRef = doc(db, 'users', uid, 'data', 'chat')
+    const truncatedMessages = messages.slice(-100)
+
+    await setDoc(
+      chatRef,
+      {
+        messages: truncatedMessages,
+        lastUpdate: serverTimestamp(),
+      },
+      { merge: true },
+    )
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Cloud sync failed: ${msg}`)
+    throw error
+  }
+}
+
+export const getChatHistoryFirebase = async (uid: string): Promise<ChatMessage[]> => {
+  if (!uid) return []
+
+  try {
+    const chatRef = doc(db, 'users', uid, 'data', 'chat')
+    const snap = await getDoc(chatRef)
+
+    if (snap.exists()) {
+      const data = snap.data()
+      return (data.messages as ChatMessage[]) || []
+    }
+
+    return []
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : 'Unknown error'
+    toast.error(`Failed to load history: ${msg}`)
+    return []
+  }
 }

@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getTaskData, runCodeInBrowser } from '../../services/firebase'
-import { PageLoader } from '../../components/shared/PageLoader'
 import Editor from '@monaco-editor/react'
-import type { TaskData } from '../../types/types'
-import TestResultsModal from '../../components/shared/TestResultsModal'
-import ResetConfirmModal from '../../components/shared/ResetConfirmModal'
-import EditorHeader from '../../components/shared/EditorHeader'
-import TaskDescription from '../../components/shared/TaskDescription'
-import TerminalConsole from '../../components/shared/TerminalConsole'
+import { getCodingTasksAndProgress, getTaskData, runCodeInBrowser } from '../../services/firebase'
+import { PageLoader } from '../../components/shared/PageLoader'
 import { useAuth } from '../../services/AuthContext'
+
+import TestResultsModal from '../../components/shared/Coding/TestResultsModal'
+import ResetConfirmModal from '../../components/shared/Coding/ResetConfirmModal'
+import EditorHeader from '../../components/shared/EditorHeader'
+import TaskDescription from '../../components/shared/Coding/TaskDescription'
+import TerminalConsole from '../../components/shared/Coding/TerminalConsole'
+import type { CodingTask, TaskData } from '../../types/codingTasksTypes'
+import { toast } from 'sonner'
 
 const EditorPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>()
   const navigate = useNavigate()
-  const { user, updateTaskStatus } = useAuth()
+  const { user, updateTaskStatus, setDraftLocal, saveDraftToCloud, resetDraft } = useAuth()
 
   const [task, setTask] = useState<TaskData | null>(null)
+  const [allTasks, setAllTasks] = useState<CodingTask[]>([])
   const [userCode, setUserCode] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(true)
   const [viewMode, setViewMode] = useState<'split' | 'full-editor'>('split')
@@ -25,52 +28,75 @@ const EditorPage: React.FC = () => {
   const [isRunning, setIsRunning] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [testSummary, setTestSummary] = useState<{ passed: number; failed: number }>({
-    passed: 0,
-    failed: 0,
-  })
-
   const [isResetModalOpen, setIsResetModalOpen] = useState(false)
+  const [testSummary, setTestSummary] = useState({ passed: 0, failed: 0 })
 
-  const parseResults = (text: string) => {
-    const passed = (text.match(/✅ PASSED/g) || []).length
-    const failed = (text.match(/❌ FAILED/g) || []).length
-    return { passed, failed }
-  }
+  const latestCodeRef = useRef(userCode)
+  useEffect(() => {
+    latestCodeRef.current = userCode
+  }, [userCode])
 
   useEffect(() => {
     let isMounted = true
-    const loadTask = async () => {
+    const initPage = async () => {
       if (!taskId) return
       try {
-        const data = await getTaskData(taskId)
-        if (isMounted && data) {
-          const taskData = data as TaskData
-          setTask(taskData)
+        setLoading(true)
 
-          const savedDraft = localStorage.getItem(`draft_${taskId}`)
-          setUserCode(savedDraft || taskData.initial_code || '')
+        const [taskResponse, tasksAndProgress] = await Promise.all([
+          getTaskData(taskId),
+          getCodingTasksAndProgress(user?.uid),
+        ])
+
+        if (!isMounted) return
+
+        if (tasksAndProgress.tasks) {
+          setAllTasks(tasksAndProgress.tasks)
         }
-      } catch (err) {
-        console.error('Failed to load task:', err)
+
+        if (taskResponse) {
+          const t = taskResponse as TaskData
+          setTask(t)
+
+          const existingDraft = user?.drafts?.[taskId]
+          const initialCode = existingDraft || t.initial_code || ''
+          setUserCode(initialCode)
+          latestCodeRef.current = initialCode
+        }
+      } catch {
+        toast.error('Failed to initialize page data. Please try again.')
       } finally {
         if (isMounted) setLoading(false)
       }
     }
-    loadTask()
+
+    initPage()
     return () => {
       isMounted = false
     }
-  }, [taskId])
+  }, [taskId, user?.uid])
 
   useEffect(() => {
-    if (taskId && userCode) {
-      localStorage.setItem(`draft_${taskId}`, userCode)
+    if (!taskId || loading || !userCode) return
+
+    if (userCode === user?.drafts?.[taskId]) return
+
+    setDraftLocal(taskId, userCode)
+
+    const timeoutId = setTimeout(() => {
+      saveDraftToCloud(taskId, userCode)
+    }, 2000)
+
+    return () => {
+      clearTimeout(timeoutId)
+      if (latestCodeRef.current && taskId) {
+        saveDraftToCloud(taskId, latestCodeRef.current)
+      }
     }
-  }, [userCode, taskId])
+  }, [userCode, taskId, setDraftLocal, saveDraftToCloud, loading])
 
   const handleRunTests = async () => {
-    if (!task || !userCode) return
+    if (!task || !userCode || !taskId) return
 
     setIsRunning(true)
     setShowTerminal(true)
@@ -79,28 +105,52 @@ const EditorPage: React.FC = () => {
     try {
       const testContent = Array.isArray(task.tests) ? task.tests[0] : task.tests
       const result = await runCodeInBrowser(userCode, testContent || '')
-      const summary = parseResults(result.output)
+
+      const passed = (result.output.match(/✅ PASSED/g) || []).length
+      const failed = (result.output.match(/❌ FAILED/g) || []).length
+
       setOutput(result.output)
-      setTestSummary(summary)
+      setTestSummary({ passed, failed })
       setIsModalOpen(true)
 
-      const status = summary.failed === 0 && summary.passed > 0 ? 'passed' : 'failed'
-      if (taskId) {
-        await updateTaskStatus(taskId, status)
-      }
+      const status = failed === 0 && passed > 0 ? 'passed' : 'failed'
+      await updateTaskStatus(taskId, status)
     } catch (error) {
-      console.error('Test Execution Error:', error)
-      setOutput('🔥 Critical Sandbox Error.')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      toast.error(`Execution Error: ${errorMessage}`)
+      setOutput('🔥 Sandbox Error. Check your syntax or connection.')
     } finally {
       setIsRunning(false)
     }
   }
 
-  const handleResetConfirm = () => {
-    if (task) {
-      setUserCode(task.initial_code)
-    }
+  const handleResetConfirm = async () => {
+    if (!taskId || !task) return
+
+    const initialCode = task.initial_code || ''
+
+    setUserCode(initialCode)
+    latestCodeRef.current = initialCode
+
+    await resetDraft(taskId)
+
+    setIsResetModalOpen(false)
   }
+
+  const nextTaskId = useMemo(() => {
+    if (!allTasks.length || !taskId) return null
+
+    const currentIndex = allTasks.findIndex((t) => t.id === taskId)
+    if (currentIndex !== -1 && currentIndex < allTasks.length - 1) {
+      return allTasks[currentIndex + 1].id
+    }
+    const firstUnsolved = allTasks.find((t) => {
+      const status = user?.completedTasks?.[t.id]
+      return status !== 'passed'
+    })
+
+    return firstUnsolved ? firstUnsolved.id : null
+  }, [allTasks, taskId, user?.completedTasks])
 
   if (loading) return <PageLoader />
 
@@ -117,41 +167,44 @@ const EditorPage: React.FC = () => {
         status={taskId ? user?.completedTasks?.[taskId] : null}
       />
 
-      <main className="flex flex-1 w-full overflow-hidden min-h-0">
+      <main className="flex-1 flex w-full overflow-hidden min-h-0">
         {viewMode === 'split' && <TaskDescription text={task?.text} />}
+
         <section
-          className={`${viewMode === 'split' ? 'w-[60%]' : 'w-full'} h-full flex flex-col bg-[#1e1e1e] relative overflow-hidden`}
+          className={`${viewMode === 'split' ? 'w-[60%]' : 'w-full'} flex flex-col bg-[#1e1e1e] border-l border-[#333] relative overflow-hidden`}
         >
           <div className="px-6 py-2 bg-[#1e1e1e] text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-[#333] flex justify-between items-center shrink-0">
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_green]" />
-              <span>JavaScript v18</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+              <span>JavaScript Environment</span>
             </div>
-            <span className="text-gray-600 font-mono italic">
+            <span className="font-mono italic opacity-50">
               Lines: {userCode.split('\n').length}
             </span>
           </div>
+
           <div className="flex-1 w-full min-h-0 relative">
             <Editor
               height="100%"
               defaultLanguage="javascript"
               theme="vs-dark"
               value={userCode}
-              onChange={(value) => setUserCode(value || '')}
+              onChange={(val) => setUserCode(val || '')}
               options={{
                 fontSize: 14,
                 minimap: { enabled: false },
                 scrollBeyondLastLine: false,
-                padding: { top: 20 },
+                padding: { top: 16 },
                 automaticLayout: true,
                 fontFamily: "'JetBrains Mono', monospace",
-                lineNumbers: 'on',
-                renderLineHighlight: 'all',
                 cursorSmoothCaretAnimation: 'on',
                 smoothScrolling: true,
+                lineNumbers: 'on',
+                renderLineHighlight: 'all',
               }}
             />
           </div>
+
           {showTerminal && (
             <TerminalConsole
               isRunning={isRunning}
@@ -166,7 +219,9 @@ const EditorPage: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         summary={testSummary}
         fullOutput={output}
+        nextTaskId={nextTaskId}
       />
+
       <ResetConfirmModal
         isOpen={isResetModalOpen}
         onClose={() => setIsResetModalOpen(false)}

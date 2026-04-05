@@ -1,5 +1,7 @@
 import type { Resolver } from 'react-hook-form'
 import z from 'zod'
+import type { ChatMessage } from './chatTypes'
+import type { User, UserCredential } from 'firebase/auth'
 
 export const authFieldsSchema = z.object({
   login: z.string(),
@@ -30,29 +32,26 @@ export const profileSchema = z.object({
     return birth < now
   }, 'Invalid birth date'),
   phone: z.string().regex(/^\+?[0-9]{10,15}$/, 'Invalid phone number format'),
+  photo: z.string().optional(),
 })
 
 export type ProfileValues = z.infer<typeof profileSchema>
 
 export interface UserSession {
-  uid: string
+  readonly uid: string
   email: string | null
   accessToken: string
   lastLogin: string
   name: string | null
   photo: string | null
+  photoFile?: File
   completedTasks?: Record<string, 'passed' | 'failed'>
+  chatHistory?: ChatMessage[]
+  drafts?: Record<string, string>
 }
 
-export interface TaskData {
-  text: string
-  initial_code: string
-  tests: string[]
-  type: string
-}
-
-export interface ExecutionResult {
-  output: string
-  error: string
-  success: boolean
+export interface SigninResponse {
+  user: User
+  profile?: ProfileValues
+  credential: UserCredential
 }

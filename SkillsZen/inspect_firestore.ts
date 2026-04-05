@@ -1,5 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore'
-import { db } from './src/services/login'
+import { db } from './src/services/firebase'
+import { toast } from 'sonner'
 
 async function inspectAnswers() {
   const blocksSnap = await getDocs(collection(db, 'courses', 'js_course', 'blocks'))
@@ -8,8 +9,7 @@ async function inspectAnswers() {
       collection(db, 'courses', 'js_course', 'blocks', blockDoc.id, 'questions'),
     )
     for (const qDoc of qSnap.docs) {
-      console.log('Question:', qDoc.data().text)
-      console.log('Answers:', JSON.stringify(qDoc.data().answers, null, 2))
+      toast.error(`${qDoc}`)
       break
     }
     break
