@@ -35,7 +35,7 @@ export function AuthFormLayout({
               <FormInput
                 id="username"
                 label="User Name"
-                placeholder="John Doe"
+                placeholder="Anna Ivanova"
                 register={register('username')}
                 error={errors.username}
               />
