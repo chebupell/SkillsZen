@@ -2,34 +2,36 @@
 
 ### My components (75 баллов)
 
+Ссылки ниже даны на код в ветке `development`.
+
 - **Complex Component** – Course Page (+25): страницы курсов `JS`, `TS` и `Algorithms` со списками тем, прогрессом по блокам и статус-тэгами.
 
 Код:<br>
-`src/pages/exercises/coursePage/coursePage.tsx`, <br>
-`src/pages/exercises/courseSubPage/courseSubPage.tsx`
+[coursePage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/coursePage/coursePage.tsx), <br>
+[courseSubPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/courseSubPage/courseSubPage.tsx)
 
 - **Complex Component** – Practice Page (+25): страница практики с загрузкой вопросов, прогрессом, выбором ответа и переходом к следующему вопросу.
 
 Код:<br>
-`src/pages/exercises/practice/practicePage.tsx`,<br>
-`src/pages/exercises/practice/practiceSubPage.tsx`,<br>
-`src/services/practiceService.ts`<br>
+[practicePage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/practice/practicePage.tsx),<br>
+[practiceSubPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/practice/practiceSubPage.tsx),<br>
+[practiceService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/practiceService.ts)<br>
 
 - **Complex Component** – TS Cards Page (+25): страница карточек по типам TypeScript с переворотом карт, отметкой изученных и сохранением прогресса.
 
 Код:<br>
-`src/pages/exercises/tsCardsPage/tsCardsPage.tsx`,<br>
-`src/pages/exercises/tsCardsPage/garden.tsx`,<br>
-`src/pages/exercises/tsCardsPage/gardenProgress.tsx`,<br>
-`src/services/tsCardsProgressService.ts`<br>
+[tsCardsPage.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tsCardsPage/tsCardsPage.tsx),<br>
+[garden.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tsCardsPage/garden.tsx),<br>
+[gardenProgress.tsx](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tsCardsPage/gardenProgress.tsx),<br>
+[tsCardsProgressService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/tsCardsProgressService.ts)<br>
 
 ### Backend & Data (15 баллов)
 
 - **BaaS CRUD** – работа с Firestore через сервисы для получения / создания / обновления данных.
 
 Код:<br>
-`src/services/practiceService.ts`,<br>
-`src/services/tsCardsProgressService.ts`<br>
+[practiceService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/practiceService.ts),<br>
+[tsCardsProgressService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/tsCardsProgressService.ts)<br>
 
 ### UI & Interaction (15 баллов)
 
@@ -40,6 +42,10 @@
 ### Architecture (10 баллов)
 
 - **API Layer** – логика работы с Firestore вынесена в `services/*`, компоненты остаются без прямых запросов к БД.
+
+Код:<br>
+[practiceService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/practiceService.ts),<br>
+[tsCardsProgressService.ts](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/tsCardsProgressService.ts)<br>
 
 ### Frameworks (5 баллов)
 
@@ -68,5 +74,7 @@
 
 3. ## Два личных Feature Component (для защиты)
 
-1) Страница выбранного курса (TS, JS, алгоритмы) - CoursePage
-2) Страница с карточками для самопроверки по TS - TsCardsPage
+Смотреть код в ветке `development`.
+
+1) Страница выбранного курса (TS, JS, алгоритмы) - [CoursePage](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/coursePage/coursePage.tsx)
+2) Страница с карточками для самопроверки по TS - [TsCardsPage](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/exercises/tsCardsPage/tsCardsPage.tsx)
