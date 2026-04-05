@@ -150,7 +150,7 @@ const AIChat: React.FC = () => {
 
           <div ref={chatEndRef} className="h-2 shrink-0" />
         </div>
-        <div className="shrink-0 bg-white border-t border-slate-100 p-4 md:p-6 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
+        <div className="shrink-0 bg-white border-t border-slate-100 p-3 md:p-6 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.05)]">
           <ChatInput
             input={input}
             setInput={setInput}
