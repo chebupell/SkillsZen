@@ -80,7 +80,7 @@ describe('AuthPage', () => {
     const mockFirebaseUser = {
       uid: 'u1',
       email: VALID_EMAIL,
-      displayName: 'John Doe',
+      displayName: 'Anna Ivanova',
     } as unknown as User
 
     const mockCredential = {
@@ -92,7 +92,7 @@ describe('AuthPage', () => {
     const mockSignupResponse = {
       ...mockCredential,
       profile: {
-        name: 'John Doe',
+        name: 'Anna Ivanova',
         country: 'Belarus',
         birthDate: '1990-01-01',
         phone: '+123',
@@ -104,7 +104,7 @@ describe('AuthPage', () => {
       email: VALID_EMAIL,
       accessToken: 'mock-token',
       lastLogin: new Date().toISOString(),
-      name: 'John Doe',
+      name: 'Anna Ivanova',
       photo: null,
     }
 
@@ -113,12 +113,12 @@ describe('AuthPage', () => {
 
     renderPage()
 
-    const nameInput = await screen.findByPlaceholderText(/john doe/i)
+    const nameInput = await screen.findByPlaceholderText(/anna ivanova/i)
     const emailInput = screen.getByPlaceholderText('name@example.com')
     const passInput = screen.getByPlaceholderText('••••••••')
     const submitBtn = screen.getByRole('button', { name: /create account/i })
 
-    await user.type(nameInput, 'John Doe')
+    await user.type(nameInput, 'Anna Ivanova')
     await user.type(emailInput, VALID_EMAIL)
     await user.type(passInput, VALID_PASSWORD)
 
@@ -127,7 +127,7 @@ describe('AuthPage', () => {
 
     await waitFor(
       () => {
-        expect(mockedSignup).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD, 'John Doe')
+        expect(mockedSignup).toHaveBeenCalledWith(VALID_EMAIL, VALID_PASSWORD, 'Anna Ivanova')
 
         expect(mockedStorage.saveSession).toHaveBeenCalledWith(mockFirebaseUser)
 
@@ -146,7 +146,7 @@ describe('AuthPage', () => {
 
     renderPage()
 
-    await user.type(await screen.findByPlaceholderText(/john doe/i), 'John Doe')
+    await user.type(await screen.findByPlaceholderText(/anna ivanova/i), 'Anna Ivanova')
     await user.type(screen.getByPlaceholderText('name@example.com'), VALID_EMAIL)
     await user.type(screen.getByPlaceholderText('••••••••'), VALID_PASSWORD)
 
@@ -164,7 +164,7 @@ describe('AuthPage', () => {
     const user = userEvent.setup()
     renderPage()
 
-    const nameInput = await screen.findByPlaceholderText(/john doe/i)
+    const nameInput = await screen.findByPlaceholderText(/anna ivanova/i)
     const submitBtn = screen.getByRole('button', { name: /create account/i })
 
     await user.type(nameInput, 'A')

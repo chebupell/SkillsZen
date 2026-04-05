@@ -60,19 +60,12 @@ export const CourseSubPage: React.FC<CourseSubPageProps> = ({
         <div className="flex justify-start">
           <BackButton />
         </div>
-        <div className="flex flex-col items-end sm:items-center space-y-1 mb-8">
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-800 dark:text-slate-100 text-right sm:text-center leading-tight">
-            {topicTitle}
-          </h1>
-        </div>
-
+        <div className="text-2xl sm:text-4xl text-right sm:text-center">{topicTitle}</div>
         <div className="hidden sm:block w-25" aria-hidden="true"></div>
       </div>
-
       <p className="text-right sm:text-center text-gray-600 mb-4">
         {exercisesProgress} completed blocks
       </p>
-
       <div className="grid gap-4 md:grid-cols-1 cursor-pointer">
         {exercises.map((item) => (
           <div
