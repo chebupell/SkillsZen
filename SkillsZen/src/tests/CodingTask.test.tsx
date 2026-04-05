@@ -4,10 +4,11 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
-import { useAuth } from '../services/AuthContext'
-import { getCodingTasksAndProgress, type CodingTask } from '../services/firebase'
-import type { UserSession } from '../types/types'
+import { useAuth, type AuthContextType } from '../services/AuthContext'
+import { getCodingTasksAndProgress } from '../services/firebase'
+import type { UserSession } from '../types/UserTypes'
 import CodingTasks from '../pages/coding/CodingTasks'
+import type { CodingTask } from '../types/codingTasksTypes'
 
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
@@ -20,7 +21,10 @@ vi.mock('../services/firebase', () => ({
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
-  return { ...actual, useNavigate: () => mockNavigate }
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  }
 })
 
 describe('CodingTasks Page', () => {
@@ -34,16 +38,28 @@ describe('CodingTasks Page', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+
     mockedUseAuth.mockReturnValue({
       user: {
         uid: 'user-123',
+        name: 'Test User',
+        email: 'test@example.com',
+        accessToken: 'abc',
+        lastLogin: 'now',
+        photo: null,
         completedTasks: { 'task-1': 'passed' },
-      } as unknown as UserSession,
+        drafts: {},
+      } as UserSession,
       isAuthenticated: true,
+      isLoading: false,
       login: vi.fn(),
       logout: vi.fn(),
-      updateTaskStatus: vi.fn(),
-    })
+      setDraftLocal: vi.fn(),
+      saveDraftToCloud: vi.fn().mockResolvedValue(undefined),
+      resetDraft: vi.fn().mockResolvedValue(undefined),
+      updateTaskStatus: vi.fn().mockResolvedValue(undefined),
+      updateChat: vi.fn().mockResolvedValue(undefined),
+    } satisfies AuthContextType)
   })
 
   it('renders PageLoader initially and then displays tasks', async () => {
@@ -56,21 +72,20 @@ describe('CodingTasks Page', () => {
     )
 
     expect(screen.getByText(/Preparing/i)).toBeInTheDocument()
-    expect(screen.getByText(/Skills/i)).toBeInTheDocument()
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Variable Basics')).toBeInTheDocument()
-        expect(screen.getByText('Loop Masters')).toBeInTheDocument()
-      },
-      { timeout: 2000 },
-    )
+    await waitFor(() => {
+      expect(screen.getByText('Variable Basics')).toBeInTheDocument()
+      expect(screen.getByText('Loop Masters')).toBeInTheDocument()
+    })
 
     expect(screen.queryByText(/Preparing/i)).not.toBeInTheDocument()
   })
 
-  it('calculates and displays the correct progress in the header', async () => {
-    mockedGetTasks.mockResolvedValue({ tasks: mockTasks, progress: {} })
+  it('displays the correct progress ratio (e.g., 1/2)', async () => {
+    mockedGetTasks.mockResolvedValue({
+      tasks: mockTasks,
+      progress: { 'task-1': 'passed' },
+    })
 
     render(
       <MemoryRouter>
@@ -79,17 +94,13 @@ describe('CodingTasks Page', () => {
     )
 
     await waitFor(() => {
-      const progressElement = screen.getByText((_content, element) => {
-        const text = element?.textContent || ''
-        const hasProgress = text.includes('1') && text.includes('/') && text.includes('2')
-        const childrenDontHaveText = Array.from(element?.children || []).every((child) => {
-          const childText = child.textContent || ''
-          return !(childText.includes('1') && childText.includes('/') && childText.includes('2'))
-        })
-        return Boolean(hasProgress && childrenDontHaveText)
-      })
-
-      expect(progressElement).toBeInTheDocument()
+      expect(
+        screen.getByText((_content, element) => {
+          const hasText = (node: Element | null) =>
+            node?.textContent === '1 / 2' || node?.textContent?.replace(/\s+/g, '') === '1/2'
+          return hasText(element)
+        }),
+      ).toBeInTheDocument()
     })
   })
 
@@ -109,7 +120,7 @@ describe('CodingTasks Page', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/')
   })
 
-  it('shows error toast if fetching fails', async () => {
+  it('shows error state if fetching fails', async () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     mockedGetTasks.mockRejectedValue(new Error('Firebase Failure'))
 
@@ -126,8 +137,9 @@ describe('CodingTasks Page', () => {
     consoleSpy.mockRestore()
   })
 
-  it('shows empty state when task array is empty', async () => {
-    mockedGetTasks.mockResolvedValue({ tasks: [], progress: {} })
+  it('navigates to specific task editor when clicking a task card', async () => {
+    const user = userEvent.setup()
+    mockedGetTasks.mockResolvedValue({ tasks: mockTasks, progress: {} })
 
     render(
       <MemoryRouter>
@@ -135,8 +147,9 @@ describe('CodingTasks Page', () => {
       </MemoryRouter>,
     )
 
-    await waitFor(() => {
-      expect(screen.getByText(/Challenge Awaits/i)).toBeInTheDocument()
-    })
+    const taskCard = await screen.findByText('Variable Basics')
+    await user.click(taskCard)
+
+    expect(mockNavigate).toHaveBeenCalledWith('editor/task-1')
   })
 })

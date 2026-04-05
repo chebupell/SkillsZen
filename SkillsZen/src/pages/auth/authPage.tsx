@@ -2,9 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { signupService } from '../../services/firebase'
-import { AuthFormLayout } from '../../components/shared/AuthFormLayout'
+import { AuthFormLayout } from '../../components/shared/Auth/AuthFormLayout'
 import { userStorageService } from '../../services/userService'
 import { useAuth } from '../../services/AuthContext'
+import { toast } from 'sonner'
 
 const signupSchema = z.object({
   username: z.string().min(2, 'Name must be at least 2 characters').optional(),
@@ -22,18 +23,24 @@ export function AuthPage() {
   const navigate = useNavigate()
 
   const handleSignup = async (data: z.infer<typeof signupSchema>) => {
+    const toastId = toast.loading('Creating account...')
+
     try {
       const credential = await signupService(data.login, data.password, data.username)
 
-      await userStorageService.saveSession(credential)
+      await userStorageService.saveSession(credential.user)
+
       const session = userStorageService.getSession()
 
       if (session) {
         login(session)
+        toast.success('Registration successful!', { id: toastId })
         navigate('/')
       }
-    } catch (error) {
-      console.error('Registration error:', error)
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Registration failed'
+
+      toast.error(message, { id: toastId })
     }
   }
 
