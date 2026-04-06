@@ -1,6 +1,6 @@
 # Self-assessment: [anastan588](https://github.com/anastan588)
 
-**Ссылка на Pull Request:** [ССЫЛКА_НА_ВАШ_PR](https://github.com/chebupell/SkillsZen/pull/69)
+**Ссылка на Pull Request:** [PR](https://github.com/chebupell/SkillsZen/pull/69)
 
 ## 1. Таблица фич (на основе SCORE_PERSONAL.md)
 
@@ -17,8 +17,8 @@
 | | **BaaS CRUD** | Интеграция Firestore Сloud для хранения данных профиля юзера (personal data, AI chat messages, progress of resolving tasks of app). Организация базы данных тасков на Firestore Cloud| 15 |
 | **AI** | **AI Chat UI** | Интерфейс взаимодействия с LLM (отправка/отображение). | 20 |
 | | **AI Streaming** | Реализация посимвольного вывода ответа (real-time typing). | 10 |
-| **UI & Interaction** | **Code Editor** | Внедрение и настройка редактора кода в учебном модуле(Monaco). | 15 
-|**Responsive** | Адаптация верстки под мобильные устройства (от 320px). | 5 |
+| **UI & Interaction** | **Code Editor** | Внедрение и настройка редактора кода в учебном модуле(Monaco). | 15 |
+| **Responsive** | Адаптация верстки под мобильные устройства (от 320px). | 5 |
 | **Quality** | **Unit Tests (Basic)** | Покрытие личного кода тестами более 20%. | 10 |
 | | **Unit Tests (Full)** | Увеличение покрытия до 60% (подтверждено логами от 23.03). | 10 |
 | **Frameworks** | **React** | Основной фреймворк разработки. | 5 |
