@@ -38,7 +38,7 @@ Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)<br>
 ## Weekly meetings
 06.03.2026 - [record](development-notes/calls/2026-03-06.md)<br>
 15.03.2026 - [record](development-notes/calls/2026-03-15.md)<br>
-22.03.2026 - [record](development-notes/calls/2026-03-12.md)<br>
+22.03.2026 - [record](development-notes/calls/2026-03-22.md)<br>
 
 ## Week 5 Checkpoint - Video
 [Watch here](https://youtu.be/XZR6ZVGX7hk)
