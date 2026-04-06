@@ -49,42 +49,46 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
           Welcome, <span className="text-primary">{user?.name?.split(' ')[0] || 'Guest'}</span>!
         </span>
       </h2>
-      <div className="flex gap-8 justify-center flex-wrap px-4">
-        {cards.length > 0 ? (
-          cards.map((card) => (
-            <ExerciseCard
-              key={card.id}
-              id={card.id}
-              name={card.name}
-              icon={`${card.icon.toLowerCase()}-icon.webp`}
-              description={card.description}
-              progress={`${card.completed_blocks}/${card.total_blocks} blocks completed`}
-              route={card.icon.toLocaleLowerCase()}
-            />
-          ))
-        ) : (
-          <div className="text-center p-20 text-slate-400">No courses available.</div>
-        )}
-        <div className="md:right-10 md:bottom-10 flex justify-center gap-10 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 flex-wrap">
-          <ActionButton
-            label="AI Chat"
-            icon={<Sparkles size={20} />}
-            onClick={() => navigate('/ai-chat')}
-            variant="indigo"
-          />
-          <ActionButton
-            label="Coding Tasks"
-            icon={<Code2 size={20} />}
-            onClick={() => navigate('/coding-tasks')}
-            variant="primary"
-          />
-          <div className="[&>button]:bg-[#3178C6] [&>button]:text-white [&>button]:border-none [&>button]:shadow-lg [&>button]:shadow-blue-500/40">
+      <div className="flex flex-col gap-5">
+        <div className="flex gap-8 justify-center flex-wrap px-4">
+          {cards.length > 0 ? (
+            cards.map((card) => (
+              <ExerciseCard
+                key={card.id}
+                id={card.id}
+                name={card.name}
+                icon={`${card.icon.toLowerCase()}-icon.webp`}
+                description={card.description}
+                progress={`${card.completed_blocks}/${card.total_blocks} blocks completed`}
+                route={card.icon.toLocaleLowerCase()}
+              />
+            ))
+          ) : (
+            <div className="text-center p-20 text-slate-400">No courses available.</div>
+          )}
+        </div>
+        <div className="flex gap-8 justify-center flex-wrap px-4">
+          <div className="md:right-10 md:bottom-10 flex justify-center gap-10 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 flex-wrap">
             <ActionButton
-              label="TS Cards"
-              icon={<Layers size={20} strokeWidth={2.5} />}
-              onClick={() => navigate('/ts-cards')}
+              label="AI Chat"
+              icon={<Sparkles size={20} />}
+              onClick={() => navigate('/ai-chat')}
+              variant="indigo"
+            />
+            <ActionButton
+              label="Coding Tasks"
+              icon={<Code2 size={20} />}
+              onClick={() => navigate('/coding-tasks')}
               variant="primary"
             />
+            <div className="[&>button]:bg-[#3178C6] [&>button]:text-white [&>button]:border-none [&>button]:shadow-lg [&>button]:shadow-blue-500/40">
+              <ActionButton
+                label="TS Cards"
+                icon={<Layers size={20} strokeWidth={2.5} />}
+                onClick={() => navigate('/ts-cards')}
+                variant="primary"
+              />
+            </div>
           </div>
         </div>
       </div>
