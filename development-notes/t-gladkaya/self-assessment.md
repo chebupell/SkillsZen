@@ -1,3 +1,5 @@
+# Self assessment PR: [link](https://github.com/chebupell/SkillsZen/pull/66)
+
 1. ## Список фич (Итого: 120 баллов)
 
 ### My components (75 баллов)
