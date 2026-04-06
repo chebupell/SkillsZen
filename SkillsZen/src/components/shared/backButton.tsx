@@ -17,7 +17,7 @@ export const BackButton: React.FC<BackButtonProps> = memo(({ label = 'Back', cla
     const lastCategory = localStorage.getItem('lastCategory') || '/'
 
     // List of pages that should always redirect to Home
-    const forceHomePages = ['/coding', '/ai-chat']
+    const forceHomePages = ['/coding', '/ai-chat', '/ts-cards']
     const isForceHomePage = forceHomePages.some((page) => path.includes(page))
 
     if (isForceHomePage || path === lastCategory) {
