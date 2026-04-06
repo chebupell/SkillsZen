@@ -26,7 +26,7 @@
 | **Quality** | **Unit Tests (Basic)** | Покрытие личного кода модульными тестами более 20%. | 10 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/tests) |
 | | **Unit Tests (Full)** | Увеличение покрытия до 60% (подтверждено логами и отчетами). | 10 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/tests) |
 | **Frameworks** | **React** | Использование библиотеки React как основы фронтенда. | 5 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/package.json) |
-| **ИТОГО** | | | **235** | |
+| **ИТОГО** | | | **215** | |
 
 
 
