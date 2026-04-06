@@ -31,7 +31,7 @@
 
 ## 2. Описание моей работы
 
-В рамках разработки **SkillsZen** я взяла на себя создание фундаментальных модулей приложения: системы регистрации (аутентификации) пользователя (Auth/Login), персонального пространства пользователя (Profile page) и обучающих инструментов JS Coding tasks, AI Chat.
+В рамках разработки **SkillsZen** я взяла на себя создание таких модулей приложения как: системы регистрации (аутентификации) пользователя (Auth/Login), персонального пространства пользователя (Profile page) и обучающих инструментов JS Coding tasks, AI Chat.
 
 Основной стек технологий: React, Tailwind, Husky, Eslint, Prettier, Shadcn library of components, React Hook Forms, Zod for validation, Firebase, GROQ LLM, Monaco editor, React Markdown, Vitest for testing.
 
