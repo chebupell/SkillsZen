@@ -25,7 +25,7 @@
 | | **Design Patterns** | Применение паттернов Provider, Service Layer и декомпозиция компонентов. | 10 | [AuthContext](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/AuthContext.tsx) / [Services](https://github.com/chebupell/SkillsZen/tree/ai-chat/SkillsZen/src/services) / [Decomposition](https://github.com/chebupell/SkillsZen/tree/ai-chat/SkillsZen/src/pages) |
 | | **API Layer** | Выделение логики работы с Firebase, GROQ LLM в сервисный слой. | 10 | [Firebase](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/firebase.ts) / [GROQ LLM](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/groq.ts) / |
 | **Frameworks** | **React** | Использование библиотеки React как основы фронтенда. | 5 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/package.json) |
-| **ИТОГО** | | | **235** | |
+| **ИТОГО** | | | **245** | |
 
 ---
 
