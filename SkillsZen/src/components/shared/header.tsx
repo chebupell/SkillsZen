@@ -59,7 +59,6 @@ export function Header() {
               >
                 <div className="flex items-center gap-2 font-semibold">
                   <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
                 </div>
               </Button>
             </div>

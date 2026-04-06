@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Sparkles, Code2 } from 'lucide-react'
+import { Sparkles, Code2, Layers } from 'lucide-react'
 
 import PageLayout from '../../components/shared/PageLayout.tsx'
 import { ExerciseCard } from './components/exerciseCard'
@@ -44,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
 
   return (
     <PageLayout backgroundImage={backgroundImage}>
-      <h2 className="text-center mb-12 flex flex-col items-center gap-2">
+      <h2 className="text-center mb-8 flex flex-col items-center gap-2">
         <span className="text-4xl md:text-5xl font-black tracking-tight text-slate-800">
           Welcome, <span className="text-primary">{user?.name?.split(' ')[0] || 'Guest'}</span>!
         </span>
@@ -65,9 +65,7 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
         ) : (
           <div className="text-center p-20 text-slate-400">No courses available.</div>
         )}
-      </div>
-      {user && (
-        <div className="fixed right-6 bottom-6 md:right-10 md:bottom-10 flex flex-col items-end gap-3 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500">
+        <div className="md:right-10 md:bottom-10 flex justify-center gap-10 z-40 animate-in fade-in slide-in-from-bottom-6 duration-500 flex-wrap">
           <ActionButton
             label="AI Chat"
             icon={<Sparkles size={20} />}
@@ -80,9 +78,19 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
             onClick={() => navigate('/coding-tasks')}
             variant="primary"
           />
+          <div className="[&>button]:bg-[#3178C6] [&>button]:text-white [&>button]:border-none [&>button]:shadow-lg [&>button]:shadow-blue-500/40">
+            <ActionButton
+              label="TS Cards"
+              icon={<Layers size={20} strokeWidth={2.5} />}
+              onClick={() => navigate('/ts-cards')}
+              variant="primary"
+            />
+          </div>
         </div>
-      )}
-      <div className="mt-6 mb-4 flex flex-col items-center text-center space-y-8 animate-in fade-in duration-1000 delay-500">
+      </div>
+
+
+      <div className="mt-6 mb-4 flex flex-col items-center text-center space-y-3 animate-in fade-in duration-1000 delay-500">
         <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         <div className="max-w-2xl space-y-4">
