@@ -6,16 +6,12 @@
 
 Я провела анализ своего вклада в проект SkillsZen согласно установленной сетке баллов.
 
-
-## 1. Таблица фич (на основе SCORE_PERSONAL.md)
-
-
 | Категория | Фича | Обоснование | Баллы | Ссылка на код / PR |
 | :--- | :--- | :--- | :---: | :--- |
 | **My Components** | **Complex Component** (JS Code Runner) | Страница задач с редактором кода и логикой проверки через тесты. | 25 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/coding) |
 | | **Complex Component** (AI Chat UI) | Интерфейс чата с поддержкой истории и стриминга (GROQ LLM). | 25 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/AIPage) |
 | | **Rich UI Screen** (User Profile) | Страница профиля с формами редактирования и синхронизацией с Firebase. | 20 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/profilePage) |
-| | **Rich UI Screen** (Auth/Login) | Страница авторизации/аутентификации с валидацией и состояниями. | 20 | [login](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/login) / [auth](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/auth)|
+| | **Rich UI Screen** (Auth/Login) | Страница авторизации/аутентификации с валидацией и состояниями. | 20 | [Login](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/login) / [Auth](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/auth)|
 | | **Rich UI Screen** (Error Handling) | Реализация страниц 404 (Not Found) и ErrorFallback для обработки исключений. | 20 | [404](https://github.com/chebupell/SkillsZen/tree/ai-chat/SkillsZen/src/pages/404Page) / [Error](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/components/shared/ErrorFallback.tsx) |
 | **Backend & Data** | **BaaS Auth** | Полная настройка авторизации через Firebase Auth (Email/Password). | 15 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/firebase.ts) |
 | | **BaaS CRUD** | Интеграция Firestore Cloud: хранение профилей, истории чата, прогресса задач и база тасков. | 15 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/firebase.ts) |
@@ -25,10 +21,10 @@
 | | **Responsive** | Полная адаптация верстки под мобильные устройства (от 320px). | 5 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/pages/auth/authPage.tsx) |
 | **Quality** | **Unit Tests (Basic)** | Покрытие личного кода модульными тестами более 20%. | 10 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/tests) |
 | | **Unit Tests (Full)** | Увеличение покрытия до 60% (подтверждено логами и отчетами). | 10 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/tests) |
+| **Architecture** | **State Manager** | Использование React Context (AuthContext) для управления состоянием авторизации. | 10 | [Link](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/AuthContext.tsx) |
+| | **API Layer** | Выделение логики работы с Firebase, GROQ LLM в сервисный слой. | 10 | [Firebase](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/firebase.ts) / [GROQ LLM](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/services/groq.ts) / |
 | **Frameworks** | **React** | Использование библиотеки React как основы фронтенда. | 5 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/package.json) |
-| **ИТОГО** | | | **215** | |
-
-
+| **ИТОГО** | | | **235** | |
 
 ---
 
