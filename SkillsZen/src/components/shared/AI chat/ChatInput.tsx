@@ -29,10 +29,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ input, setInput, onSend, d
           disabled={!input.trim() || disabled}
           className="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 bg-primary text-white rounded-xl sm:rounded-2xl flex items-center justify-center hover:scale-105 active:scale-95 disabled:opacity-30 shadow-lg transition-all"
         >
-          <Send
-            size={18}
-            className="flex-shrink-0"
-          />
+          <Send size={18} className="flex-shrink-0" />
         </button>
       </div>
     </div>

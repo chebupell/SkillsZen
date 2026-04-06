@@ -89,7 +89,6 @@ const Menu: React.FC<MenuProps> = ({ backgroundImage }) => {
         </div>
       </div>
 
-
       <div className="mt-6 mb-4 flex flex-col items-center text-center space-y-3 animate-in fade-in duration-1000 delay-500">
         <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
