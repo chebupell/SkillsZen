@@ -21,8 +21,8 @@ The **AI chat** complements this experience as an integrated assistant that also
 
 ## Team members
 
-Mikhail Kremenetski - [chebupell](https://github.com/chebupell) - 📓 [Diary]() <br>
-Anastasiya Andronava - [anastan588](https://github.com/anastan588) - 📓 [Diary]() <br>
+Mikhail Kremenetski - [chebupell](https://github.com/chebupell) - 📓 [Diary](/development-notes/chebupell/merged-diary.md) <br>
+Anastasiya Andronava - [anastan588](https://github.com/anastan588) - 📓 [Diary](/development-notes/anastan588/merged-diary.md) <br>
 Tatsiana Hladkaya - [t-gladkaya](https://github.com/t-gladkaya) - 📓 [Diary](/development-notes/t-gladkaya/merged-diary.md) <br>
 Egor Gerasimchyk - [ForestDeerr](https://github.com/forestdeerr)<br>
 
