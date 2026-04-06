@@ -10,7 +10,7 @@
 | :--- | :--- | :--- | :---: | :--- |
 | **My Components** | **Complex Component** (JS Code Runner) | Страница задач с редактором кода и логикой проверки через тесты. | 25 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/coding) |
 | | **Complex Component** (AI Chat UI) | Интерфейс чата с поддержкой истории и стриминга (GROQ LLM). | 25 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/AIPage) |
-| | **Rich UI Screen** (User Profile) | Страница профиля с формами редактирования и синхронизацией с Firebase. | 20 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/profilePage) |
+| | **Rich UI Screen** (User Profile) | Страница профиля user с формами редактирования и синхронизацией с Firebase. | 20 | [Link](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/profilePage) |
 | | **Rich UI Screen** (Auth/Login) | Страница авторизации/аутентификации с валидацией и состояниями. | 20 | [Login](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/login) / [Auth](https://github.com/chebupell/SkillsZen/tree/development/SkillsZen/src/pages/auth)|
 | | **Rich UI Screen** (Error Handling) | Реализация страниц 404 (Not Found) и ErrorFallback для обработки исключений. | 20 | [404](https://github.com/chebupell/SkillsZen/tree/ai-chat/SkillsZen/src/pages/404Page) / [Error](https://github.com/chebupell/SkillsZen/blob/ai-chat/SkillsZen/src/components/shared/ErrorFallback.tsx) |
 | **Backend & Data** | **BaaS Auth** | Полная настройка авторизации через Firebase Auth (Email/Password). | 15 | [Link](https://github.com/chebupell/SkillsZen/blob/development/SkillsZen/src/services/firebase.ts) |
@@ -61,11 +61,11 @@
 *   **Технологический стек**: Интеграция **Firebase Auth** реализована в связке с **React Hook Form** и **Zod**. Это обеспечило строгую типизацию входных данных и сложную клиентскую валидацию еще до отправки запроса на сервер.
 *   **Безопасность и UX**: Реализован механизм **Protected Routes**, блокирующий несанкционированный доступ. Система обработки ошибок сервера трансформирует технические ответы Firebase в человекочитаемые уведомления через компоненты **shadcn/ui**, значительно улучшая пользовательский опыт.
 
-### 2. Модуль управления профилем и персональными данными (Personal Data Page)
+### 2. Модуль управления профилем и персональными данными (Profile User Data Page)
 Компонент, демонстрирующий навыки проектирования CRUD-операций и синхронизации данных в реальном времени.
 *   **Data Orchestration**: Реализован полный цикл взаимодействия с **Firebase Firestore Cloud**. Логика построена на связке уникального идентификатора пользователя (UID) из Auth-сервиса с его документом в базе данных, что гарантирует абсолютную приватность и целостность информации.
 *   **Оптимистичный UI и реактивность**: Форма профиля поддерживает переключение между режимами просмотра и редактирования. При сохранении данных реализовано мгновенное обновление локального состояния, что делает интерфейс отзывчивым даже при задержках сети.
-*   **Масштабируемость**: Структура данных в Firestore Cloud спроектирована с учетом расширения, что подтверждает продуманность архитектуры на уровне БД.
+*   **Масштабируемость**: Структура данных в Firestore Cloud спроектирована с учетом расширения (добавление полей), что подтверждает продуманность архитектуры на уровне БД.
 
 
 
