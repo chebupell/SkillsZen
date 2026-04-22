@@ -39,8 +39,7 @@ describe('LoginPage', () => {
   const mockedSignin = vi.mocked(signinService)
 
   const VALID_EMAIL = 'test@example.com'
-  const VALID_PASSWORD = 'Password123!' // Удовлетворяет всем правилам Zod (A, a, 1, !)
-
+  const VALID_PASSWORD = 'Password123!'
   beforeEach(() => {
     vi.clearAllMocks()
 

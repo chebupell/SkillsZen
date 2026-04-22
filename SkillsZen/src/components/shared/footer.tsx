@@ -48,7 +48,6 @@ export function Footer() {
               ))}
             </nav>
           </div>
-
           <div className="flex flex-col md:flex-row justify-between items-center pt-3 border-t border-primary/5 gap-3 text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/30">
             <p>© {currentYear} RsSchool. All rights reserved.</p>
             <div className="flex items-center gap-4">

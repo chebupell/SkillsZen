@@ -61,20 +61,15 @@ const TestResultsModal = ({
             <button
               onClick={() => {
                 if (nextTaskId) {
-                  // Если есть следующая или нерешенная задача — идем к ней
                   navigate(`/coding-tasks/editor/${nextTaskId}`)
                 } else {
-                  // Если абсолютно всё пройдено — в общее меню
                   navigate('/coding-tasks')
                 }
-                onClose() // Обязательно закрываем модалку перед переходом
+                onClose()
               }}
               className="flex items-center gap-2 px-6 py-2 rounded-xl font-bold bg-yellow-500 text-black hover:bg-yellow-400 active:scale-95 transition-all group"
             >
-              {/* Динамический текст в зависимости от наличия следующей задачи */}
               <span>{nextTaskId ? 'Next Task' : 'All Completed! Menu'}</span>
-
-              {/* Иконка стрелки с анимацией при наведении (group-hover) */}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           )}

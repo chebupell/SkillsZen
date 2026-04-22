@@ -74,7 +74,7 @@ describe('ChatMessageItem', () => {
 
     const inlineCode = screen.getByText('const')
     expect(inlineCode.tagName).toBe('CODE')
-    expect(inlineCode).toHaveClass('text-pink-600') // Твой кастомный стиль
+    expect(inlineCode).toHaveClass('text-pink-600')
   })
 
   it('switches to fallback icon when user photo fails to load', () => {

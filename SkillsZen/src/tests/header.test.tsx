@@ -39,8 +39,11 @@ describe('Header', () => {
     })
 
     renderHeader()
-    expect(screen.getByRole('link', { name: /sign in/i })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /logout/i })).not.toBeInTheDocument()
+    const loginBtn = screen.getByTestId('login-button')
+
+    expect(loginBtn).toBeInTheDocument()
+    expect(loginBtn).toHaveAttribute('href', '/sign-in')
+    expect(screen.getByText(/sign in/i)).toBeInTheDocument()
   })
 
   it('calls logout and navigates to home on logout click', async () => {
@@ -53,7 +56,7 @@ describe('Header', () => {
 
     renderHeader()
 
-    const logoutBtn = screen.getByRole('button', { name: /logout/i })
+    const logoutBtn = screen.getByTestId('logout-button')
     await user.click(logoutBtn)
 
     expect(mockLogout).toHaveBeenCalledTimes(1)

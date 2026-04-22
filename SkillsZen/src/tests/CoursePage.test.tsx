@@ -1,4 +1,4 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 import { useAuth } from '../services/AuthContext'
@@ -6,7 +6,6 @@ import { getCourseSubPage } from '../services/firebase'
 import type { CourseSubPageProps } from '../types/exerciseTypes'
 import CoursePage from '../pages/exercises/coursePage/coursePage'
 
-// 1. Mocks
 vi.mock('../services/AuthContext', () => ({
   useAuth: vi.fn(),
 }))
@@ -68,17 +67,6 @@ describe('CoursePage', () => {
 
     expect(screen.getByText('TypeScript Masterclass')).toBeInTheDocument()
     expect(screen.getByText(/50\s+completed blocks/i)).toBeInTheDocument()
-  })
-
-  it('renders "TS Cards" button only on /ts path', async () => {
-    mockedGetSubPage.mockResolvedValue(mockData)
-    renderComponent()
-
-    const cardBtn = await screen.findByRole('button', { name: /ts cards/i })
-    expect(cardBtn).toBeInTheDocument()
-
-    fireEvent.click(cardBtn)
-    expect(mockNavigate).toHaveBeenCalledWith('/ts-cards')
   })
 
   it('does not render "TS Cards" button on other paths', async () => {

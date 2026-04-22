@@ -29,7 +29,7 @@ export default function ProfilePage() {
       country: '',
       birthDate: '',
       phone: '',
-      photo: user?.photo || '', // Добавлено поле photo
+      photo: user?.photo || '', 
     },
   })
 
@@ -51,7 +51,7 @@ export default function ProfilePage() {
   }, [user?.uid, form.reset, user?.name, user?.photo])
 
   const onSubmit = async (data: ProfileValues) => {
-    const toastId = toast.loading('Updating profile...') // Показываем лоадер
+    const toastId = toast.loading('Updating profile...') 
 
     try {
       if (!user?.uid) throw new Error('User not found')
@@ -60,7 +60,7 @@ export default function ProfilePage() {
 
       const updatedSession = userStorageService.syncLocalSession({
         name: data.name,
-        photo: data.photo, // Передаем фото сразу сюда
+        photo: data.photo, 
       })
       if (updatedSession) {
         login(updatedSession)
@@ -97,7 +97,6 @@ export default function ProfilePage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-hide">
         <div className="max-w-3xl mx-auto w-full flex flex-col items-center gap-4 animate-in fade-in duration-500">
           <Card className="w-full max-w-xl border border-white/20 shadow-xl p-0 bg-white/60 backdrop-blur-xl rounded-[2rem] overflow-hidden">
-            {/* Хедер просто берет user из контекста страницы */}
             <ProfileHeader user={user} />
 
             <CardContent className="pt-4 px-6 pb-6">
