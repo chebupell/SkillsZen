@@ -40,7 +40,6 @@ describe('MainPage Layout', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Provide default auth state
     mockedUseAuth.mockReturnValue({
       user: { name: 'John Doe' },
       isAuthenticated: true,

@@ -47,8 +47,7 @@ describe('AuthPage', () => {
   const mockedStorage = vi.mocked(userStorageService)
 
   const VALID_EMAIL = 'test@example.com'
-  const VALID_PASSWORD = 'Password123!' // Соответствует всем правилам Zod
-
+  const VALID_PASSWORD = 'Password123!'
   beforeEach(() => {
     vi.clearAllMocks()
 

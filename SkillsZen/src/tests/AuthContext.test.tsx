@@ -163,7 +163,6 @@ describe('AuthContext', () => {
   it('updates chat history: calls firebase, updates storage and state', async () => {
     vi.mocked(userStorageService.getSession).mockReturnValue(mockSession)
 
-    // Подготавливаем обновленного пользователя, которого вернет хранилище
     const newMessages: ChatMessage[] = [{ role: 'user', content: 'Hello AI' }]
     const updatedUser: UserSession = {
       ...mockSession,
@@ -175,7 +174,6 @@ describe('AuthContext', () => {
     const { result } = renderHook(() => useAuth(), { wrapper })
     await waitFor(() => expect(result.current.user).not.toBeNull())
 
-    // 2. Вызываем обновление чата
     await act(async () => {
       await result.current.updateChat(newMessages)
     })
@@ -212,8 +210,6 @@ describe('AuthContext', () => {
     await act(async () => {
       await result.current.updateChat([{ role: 'user', content: 'No user' }])
     })
-
-    // Ни один сервис не должен быть вызван из-за guard clause: if (!user?.uid) return
     expect(saveChatHistoryFirebase).not.toHaveBeenCalled()
     expect(userStorageService.updateChatInStorage).not.toHaveBeenCalled()
   })

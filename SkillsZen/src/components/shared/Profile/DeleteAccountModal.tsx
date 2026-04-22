@@ -28,7 +28,7 @@ export function DeleteAccountModal({ onConfirm, isDeleting }: DeleteAccountModal
     e.preventDefault()
     if (!password) return
     await onConfirm(password)
-    setPassword('') // Clear after attempt
+    setPassword('')
   }
 
   return (

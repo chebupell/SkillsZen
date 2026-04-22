@@ -55,6 +55,7 @@ export function Header() {
               <Button
                 size="sm"
                 onClick={handleLogout}
+                data-testid="logout-button"
                 className="px-5 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out hover:shadow-md active:scale-95"
               >
                 <div className="flex items-center gap-2 font-semibold">
@@ -67,6 +68,7 @@ export function Header() {
               <Button
                 size="sm"
                 asChild
+                data-testid="login-button"
                 className="px-5 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ease-in-out hover:shadow-md active:scale-95"
               >
                 <Link to="/sign-in" className="flex items-center gap-2">
